@@ -1,0 +1,8 @@
+/nbproject/*
+/vendor/*
+/node_modules/*
+/build/*
+/bin/*
+.idea/*
+/src/common/config.js
+
