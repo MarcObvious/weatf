@@ -1,0 +1,68 @@
+<div class="order-detail row-fluid clearfix">
+    <div back class="order-detail-header" >
+        <p><img src="../../assets/weatf_back.svg" width="29px"> Detalle pedido</p>
+    </div>
+    <div class="panel panel-default">
+
+        <div class="panel-body">
+            <div ng-if="orderData" class="col-lg-12">
+                <div class="order-detail-title">
+                    <h3 class="order-detail-order"> ID: #{{orderData.id_order}}</h3>
+                    <h3 class="order-detail-status {{orderData.state_class}}" >{{orderData.state_name}}<img src="../../assets/weatf_small_{{orderData.state_class}}.svg" height="29px"></h3>
+                </div>
+                <hr>
+                <div class="col-lg-4 col-md-6">
+                    <h4><img src="../../assets/weatf_destinatario.svg" height="25px"> Destinatario </h4>
+                    <p>{{orderData.firstname}} {{orderData.lastname}}</p>
+                    <p class="order-detail-strong">{{orderData.address}}</p>
+                    <p>{{orderData.zipcode}} {{orderData.city}}</p>
+                    <p>{{orderData.hora_entrega}} - {{orderData.hora_entrega_max}}</p>
+                </div>
+                <div class="col-lg-4 col-md-6">
+                    <h4><img src="../../assets/weatf_repartidor.svg" height="25px"> Repartidor</h4>
+                    <p>{{orderData.mensajero}}</p>
+                </div>
+                <div class="col-lg-4 col-md-6">
+                    <h4><img src="../../assets/weatf_observaciones.svg" height="25px"> Observaciones</h4>
+                    <p>{{orderData.comments}}</p>
+                </div>
+            </div>
+
+            <div ng-if="orderData===undefined" class="col-lg-12">
+                <div class="order-detail-header">
+                    <i>No hay información para ese pedido</i>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <div ng-if="orderData.incidences" class="panel panel-default">
+        <div class="panel-body">
+            <div class="col-lg-12">
+                <div class="order-detail-title">
+                    <h3 class="order-detail-order"> Incidéncias pedido #{{orderData.id_order}}</h3>
+                    <h3 class="order-detail-status incidencia" ><i class="fa fa-exclamation-triangle" aria-hidden="true"></i></h3>
+                </div>
+                <hr>
+                <div ng-repeat="(key,incidence) in orderData.incidences">
+                    <div class="col-lg-3">
+                        <h4><i class="fa fa-exclamation-triangle" aria-hidden="true"></i> Incidéncia #{{incidence.id_incidence}}</h4>
+                        <p>Añadido a {{incidence.date_add}}</p>
+                        <p class="order-detail-strong">Ultima actualización a {{incidence.date_add}}</p>
+                        <p>Tipo {{incidence.id_incidence_type}}</p>
+                    </div>
+                    <div class="col-lg-3">
+                        <h4><img src="../../assets/weatf_check.svg" height="25px"> Estado</h4>
+                        <p>{{incidence.incidence_name}}</p>
+                    </div>
+                    <div class="col-lg-6">
+                        <h4><img src="../../assets/weatf_observaciones.svg" height="25px"> Observaciones</h4>
+                        <p>{{incidence.incidence_comment}}</p>
+                    </div>
+                    <hr ng-if="key < orderData.incidences.length-1" class="col-lg-11">
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>

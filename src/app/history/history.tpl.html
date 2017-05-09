@@ -1,0 +1,85 @@
+<div class="row historyClass">
+    &nbsp;
+    <div class="history-grid">
+        <div back class="history-grid-header">
+            <p><img src="../../assets/weatf_back.svg" width="29px"> {{name}} <span>({{totalItems}})</span>
+        </div>
+
+        <div ng-if="ordersData" class="col-lg-4 col-md-6 history-grid-element" ng-repeat="orderData in ordersDataSliced">
+            <div class="panel panel-default" ng-click="openOrder(orderData.id_order)">
+                <div class="panel-body">
+                    <div class="col-lg-12">
+                        <div class="history-grid-title">
+                            <h3 class="history-grid-order"> ID: #{{orderData.id_order}}</h3>
+                        </div>
+                        <div class="history-grid-text">
+                            <p class="history-grid-strong">{{orderData.address}}</p>
+                            <p>{{orderData.zipcode}} {{orderData.city}}</p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <div class="col-lg-12">
+                <div class="col-lg-3 col-md-3 col-sm-12">
+                    <p>Desde el</p>
+                    <p class="input-group">
+                        <input title="Date Start" type="text" name="date_start"
+                               class="form-control" is-open="dateStart.opened"
+                               ng-model="dateStart.date" popup-placement="top"
+                               uib-datepicker-popup="{{dateEnd.format}}"
+                               datepicker-options="dateStart.dateOptions"
+                               placeholder="Date Start"/>
+
+                        <span class="input-group-btn">
+                        <button type="button" class="btn btn-success" ng-click="openDatepicker('dateStart')"><i class="fa fa-calendar"></i></button>
+                    </span>
+                    </p>
+                </div>
+                <div class="col-lg-3 col-md-3 col-sm-12">
+                    <p>Hasta el</p>
+                    <p class="input-group">
+                        <input title="Date End" type="text" name="date_end"
+                               class="form-control" is-open="dateEnd.opened"
+                               ng-model="dateEnd.date" popup-placement="top"
+                               uib-datepicker-popup="{{dateEnd.format}}"
+                               datepicker-options="dateEnd.dateOptions"
+                               placeholder="Date End"/>
+                        <span class="input-group-btn">
+                        <button type="button" class="btn btn-danger" ng-click="openDatepicker('dateEnd')"><i class="fa fa-calendar"></i></button>
+                    </span>
+                    </p>
+                </div>
+                <div class="col-lg-2 col-md-2 btn-mostrar">
+                    <button class="btn btn-danger btn-block" ng-click="mostrar()"> Mostrar</button>
+                </div>
+
+
+                <div ng-show="totalItems>numPerPage" class="col-lg-4">
+                    <div class="home-pagination pull-right">
+                        <ul uib-pagination  direction-links="true"
+                            previous-text="&lsaquo;" next-text="&rsaquo;"
+                            total-items="totalItems"
+                            items-per-page="numPerPage" max-size="4"
+                            boundary-link-numbers="true" rotate="false"
+                            ng-model="currentPage" ng-change="pageChanged()">
+                        </ul>
+                    </div>
+                </div>
+        </div>
+
+
+        <div ng-if="ordersData==false" class="col-lg-12">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <i>No hay información de esos pedidos.</i>
+
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+</div>
+

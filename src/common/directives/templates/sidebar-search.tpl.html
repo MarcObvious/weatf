@@ -1,0 +1,11 @@
+<li class="sidebar-search">
+    <p class="head-text">Localizar pedido</p>
+    <div class="input-group custom-search-form">
+        <input type="text" class="form-control" placeholder="Buscar por id..." ng-model="string_search" ng-keyup="$event.keyCode == 13 && searchF()">
+        <span class="input-group-btn">
+            <button class="btn btn-default" type="button"  ng-click="searchF()">
+                <i class="fa fa-search"></i>
+            </button>
+        </span>
+    </div>
+</li>

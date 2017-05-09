@@ -1,0 +1,23 @@
+<div class="sidebar-loginBox">
+    <div ng-show="logged">
+        <h4 class="str">Administrador <span class="head-text" ng-click="submitLogout()"><i class="fa fa-sign-in" aria-hidden="true"></i></span></h4>
+        <p>Admin xx xxx</p>
+        {{date | date:'hh:mm'}} - {{date | date:'longDate'}}
+        <hr>
+    </div>
+
+    <div ng-show="!logged">
+        <form class="form-signin">
+            <h4 class="str">Gestión de entregas</h4>
+            {{date | date:'hh:mm'}} - {{date | date:'longDate'}}
+            <br>
+            <p class="email-red">Correo electrónico</p>
+            <input type="text" id="inputEmail" class="form-control" placeholder="Correo electrónico" required autofocus ng-model="login.username">
+            <br>
+            <input type="password" id="inputPassword" class="form-control" placeholder="Contraseña" required ng-model="login.password" ng-keyup="$event.keyCode == 13 && submitLogin()">
+            <br>
+            <button class="btn-sig-in btn btn-lg btn-danger btn-block" type="button" ng-click="submitLogin()">EMPEZAR</button>
+            <br>
+        </form>
+    </div>
+</div>

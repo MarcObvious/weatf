@@ -1,0 +1,11 @@
+<div class="panel-body">
+    <div class="list-group">
+        <a ng-repeat="action in actionData" href="#" class="list-group-item" uib-tooltip="Blame to: {{action.username}} --- {{action.actionlog}}">
+            <i class="{{action.icon}}"></i> {{action.name}}
+            <span class="pull-right text-muted small"><em>{{action.time}}</em>
+            </span>
+        </a>
+    </div>
+    <!-- /.list-group -->
+    <!--<a href="#" class="btn btn-default btn-block">View All Alerts</a>-->
+</div>

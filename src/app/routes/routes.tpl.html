@@ -1,0 +1,85 @@
+<div class="row routesClass">
+    &nbsp;
+    <div class="routes-grid">
+        <div back class="routes-grid-header">
+            <p><img src="../../assets/weatf_back.svg" width="29px"> {{name}} <span>({{totalItems}})</span>
+        </div>
+
+        <div class="col-lg-12">
+            <div class="col-lg-11 col-lg-offset-1">
+                <div class="col-lg-4">
+                    <p class="input-group">
+                        <input title="Date Start" type="text" name="date_start"
+                               class="form-control" is-open="dateStart.opened"
+                               ng-model="dateStart.date" popup-placement="bottom"
+                               uib-datepicker-popup="{{dateStart.format}}"
+                               datepicker-options="dateStart.dateOptions"
+                               placeholder="Date Start"/>
+
+                        <span class="input-group-btn">
+                        <button type="button" class="btn btn-success" ng-click="openDatepicker('dateStart')"><i class="fa fa-calendar"></i></button>
+                    </span>
+                    </p>
+                </div>
+
+                <div class="col-lg-2">
+                    <button class="btn btn-danger btn-block" ng-click="mostrar()"> Mostrar</button>
+                </div>
+                &nbsp;
+                <div class="col-lg-2">
+                    <button class="btn btn-danger btn-block" add-bom field-separator=";" ng-csv="routesDataA" csv-header="['Ruta', 'Pedido', 'Dirección', 'Población', 'CP','Hora de entrega']" filename="{{name_csv}}.csv">CSV</button>
+                </div>
+                <div class="col-lg-3 radio_buttons">
+                    <label><input type="radio" ng-model="city" value="bcn"> Barcelona</label>
+                    <label><input type="radio" ng-model="city" value="mad"> Madrid</label>
+                </div>
+
+
+            </div>
+            <div ng-if="routesData==0" class="col-lg-12">
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <i>Cargando {{name_csv}}... <img width="20px" height="20px" src="../../assets/rolling.svg"></i>
+                    </div>
+                </div>
+            </div>
+
+            <div ng-if="routesData==1" class="col-lg-12">
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <table ng-table="vm.tableParams" class="table table-striped table-bordered text-center table-hover" show-filter="true">
+                            <tr ng-repeat="mv in $data">
+                                <td title="'Ruta'" filter="{ route_id: 'number'}" sortable="'route_id'">
+                                    {{mv.route_id}}
+                                </td>
+                                <td title="'Pedido'" filter="{ order_id: 'number'}" sortable="'order_id'">
+                                    {{mv.order_id}}
+                                </td>
+                                <td title="'Dirección'" filter="{ address: 'text'}" sortable="'address'">
+                                    {{mv.address}}</td>
+                                <td title="'Población'" filter="{ city: 'text'}" sortable="'city'">
+                                    {{mv.city}}</td>
+                                <td title="'CP'" filter="{ cp: 'text'}" sortable="'cp'">
+                                    {{mv.zipcode}}
+                                </td>
+                                <td title="'Hora de entrega'" filter="{ order_date: 'text'}" sortable="'Hora de entrega'">
+                                    {{mv.hora_entrega}}
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+
+            <div ng-if="routesData==2" class="col-lg-12">
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <i>No hay información para ese dia.</i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

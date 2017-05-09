@@ -1,0 +1,117 @@
+/* Less file for routes - remember to import in main.less */
+
+.routesClass {
+
+  .radio_buttons {
+    padding-top: 5px;
+    text-align: center;
+  }
+  
+  .routes-grid {
+    p > {
+      color: #5c5c5c;
+    }
+    .routes-grid-header {
+      position: relative;
+      padding-left: 15px;
+      cursor: pointer;
+      span > {
+        color: #ee2845;
+        font-weight: bold;
+      }
+    }
+    .btn-mostrar {
+      position: relative;
+      margin-top:30px;
+    }
+    .routes-grid-element {
+      cursor:pointer;
+      .panel-body {
+        padding: 0 15px 0 15px;
+      }
+
+      .routes-grid-title {
+
+        .routes-grid-routes {
+          display: inline;
+          position: relative;
+
+        }
+        .routes-grid-status {
+          display: inline;
+          position: absolute;
+          top:-20px;
+          right: 0;
+        }
+        .pendiente {
+          color: #F46224;
+        }
+        .encurso {
+          color: #16AA30;
+        }
+        .incidencia {
+          color: #FB1831;
+        }
+      }
+
+      .routes-grid-text {
+        //padding-top:10px;
+
+        .routes-grid-strong {
+          font-weight: bold;
+          color:black;
+        }
+      }
+    }
+  }
+
+  .routes-detail {
+    h4 > {
+      color: #ee2845;
+      font-weight: bold;
+    }
+    p > {
+      color: #5c5c5c;
+    }
+    .routes-detail-strong {
+      font-weight: bold;
+      color:black;
+    }
+    .routes-detail-header {
+      cursor: pointer;
+      i > {
+        color: #ee2845;
+        font-weight: bold;
+      }
+    }
+    img > {
+      position:relative;
+      bottom: 3px;
+    }
+    .routes-detail-title {
+
+      .routes-detail-routes {
+        display: inline;
+        position: relative;
+
+      }
+      .routes-detail-status {
+        display: inline;
+        position: absolute;
+        top:-20px;
+        bottom:10px;
+        right: 0;
+
+      }
+      .pendiente {
+        color: #F46224;
+      }
+      .encurso {
+        color: #16AA30;
+      }
+      .incidencia {
+        color: #FB1831;
+      }
+    }
+  }
+}
