@@ -7,7 +7,10 @@
                     parent: 'root',
                     resolve: {
                         autentica: (['authService', function (authService) {
-                            return authService.autentica();
+                            var res = authService.autentica();
+                            console.log('autentica?');
+                            console.log(res);
+                            return res;
                         }])
                     },
                     abstract: true,

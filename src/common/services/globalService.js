@@ -24,36 +24,23 @@ angular.module('globalService', [])
                     });
                 },
                 getAuthToken: function(){
-                    var def = $q.defer();
-                    var _this = this;
-
-                    this.getStorage('authToken').then(function(authToken) {
-                        if(!authToken){
-                            console.log('undefined?');
-
-                            _this.api('init').save({}, {}, function (data) {
-                                console.log(data);
-                                def.resolve(data);
-                                /*var authToken2 = data.userinfo.authtoken;
-                                if (authToken2 !== undefined) {
-                                    _this.setStorage('authToken',authToken2);
-                                    $log.warn('Api::data:: ');
-                                    $log.warn(authToken2);
-                                    def.resolve(authToken2);
-                                }
-                                else {
-                                    def.reject();
-                                }*/
-                            }, function (err) {
-                                def.reject(err);
-                            });
-                        }
-                        else {
-                            def.resolve(authToken);
-                        }
-                    });
-
-                    return def.promise;
+                    //sessionStorage.setItem(CUSTOM_HEADER, '');
+                    var authToken = sessionStorage.getItem(CUSTOM_HEADER);
+                    console.log('AUTHTOKEN!::::');
+                    console.log(authToken);
+                    if(authToken) {
+                        return authToken;
+                    }
+                    else {
+                        this.api('init').save({}, {}, function (data) {
+                            console.log(data);
+                            authToken = data.data.userinfo.authtoken;
+                            if(authToken) {
+                                sessionStorage.setItem(CUSTOM_HEADER, authToken);
+                            }
+                            return authToken;
+                        });
+                    }
                 },
                 getAction: function () {
                     //Service action with promise resolve (then)

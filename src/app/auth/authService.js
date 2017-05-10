@@ -6,7 +6,7 @@ angular.module('authService', [])
                     if (!extra_route) {
                         extra_route = '';
                     }
-                    return $resource(API_URL + '/auth' + extra_route, {}, {
+                    return $resource(API_URL + '/login' + extra_route, {}, {
                         query: {
                             timeout: 15000
                         },
@@ -48,18 +48,23 @@ angular.module('authService', [])
                 },
                 submitLogin: function (username,password) {
                     var def = $q.defer();
-                    globalService.removeStorage(CUSTOM_HEADER);
+                   // globalService.removeStorage(CUSTOM_HEADER);
                     globalService.removeStorage('user_data');
 
-                    if (username === 'Admin' && password === '1234') {
+                    this.api().save({},{email:username, password:password}, function (data){
+                        console.log(data);
+                        def.resolve(true);
+                    });
+
+                    /*if (username === 'Admin' && password === '1234') {
                         // globalService.setStorage('user_data', {id: data.data.id, username: data.data.username, email: data.data.email, level: data.data.level});
                         globalService.setStorage(CUSTOM_HEADER, API_KEY);
 
                         def.resolve(true);
-                    }
-                    else {
+                    }*/
+                    /*else {
                         def.reject(false);
-                    }
+                    }*/
                     return def.promise;
                 },
                 submitLogout: function () {

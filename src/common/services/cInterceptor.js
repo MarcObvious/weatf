@@ -10,16 +10,19 @@ angular.module('cInterceptor', [])
                 config.headers = config.headers || {};
 
                 //Get saved data of your custom header from sessionStorage
-                //$rootScope.customHeader = sessionStorage.getItem(CUSTOM_HEADER);
+                $rootScope.customHeader = sessionStorage.getItem(CUSTOM_HEADER);
 
                 //$rootScope.customHeader = API_KEY;
-
+                //console.log('interceptor');
                 config.headers = {
-                    'Content-type': 'application/json;charset=UTF-8'
+                    'Content-type': 'application/json;charset=UTF-8',
+                    'lang': 'es',
+                    'country': 'es'
                 };
 
                 //Add custom header/data to request
-                //config.headers[CUSTOM_HEADER] = API_KEY;
+                config.headers[CUSTOM_HEADER] = $rootScope.customHeader;
+                //console.log(config.headers);
 
                 return config;
             },
