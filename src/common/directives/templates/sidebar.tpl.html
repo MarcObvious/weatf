@@ -1,15 +1,15 @@
 <div class="navbar-default sidebar" role="navigation">
     <div class="sidebar-nav navbar-collapse">
-        <a href="/"><img src="../../assets/logo-matias_marc.svg" width="100%" height="100%"></a>
+        <a href="/"><img src="../../assets/common_actionbar_android.png" width="100%" height="100%"></a>
         <login-box></login-box>
 
         <ul class="nav in" id="side-menu" ng-show="logged">
             <sidebar-search></sidebar-search>
             <li>
-                <a href="" class="head-text">Filtrar por:</a>
+                <a href="" class="head-text">Organizador:</a>
             </li>
             <li ng-class="{active: collapseVar==1}">
-                <a href="" ng-click="check(1)" class="sub-hedd-text">Estado<span class="fa arrow"></span></a>
+                <a href="" ng-click="check(1)" class="sub-hedd-text">Locales<span class="fa arrow"></span></a>
                 <ul class="nav nav-second-level" uib-collapse="collapseVar!=1">
                     <li ui-sref-active="active" ng-repeat="estado in sidebarContent.filtro_estado">
                         <a ng-if="estado.show" class="sub-sub-hedd-text" ui-sref="root.home.ordergrid({ filter_by:'estado', page: 1, id:{{estado.id}}})">{{estado.n}} <span class="head-text">({{estado.c}})</span></a>
@@ -17,7 +17,7 @@
                 </ul>
             </li>
             <li ng-class="{active: collapseVar==2}">
-                <a href="" ng-click="check(2)" class="sub-hedd-text">Repatidor<span class="fa arrow"></span></a>
+                <a href="" ng-click="check(2)" class="sub-hedd-text">Usuarios<span class="fa arrow"></span></a>
                 <ul class="nav nav-second-level" uib-collapse="collapseVar!=2">
                     <li ui-sref-active="active" ng-repeat="repartidor in sidebarContent.filtro_repartidor track by $index">
                         <a ng-if="repartidor.show" class="sub-sub-hedd-text" ui-sref="root.home.ordergrid({ filter_by:'repartidor', page: 1, id:{{repartidor.id}} })">{{repartidor.n}} <span class="head-text">({{repartidor.c}})</span></a>
@@ -25,19 +25,19 @@
                 </ul>
             </li>
             <li>
-                <a href="" class="head-text">Histórico:</a>
+                <a href="" class="head-text">Estadisticas:</a>
             </li>
             <li>
-                <a ui-sref="root.history({ option: 'entregas', page:1})" class="sub-hedd-text">Entregas</a>
+                <a ui-sref="root.history({ option: 'entregas', page:1})" class="sub-hedd-text">Ordenes</a>
             </li>
             <li>
-                <a ui-sref="root.history({ option: 'incidencias', page:1 })" class="sub-hedd-text">Incidéncias</a>
+                <a ui-sref="root.history({ option: 'incidencias', page:1 })" class="sub-hedd-text">Blablabla</a>
             </li>
             <li>
-                <a href="" class="head-text">Organizador:</a>
+                <a href="" class="head-text">Acciones:</a>
             </li>
             <li>
-                <a ui-sref="root.routes" class="sub-hedd-text">Organizador de rutas</a>
+                <a ui-sref="root.routes" class="sub-hedd-text">Push individual</a>
             </li>
         </ul>
     </div>

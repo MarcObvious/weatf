@@ -7,6 +7,11 @@
                     parent: 'root',
                     resolve: {
                         autentica: (['globalService',  function (globalService) {
+                            console.log('authservice::::');
+                            globalService.getAuthToken().then(function(authToken){
+                                console.log(authToken);
+                            });
+
                             return globalService.removeStorage(CUSTOM_HEADER);
                         }])
 

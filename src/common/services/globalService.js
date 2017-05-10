@@ -23,6 +23,38 @@ angular.module('globalService', [])
                         }
                     });
                 },
+                getAuthToken: function(){
+                    var def = $q.defer();
+                    var _this = this;
+
+                    this.getStorage('authToken').then(function(authToken) {
+                        if(!authToken){
+                            console.log('undefined?');
+
+                            _this.api('init').save({}, {}, function (data) {
+                                console.log(data);
+                                def.resolve(data);
+                                /*var authToken2 = data.userinfo.authtoken;
+                                if (authToken2 !== undefined) {
+                                    _this.setStorage('authToken',authToken2);
+                                    $log.warn('Api::data:: ');
+                                    $log.warn(authToken2);
+                                    def.resolve(authToken2);
+                                }
+                                else {
+                                    def.reject();
+                                }*/
+                            }, function (err) {
+                                def.reject(err);
+                            });
+                        }
+                        else {
+                            def.resolve(authToken);
+                        }
+                    });
+
+                    return def.promise;
+                },
                 getAction: function () {
                     //Service action with promise resolve (then)
                     var def = $q.defer();
@@ -100,7 +132,7 @@ angular.module('globalService', [])
 
                                 if (flag === 0){
 
-                                        estados.filtro_repartidor.push({n: order.mensajero, c: 1, id: order.id_mensajero, show: parseInt(order.id_mensajero) !== 0});
+                                    estados.filtro_repartidor.push({n: order.mensajero, c: 1, id: order.id_mensajero, show: parseInt(order.id_mensajero) !== 0});
 
 
                                 }
@@ -132,11 +164,11 @@ angular.module('globalService', [])
                     }, function (err) {
                         def.reject(err);
                     });
-                     return def.promise;
+                    return def.promise;
                 }
 
 
-                };
+            };
         }]);
 
 

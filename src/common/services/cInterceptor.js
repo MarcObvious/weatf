@@ -19,7 +19,7 @@ angular.module('cInterceptor', [])
                 };
 
                 //Add custom header/data to request
-                config.headers[CUSTOM_HEADER] = API_KEY;
+                //config.headers[CUSTOM_HEADER] = API_KEY;
 
                 return config;
             },
