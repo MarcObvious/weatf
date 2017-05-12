@@ -7,5 +7,22 @@
   min-width: calc(100vw - 250px);
   min-height: 100vh;
   background-size: cover;
-  background: #000000 url(common_actionbar_android.png) no-repeat fixed center center;
+  background: rgb(63, 128, 63); /* For browsers that do not support gradients */
+  background: -webkit-linear-gradient(left, rgb(181, 212, 56) , rgb(63, 128, 63)); /* For Safari 5.1 to 6.0 */
+  background: -o-linear-gradient(right, rgb(181, 212, 56) , rgb(63, 128, 63)); /* For Opera 11.1 to 12.0 */
+  background: -moz-linear-gradient(right, rgb(181, 212, 56) , rgb(63, 128, 63)); /* For Firefox 3.6 to 15 */
+  background: linear-gradient(to right, rgb(181, 212, 56) , rgb(63, 128, 63)); /* Standard syntax */
+
+  //background: #000000 ;
+  .backg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    min-width: 100%;
+    min-height: 100%;
+    background-size: cover;
+    background: url(common_actionbar_android.png) no-repeat fixed center center;
+  }
 }
+
+

@@ -1,0 +1,63 @@
+<div class="order-grid row-fluid clearfix">
+    <div class="order-grid-header" >
+        <p>{{filterBy}} <span>({{totalItems}})</span>
+    </div>
+    <div class="col-lg-12 clearfix">
+        <div ng-if="ordersData" class="col-lg-4 col-md-6 order-grid-element" ng-repeat="orderData in ordersDataSliced">
+            <div class="panel panel-default" ng-click="openOrder(orderData.id_order)">
+                <div class="panel-body">
+                    <div class="col-lg-12">
+                        <div class="order-grid-title">
+                            <h3 class="order-grid-order"> ID: #{{orderData.id_order}}</h3>
+                            <h3 class="order-grid-status {{orderData.state_class}}" >{{orderData.state_name}}<img src="../../assets/weatf_small_{{orderData.state_class}}.svg" height="29px"></h3>
+                        </div>
+                        <div class="order-grid-text">
+                            <p class="order-grid-strong">{{orderData.address}}</p>
+                            <p>{{orderData.zipcode}} {{orderData.city}}</p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-12 clearfix">
+        <div class="col-lg-3 col-md-3 col-sm-12 btn-mostrar">
+            <p class="input-group">
+                <input title="Date Start" type="text" name="date_start"
+                       class="form-control" is-open="dateStart.opened"
+                       ng-model="dateStart.date" popup-placement="top"
+                       uib-datepicker-popup="{{dateStart.format}}"
+                       datepicker-options="dateStart.dateOptions"
+                       placeholder="Date Start"/>
+                <span class="input-group-btn">
+                    <button type="button" class="btn btn-success" ng-click="openDatepicker('dateStart')"><i class="fa fa-calendar"></i></button>
+                </span>
+            </p>
+        </div>
+
+        <div class="col-lg-2 col-md-2 btn-mostrar btn-mostrar">
+            <button class="btn btn-danger btn-block" ng-click="mostrar()"> Mostrar</button>
+        </div>
+
+        <div class="col-lg-4 col-md-7 col-lg-push-3" ng-show="totalItems>numPerPage">
+            <div class="pull-right stores-pagination">
+                <ul uib-pagination direction-links="true"
+                    previous-text="&lsaquo;" next-text="&rsaquo;"
+                    total-items="totalItems"
+                    items-per-page="numPerPage" max-size="4"
+                    boundary-link-numbers="true" rotate="false"
+                    ng-model="currentPage" ng-change="pageChanged()">
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div ng-if="ordersData==false" class="col-lg-12">
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <i>No hay información de esos pedidos.</i>
+
+            </div>
+        </div>
+    </div>
+</div>

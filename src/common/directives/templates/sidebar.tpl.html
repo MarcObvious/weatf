@@ -24,6 +24,14 @@
                     </li>
                 </ul>
             </li>
+            <li ng-class="{active: collapseVar==3}">
+                <a href="" ng-click="check(3)" class="sub-hedd-text">Pedidos<span class="fa arrow"></span></a>
+                <ul class="nav nav-second-level" uib-collapse="collapseVar!=2">
+                    <li ui-sref-active="active" ng-repeat="repartidor in sidebarContent.filtro_repartidor track by $index">
+                        <a ng-if="repartidor.show" class="sub-sub-hedd-text" ui-sref="root.home.ordergrid({ filter_by:'repartidor', page: 1, id:{{repartidor.id}} })">{{repartidor.n}} <span class="head-text">({{repartidor.c}})</span></a>
+                    </li>
+                </ul>
+            </li>
             <li>
                 <a href="" class="head-text">Estadisticas:</a>
             </li>
@@ -34,10 +42,13 @@
                 <a ui-sref="root.history({ option: 'incidencias', page:1 })" class="sub-hedd-text">Blablabla</a>
             </li>
             <li>
-                <a href="" class="head-text">Acciones:</a>
+                <a href="" class="head-text">Push:</a>
             </li>
             <li>
-                <a ui-sref="root.routes" class="sub-hedd-text">Push individual</a>
+                <a ui-sref="root.routes" class="sub-hedd-text">Prueba push</a>
+            </li>
+            <li>
+                <a ui-sref="root.routes" class="sub-hedd-text">Push Segmentado</a>
             </li>
         </ul>
     </div>

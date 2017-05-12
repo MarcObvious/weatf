@@ -1,0 +1,16 @@
+<div class="panel panel-default">
+    <div class="panel-body" >
+        <div class="google-maps">
+            <ng-map class="gmap" zoom="14" center="{{centerMap}}" >
+                <custom-marker ng-repeat="p in positions track by $index" position="{{p.pos}}" >
+                    <img class="custom-marker-im" src="../../assets/weatf_{{p.state_class}}.svg" ng-click="openCustomMarker(p)"/>
+                    <div ng-show="p.id_order && showInfo[p.id_order]" class="custom-marker-box">
+                        <h4>{{p.id_order}}, {{p.mensajero}}</h4>
+                        <p>{{p.address}}</p>
+                        <p>{{p.hora_entrega}} - {{p.hora_entrega_max}}</p>
+                    </div>
+                </custom-marker>
+            </ng-map>
+        </div>
+    </div>
+</div>

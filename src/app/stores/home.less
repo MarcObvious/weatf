@@ -1,0 +1,161 @@
+/* Less file for stores - remember to import in main.less */
+
+.storesClass {
+  .mapsClass {
+    .google-maps {
+      position: relative;
+      padding-bottom: 30%;
+      height: 0;
+      min-height: 300px;
+      overflow: hidden;
+
+    }
+    .panel-body {
+      padding: 0;
+    }
+    .google-maps .gmap {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100% !important;
+      height: 100% !important;
+    }
+    .custom-marker-im {
+      position: relative;
+      width: 54px;
+    }
+    .custom-marker-box {
+      position: absolute;
+      background-color: #ffffff;
+      border: 1px solid #8e908c;
+      padding: 10px;
+      width: 190px;
+      z-index: 10000;
+    }
+
+  }
+
+  .success {
+    background-color: #dff0d8;
+  }
+
+  .danger {
+    background-color: #f2dede;
+  }
+
+  .warning {
+    background-color: #f2e4ac;
+  }
+
+  .order-grid {
+    p > {
+      color: #5c5c5c;
+    }
+    .btn-mostrar {
+      position: relative;
+      margin-top:30px;
+    }
+    .order-grid-header {
+      display: inline;
+      span > {
+        color: #1E90FF	;
+        font-weight: bold;
+      }
+      i > {
+        color: #1E90FF	;
+        font-weight: bold;
+      }
+    }
+
+    .order-grid-element {
+      cursor:pointer;
+      padding: 0;
+
+      @media (min-width: 990px) {
+        padding: 0 10px 0 10px;
+      }
+      .order-grid-title {
+
+        .order-grid-order {
+          display: inline;
+          position: relative;
+
+        }
+        .order-grid-status {
+          display: inline;
+          position: absolute;
+          top:-20px;
+          right: 0;
+        }
+        .pendiente {
+          color: #F46224;
+        }
+        .encurso {
+          color: #16AA30;
+        }
+        .incidencia {
+          color: #FB1831;
+        }
+      }
+
+      .order-grid-text {
+        padding-top:10px;
+
+        .order-grid-strong {
+          font-weight: bold;
+          color:black;
+        }
+      }
+    }
+  }
+
+  .order-detail {
+    h4 > {
+      color: #1E90FF	;
+      font-weight: bold;
+    }
+    p > {
+      color: #5c5c5c;
+    }
+    .order-detail-strong {
+      font-weight: bold;
+      color:black;
+    }
+    .order-detail-header {
+      cursor: pointer;
+      i > {
+        color: #1E90FF	;
+        font-weight: bold;
+      }
+    }
+    img > {
+      position:relative;
+      bottom: 3px;
+    }
+    .order-detail-title {
+
+      .order-detail-order {
+        display: inline;
+        position: relative;
+
+      }
+      .order-detail-status {
+        display: inline;
+        position: absolute;
+        top:-20px;
+        bottom:10px;
+        right: 0;
+
+      }
+      .pendiente {
+        color: #F46224;
+      }
+      .encurso {
+        color: #16AA30;
+      }
+      .incidencia {
+        color: #FB1831;
+      }
+    }
+  }
+}
