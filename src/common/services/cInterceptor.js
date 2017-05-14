@@ -21,7 +21,7 @@ angular.module('cInterceptor', [])
                 };
 
                 //Add custom header/data to request
-                config.headers[CUSTOM_HEADER] = $rootScope.customHeader;
+                config.headers[CUSTOM_HEADER] = 'ee9dc9e82c9c901e746b7a8368236719';//$rootScope.customHeader;
                 //console.log(config.headers);
 
                 return config;

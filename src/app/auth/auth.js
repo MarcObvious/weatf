@@ -7,10 +7,11 @@
                     parent: 'root',
                     resolve: {
                         autentica: (['globalService',  function (globalService) {
-                            console.log('authservice::::');
-                            console.log(globalService.getAuthToken());
+                            console.log('AUTH!?');
+                            globalService.getAuthToken().then(function (authtoken) {
+                                console.log(authtoken);
+                            });
                             return true;
-                            //return globalService.removeStorage(CUSTOM_HEADER);
                         }])
 
                     },
@@ -47,8 +48,9 @@
                     $scope.selectedMenu = 'home';
                     $scope.date = new Date();
                     $scope.login = {};
-                    authService.autentica().then(function (data) {
-                        $scope.logged = data;
+                    $scope.logged = false;
+                    authService.autentica().then(function(logged){
+                        $scope.logged = logged;
                         $rootScope.$emit('logged.loggedChange', {logged: $scope.logged});
                     });
 
@@ -66,7 +68,7 @@
                         if(data === true) {
                             $scope.logged = true;
                             $rootScope.$emit('logged.loggedChange', {logged: true});
-                            $state.go('root.home.ordergrid');
+                            $state.go('root.locals.localgrid');
                             return true;
                         }
                         else {

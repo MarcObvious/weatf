@@ -23,24 +23,27 @@ angular.module('globalService', [])
                         }
                     });
                 },
-                getAuthToken: function(){
+                getAuthToken: function() {
                     //sessionStorage.setItem(CUSTOM_HEADER, '');
-                    var authToken = sessionStorage.getItem(CUSTOM_HEADER);
-                    console.log('AUTHTOKEN!::::');
-                    console.log(authToken);
-                    if(authToken) {
-                        return authToken;
-                    }
-                    else {
-                        this.api('init').save({}, {}, function (data) {
-                            console.log(data);
-                            authToken = data.data.userinfo.authtoken;
-                            if(authToken) {
-                                sessionStorage.setItem(CUSTOM_HEADER, authToken);
-                            }
-                            return authToken;
-                        });
-                    }
+                    var def = $q.defer();
+                    var _this = this;
+                    this.getStorage(CUSTOM_HEADER).then(function(authToken){
+                        if (!authToken || authToken === 'no_token'){
+                            _this.api('init').save({}, {}, function (data) {
+                                var authToken = data.data.userinfo.authtoken;
+                                if(authToken) {
+                                    _this.setStorage(CUSTOM_HEADER, authToken);
+                                    sessionStorage.setItem(CUSTOM_HEADER, authToken);
+                                }
+                                def.resolve(authToken);
+                            });
+                        }
+                        else {
+                            sessionStorage.setItem(CUSTOM_HEADER, authToken);
+                            def.resolve(authToken);
+                        }
+                    });
+                    return def.promise;
                 },
                 getAction: function () {
                     //Service action with promise resolve (then)
@@ -94,63 +97,91 @@ angular.module('globalService', [])
                 },
                 getSideBarContent: function () {
                     var def = $q.defer();
-
-                    var cpedidos = 0;
-                    var estados = {
-                        filtro_estado: [
-                            {n: 'En reparto', c: 0, id: 1, show: false},
-                            {n: 'Pendiente', c: 0, id: 2, show: true},
-                            {n: 'Entregado', c: 0, id: 3, show: true},
-                            {n: 'Incidéncias', c: 0, id: 4, show:true}],
-                        filtro_repartidor: []
+                    var filters = {
+                        organizer: {locals:[],users:[],orders:[]}
                     };
-                    this.api('ordersfront').get({}, {}, function (data) {
+                    var locals_count = 0, users_count = 0, orders_count = 0;
 
-                        if(data.data) {
-                            cpedidos = data.results;
-                            angular.forEach(data.data, function(order) {
-                                var flag = 0;
-                                angular.forEach(estados.filtro_repartidor, function (repartidor, index) {
-                                    if (repartidor.id === order.id_mensajero) {
-                                        ++estados.filtro_repartidor[index].c;
-                                        flag = 1;
-                                    }
-                                });
-
-                                if (flag === 0){
-
-                                    estados.filtro_repartidor.push({n: order.mensajero, c: 1, id: order.id_mensajero, show: parseInt(order.id_mensajero) !== 0});
+                    console.log(filters);
 
 
-                                }
-                                switch (parseInt(order.id_delivery_state)) {
-                                    case 1:
-                                        ++estados.filtro_estado[0].c;
-                                        break;
-                                    case 0:
-                                    case 2:
-                                        ++estados.filtro_estado[1].c;
-                                        break;
-                                    case 3:
-                                        ++estados.filtro_estado[2].c;
-                                        break;
-                                    case 4:
-                                        ++estados.filtro_estado[3].c;
-                                        break;
-                                    default:
-                                        ++estados.filtro_estado[1].c;
-                                        break;
-                                }
 
+                    this.api('getlocals/').save({}, {}, function (data) {
+                        var localsData = data.data;
+                        if(localsData && localsData !== 'no data yet'){
+                            angular.forEach(localsData, function (localData, index) {
+                                filters.organizer.locals.push({n: localData.name, c: 1, id: localData.id, show: true});
+                                ++locals_count;
                             });
                         }
-                        estados.filtro_estado.push({n: 'Todos los pedidos', c: cpedidos, id:0, show:true});
-                        estados.filtro_repartidor.push({n: 'Todos los repartidores', c: cpedidos, id: 0, show:true});
-
-                        def.resolve(estados);
-                    }, function (err) {
-                        def.reject(err);
+                        filters.organizer.locals.push({n: 'All locals', c: locals_count, id: 0, show: true});
                     });
+
+
+                    this.api('getusers/').save({}, {}, function (data) {
+                        var usersData = data.data;
+                        console.log(usersData);
+                        if(usersData && usersData !== 'no data yet'){
+                            angular.forEach(usersData, function (userData, index) {
+                                filters.organizer.users.push({n: userData.name, c: 1, id: userData.id, show: true});
+                                ++users_count;
+                            });
+                        }
+                        filters.organizer.users.push({n: 'All users', c: users_count, id: 0, show:true});
+                    });
+
+
+                    filters.organizer.orders.push({n: 'All orders', c: orders_count, id: 0, show:true});
+
+                    /*
+                     this.api('getlocals').get({}, {}, function (data) {
+
+                     if(data.data) {
+                     cpedidos = data.results;
+                     angular.forEach(data.data, function(order) {
+                     var flag = 0;
+                     angular.forEach(estados.filtro_repartidor, function (repartidor, index) {
+                     if (repartidor.id === order.id_mensajero) {
+                     ++estados.filtro_repartidor[index].c;
+                     flag = 1;
+                     }
+                     });
+
+                     if (flag === 0){
+
+                     estados.filtro_repartidor.push({n: order.mensajero, c: 1, id: order.id_mensajero, show: parseInt(order.id_mensajero) !== 0});
+
+
+                     }
+                     switch (parseInt(order.id_delivery_state)) {
+                     case 1:
+                     ++estados.filtro_estado[0].c;
+                     break;
+                     case 0:
+                     case 2:
+                     ++estados.filtro_estado[1].c;
+                     break;
+                     case 3:
+                     ++estados.filtro_estado[2].c;
+                     break;
+                     case 4:
+                     ++estados.filtro_estado[3].c;
+                     break;
+                     default:
+                     ++estados.filtro_estado[1].c;
+                     break;
+                     }
+
+                     });
+                     }
+                     estados.filtro_estado.push({n: 'Todos los pedidos', c: cpedidos, id:0, show:true});
+                     estados.filtro_repartidor.push({n: 'Todos los repartidores', c: cpedidos, id: 0, show:true});
+
+                     def.resolve(estados);
+                     }, function (err) {
+                     def.reject(err);
+                     });*/
+                    def.resolve(filters);
                     return def.promise;
                 }
 

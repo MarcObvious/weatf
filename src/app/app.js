@@ -41,7 +41,7 @@
 
     app.controller('AppController', ['$scope', '$log','geolocationService', function ($scope, $log, geolocationService) {
         $log.info('App:: Starting AppController');
-        $log.info('App::Geolocation::' + geolocationService.getNearestCity());
+        //$log.info('App::Geolocation::' + geolocationService.getNearestCity());
     }]);
 
     app.controller('FrontController', ['$scope', '$log', function ($scope, $log) {
@@ -57,10 +57,13 @@
     'ngAnimate',
     'globalService',
     'geolocationService',
-    'weatf.home',
+    'weatf.locals',
     'weatf.history',
-    'weatf.routes',
     'weatf.auth',
+    'weatf.notifier',
+    'weatf.scheduler',
+    'weatf.simplepush',
+    'weatf.segment',
     'LocalStorageModule',
     'ui.bootstrap',
     'templates-app',

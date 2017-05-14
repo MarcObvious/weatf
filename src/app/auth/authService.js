@@ -1,6 +1,8 @@
 angular.module('authService', [])
     .factory('authService', ['$resource', '$q', '$log', 'globalService','$state',
         function ($resource, $q, $log, globalService, $state) {
+            var _user_data = {};
+            var _logged = false;
             return {
                 api: function (extra_route) {
                     if (!extra_route) {
@@ -31,40 +33,29 @@ angular.module('authService', [])
                 },
                 autentica: function () {
                     var def = $q.defer();
-                    globalService.getStorage(CUSTOM_HEADER).then(function (data) {
-                        if (data == null || data == "no-token") {
-                            globalService.setStorage(CUSTOM_HEADER, "no-token");
-                            $state.go('root.auth');
-                            def.resolve(false);
-
-                        }
-                        else {
+                    globalService.getStorage(CUSTOM_HEADER).then(function(authToken) {
+                        if(authToken!== 'no_token' && _logged) {
                             def.resolve(true);
                         }
-                    },function(err){
-                        def.resolve(false);
+                        else {
+                            $state.go('root.auth');
+                            def.reject();
+                        }
                     });
                     return def.promise;
                 },
                 submitLogin: function (username,password) {
                     var def = $q.defer();
-                   // globalService.removeStorage(CUSTOM_HEADER);
-                    globalService.removeStorage('user_data');
+                    // globalService.removeStorage(CUSTOM_HEADER);
+                   // globalService.removeStorage('user_data');
 
                     this.api().save({},{email:username, password:password}, function (data){
                         console.log(data);
+                        _user_data = data;
+                        _logged = true;
                         def.resolve(true);
                     });
 
-                    /*if (username === 'Admin' && password === '1234') {
-                        // globalService.setStorage('user_data', {id: data.data.id, username: data.data.username, email: data.data.email, level: data.data.level});
-                        globalService.setStorage(CUSTOM_HEADER, API_KEY);
-
-                        def.resolve(true);
-                    }*/
-                    /*else {
-                        def.reject(false);
-                    }*/
                     return def.promise;
                 },
                 submitLogout: function () {

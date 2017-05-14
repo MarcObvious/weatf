@@ -1,0 +1,112 @@
+/* Less file for notifier - remember to import in main.less */
+
+.notifierClass {
+  
+  .notifier-grid {
+    p > {
+      color: #5c5c5c;
+    }
+    .notifier-grid-header {
+      position: relative;
+      padding-left: 15px;
+      cursor: pointer;
+      span > {
+        color: #1E90FF	;
+        font-weight: bold;
+      }
+    }
+    .btn-mostrar {
+      position: relative;
+      margin-top:30px;
+    }
+    .notifier-grid-element {
+      cursor:pointer;
+      .panel-body {
+        padding: 0 15px 0 15px;
+      }
+
+      .notifier-grid-title {
+
+        .notifier-grid-notifier {
+          display: inline;
+          position: relative;
+
+        }
+        .notifier-grid-status {
+          display: inline;
+          position: absolute;
+          top:-20px;
+          right: 0;
+        }
+        .pendiente {
+          color: #F46224;
+        }
+        .encurso {
+          color: #16AA30;
+        }
+        .incidencia {
+          color: #FB1831;
+        }
+      }
+
+      .notifier-grid-text {
+        //padding-top:10px;
+
+        .notifier-grid-strong {
+          font-weight: bold;
+          color:black;
+        }
+      }
+    }
+  }
+
+  .notifier-detail {
+    h4 > {
+      color: #1E90FF	;
+      font-weight: bold;
+    }
+    p > {
+      color: #5c5c5c;
+    }
+    .notifier-detail-strong {
+      font-weight: bold;
+      color:black;
+    }
+    .notifier-detail-header {
+      cursor: pointer;
+      i > {
+        color: #1E90FF	;
+        font-weight: bold;
+      }
+    }
+    img > {
+      position:relative;
+      bottom: 3px;
+    }
+    .notifier-detail-title {
+
+      .notifier-detail-notifier {
+        display: inline;
+        position: relative;
+
+      }
+      .notifier-detail-status {
+        display: inline;
+        position: absolute;
+        top:-20px;
+        bottom:10px;
+        right: 0;
+
+      }
+      .pendiente {
+        color: #F46224;
+      }
+      .encurso {
+        color: #16AA30;
+      }
+      .incidencia {
+        color: #FB1831;
+      }
+    }
+  }
+}

@@ -41,10 +41,10 @@
  */
 
 
-@import '../app/home/home.less';
+@import '../app/locals/locals.less';
 @import '../app/history/history.less';
 @import '../app/auth/auth.less';
-@import '../app/routes/routes.less';
+@import '../app/notifier/notifier.less';
 
 
 .container.menu {
@@ -58,7 +58,7 @@
 
 /* Space out content a bit */
 body {
-   // padding-bottom: 20px;
+    // padding-bottom: 20px;
 }
 
 /* Everything but the jumbotron gets side spacing for mobile first views */
@@ -157,15 +157,15 @@ body {
 
 #page-wrapper {
     padding: 0 15px;
-   // min-height: 568px;
-   // background-color: #fff;
+    // min-height: 568px;
+    // background-color: #fff;
 }
 
 @media(min-width:768px) {
     #page-wrapper {
         position: inherit;
         margin: 0 0 0 250px;
-      //  padding: 0 30px;
+        //  padding: 0 30px;
         border-left: 1px solid #e7e7e7;
     }
 }
@@ -355,6 +355,22 @@ body {
 
 .btn-danger.btn-outline {
     color: #d9534f;
+}
+.logo-header {
+    top: 0;
+    left: 0;
+    z-index: -10;
+    width:100%;
+    height:100%;
+    padding: 10px 0 20px 0;
+    background-size: cover;
+    background: rgb(63, 128, 63); /* For browsers that do not support gradients */
+    background: -webkit-linear-gradient(left, rgb(181, 212, 56) , rgb(63, 128, 63)); /* For Safari 5.1 to 6.0 */
+    background: -o-linear-gradient(right, rgb(181, 212, 56) , rgb(63, 128, 63)); /* For Opera 11.1 to 12.0 */
+    background: -moz-linear-gradient(right, rgb(181, 212, 56) , rgb(63, 128, 63)); /* For Firefox 3.6 to 15 */
+    background: linear-gradient(to right, rgb(181, 212, 56) , rgb(63, 128, 63)); /* Standard syntax */
+
+
 }
 
 .btn-primary.btn-outline:hover,

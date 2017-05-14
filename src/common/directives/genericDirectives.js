@@ -79,14 +79,28 @@ angular.module('genericDirectives', [])
                         $scope.multiCollapseVar = 0;
 
                         $scope.check(1);
-                        globalService.getSideBarContent().then(function(content){
-                            $scope.sidebarContent = content;
+
+                        $scope.logged = false;
+                        $scope.sidebarContent = {};
+                        authService.autentica().then(function(logged){
+                            $scope.logged = logged;
+                            if ($scope.logged) {
+                                globalService.getSideBarContent().then(function(content){
+                                    $scope.sidebarContent = content;
+                                });
+                            }
                         });
-                        $scope.logged = authService.autentica();
+
+
                     };
 
                     $rootScope.$on('logged.loggedChange', function(event, aValues) {
                         $scope.logged = aValues.logged;
+                        if ($scope.logged) {
+                            globalService.getSideBarContent().then(function(content){
+                                $scope.sidebarContent = content;
+                            });
+                        }
                     });
 
                     $scope.check = function(x){
@@ -127,29 +141,29 @@ angular.module('genericDirectives', [])
 
     .directive('maps', [function() {
         return {
-            templateUrl:'home/maps.tpl.html',
+            templateUrl:'locals/maps.tpl.html',
             restrict: 'E',
             replace: true,
             controller: ('mapsController', ['$scope', '$log', '$rootScope', 'geolocationService',
                 function($scope, $log, $rootScope, geolocationService) {
 
                     var init = function() {
-                        $scope.id_order = null;
+                        $scope.id_local = null;
                         $log.debug('Maps::::mapsController::');
                         $scope.centerMap = geolocationService.getNearestCity();
                         $scope.showInfo = [];
                     };
                     $scope.openCustomMarker = function(order){
                         angular.forEach($scope.positions, function (pos) {
-                            $scope.showInfo[pos.id_order] = false;
+                            $scope.showInfo[pos.id_local] = false;
                         });
-                        if(angular.isDefined(order.id_order) && $scope.id_order !== order.id_order) {
-                            $scope.showInfo[order.id_order] = !$scope.showInfo[order.id_order];
-                            $scope.id_order = order.id_order;
+                        if(angular.isDefined(order.id_local) && $scope.id !== order.id_local) {
+                            $scope.showInfo[order.id_local] = !$scope.showInfo[order.id_local];
+                            $scope.id_local = order.id_local;
                             //$scope.centerMap = order.pos;
                         }
                         else {
-                            $scope.id_order = null;
+                            $scope.id_local = null;
                         }
 
                     };
@@ -163,7 +177,7 @@ angular.module('genericDirectives', [])
                         }
                         $scope.positions = aValues.positions;
                         angular.forEach($scope.positions, function (pos) {
-                            $scope.showInfo[pos.id_order] = false;
+                            $scope.showInfo[pos.id_local] = false;
                         });
 
                     });

@@ -1,0 +1,72 @@
+<div class="local-detail row-fluid clearfix">
+    <div back class="local-detail-header" >
+        <p><img src="../../assets/mbd_back.svg" width="29px"> Local details</p>
+    </div>
+    <div class="panel panel-default">
+        <div class="panel-body">
+            <div ng-if="local" class="col-lg-12">
+                <div class="local-detail-title">
+                    <h3 class="local-detail-local"> {{local.name}}</h3>
+                </div>
+                <hr>
+                <div class="col-lg-6">
+                    <p><span>Dirección: </span>{{local.direction}}</p>
+                    <p><span>Desde: </span>{{local.from_hour}}</p>
+                    <p><span>Id: </span>{{local.id}}</p>
+                    <p><span>latitud: </span>{{local.lat}}</p>
+                    <p><span>longitud: </span>{{local.lng}}</p>
+                    <p><span>Nombre: </span>{{local.name}}</p>
+                    <p><span>Hora de recogida: </span>{{local.pickup_time}}</p>
+                    <p><span>Codigo postal: </span>{{local.postcode}}</p>
+                    <p><span>Actualizado: </span>{{local.updated_at}}</p>
+                    <p><span >Usuari: </span>{{local.user_id}}</p>
+                </div>
+                <div class="col-lg-6">
+                    <img src="{{local.picture}}" width="100%" height="100%">
+                </div>
+                <div class="col-lg-6">
+                    &nbsp;
+                    <button class="btn btn-danger btn-block" ng-click="editar()"> Editar</button>
+                </div>
+
+                <div ng-if="local===undefined" class="col-lg-12">
+                    <div class="local-detail-header">
+                        <i>No hay información para ese pedido</i>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <div ng-if="local.products" class="panel panel-default">
+        <div class="panel-body">
+            <div class="col-lg-12">
+                <div class="local-detail-title">
+                    <h3 class="local-detail-local"> Productos local #{{local.id}}</h3>
+                </div>
+                <hr>
+                <div ng-repeat="(key,product) in local.products">
+                    <div class="col-lg-3">
+                        <h4>{{product.name}}</h4>
+                        <img src="{{product.picture}}" width="100%" height="100%">
+
+                    </div>
+                    <div class="col-lg-3">
+                        <h4>Información</h4>
+                        <p><span>Precio inicial: </span>{{product.previous_price}}€</p>
+                        <p><span>Precio final: </span>{{product.final_price}}€</p>
+                        <p><span>IVA: </span>{{product.tax_rate}}%</p>
+                        <p><span>Tipo:</span> {{product.type}}</p>
+                        <p><span>Stock:</span> {{product.stock}}</p>
+                    </div>
+                    <div class="col-lg-6">
+                        <h4>Descripción</h4>
+                        <p>{{product.description}}</p>
+                    </div>
+                    <hr ng-if="key < local.products.length-1" class="col-lg-11">
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
