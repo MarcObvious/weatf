@@ -228,8 +228,8 @@ angular.module('genericDirectives', [])
             restrict: 'E',
             replace: true,
             scope: {},
-            controller:  ('sidebarLocalsController', ['$scope', 'globalService','$state',
-                function($scope, globalService, $state) {
+            controller:  ('sidebarLocalsController', ['$scope', 'globalService','$state','$uibModal',
+                function($scope, globalService, $state, $uibModal) {
 
                     var init = function(){
                         $scope.locals = [];
@@ -244,16 +244,35 @@ angular.module('genericDirectives', [])
                     };
 
                     $scope.$watch('localSelected', function(id, oldValue) {
+                        console.log(id);
                         if (id === oldValue) {
                             return false;
                         }
                         else if (id === 'All'){
                             $state.go('root.locals.localgrid',{page: 1});
                         }
+                        else if (parseInt(id) === 0){
+                            $scope.newLocal();
+                        }
                         else {
                             $state.go('root.locals.localdetail',{id_local: id});
                         }
                     });
+
+                    $scope.newLocal = function () {
+                        $scope.modalInstance = $uibModal.open({
+                            templateUrl: 'locals/localModalEdit.tpl.html',
+                            size: 'lg',
+                            controller: 'localModalEditController',
+                            resolve: {localData : {newlocal: true}},
+                            scope: $scope
+                        });
+
+                        $scope.modalInstance.result.then(function(modalResult){
+                        },function(){
+
+                        });
+                    };
 
                     init();
                 }])

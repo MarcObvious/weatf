@@ -1,6 +1,7 @@
 <div>
     <div class="modal-header">
-        <h3 class="modal-title">Edición del local {{local.id}}</h3>
+        <h3 class="modal-title" ng-if="local.newlocal">Alta nuevo local</h3>
+        <h3 class="modal-title" ng-if="!local.newlocal">Edición del local {{local.id}}</h3>
     </div>
     <div class="modal-body clearfix">
         <div class="col-md-12">
@@ -35,7 +36,7 @@
                 </div>
                 <div class="col-md-6">
                     <label>Imagen:</label>
-                    <input disabled class="form-control" placeholder="Imagen" ng-model="local.picture">
+                    <input class="form-control" placeholder="Imagen url" ng-model="local.picture">
                 </div>
             </div>
         </div>
