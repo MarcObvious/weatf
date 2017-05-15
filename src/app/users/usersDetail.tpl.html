@@ -1,38 +1,38 @@
-<div class="local-detail row-fluid clearfix">
-    <div back class="local-detail-header" >
-        <p><img src="../../assets/mbd_back.svg" width="29px"> Local details</p>
+<div class="user-detail row-fluid clearfix">
+    <div back class="user-detail-header" >
+        <p><img src="../../assets/mbd_back.svg" width="29px"> user details</p>
     </div>
     <div class="panel panel-default">
         <div class="panel-body">
-            <div ng-if="local" class="col-lg-12">
-                <div class="local-detail-title">
-                    <h3 class="local-detail-local"> {{local.name}}</h3>
+            <div ng-if="user" class="col-lg-12">
+                <div class="user-detail-title">
+                    <h3 class="user-detail-user"> {{user.name}}</h3>
                 </div>
                 <hr>
                 <div class="col-lg-6">
-                    <p><span>Id: </span>{{local.id}}</p>
-                    <p><span>Dirección: </span>{{local.direction}}</p>
-                    <p><span>Desde: </span>{{local.from_hour}}</p>
-                    <p><span>Latitud: </span>{{local.lat}}</p>
-                    <p><span>Longitud: </span>{{local.lng}}</p>
-                    <p><span>Nombre: </span>{{local.name}}</p>
-                    <p><span>Hora de recogida: </span>{{local.pickup_time}}</p>
-                    <p><span>Codigo postal: </span>{{local.postcode}}</p>
-                    <p><span>Actualizado: </span>{{local.updated_at}}</p>
-                    <p><span >Usuario: </span>{{local.user_id}}</p>
+                    <p><span>Id: </span>{{user.id}}</p>
+                    <p><span>Dirección: </span>{{user.direction}}</p>
+                    <p><span>Desde: </span>{{user.from_hour}}</p>
+                    <p><span>Latitud: </span>{{user.lat}}</p>
+                    <p><span>Longitud: </span>{{user.lng}}</p>
+                    <p><span>Nombre: </span>{{user.name}}</p>
+                    <p><span>Hora de recogida: </span>{{user.pickup_time}}</p>
+                    <p><span>Codigo postal: </span>{{user.postcode}}</p>
+                    <p><span>Actualizado: </span>{{user.updated_at}}</p>
+                    <p><span >Usuario: </span>{{user.user_id}}</p>
                 </div>
                 <div class="col-lg-6">
-                    <img src="{{local.picture}}" width="100%" height="100%">
+                    <img src="{{user.picture}}" width="100%" height="100%">
                 </div>
                 <div class="col-lg-12" style="padding: 0">
                     <div class="col-lg-3 col-lg-push-9">
-                        <button class="btn btn-danger btn-block" ng-click="editLocal(local)"> Editar</button>
+                        <button class="btn btn-danger btn-block" ng-click="edituser(user)"> Editar</button>
                         &nbsp;
                     </div>
                 </div>
 
-                <div ng-if="local===undefined" class="col-lg-12">
-                    <div class="local-detail-header">
+                <div ng-if="user===undefined" class="col-lg-12">
+                    <div class="user-detail-header">
                         <i>No hay información para ese pedido</i>
                     </div>
                 </div>
@@ -40,14 +40,14 @@
             </div>
         </div>
     </div>
-    <div ng-if="local.products" class="panel panel-default">
+    <div ng-if="user.products" class="panel panel-default">
         <div class="panel-body">
             <div class="col-lg-12">
-                <div class="local-detail-title">
-                    <h3 class="local-detail-local"> Productos local #{{local.id}}</h3>
+                <div class="user-detail-title">
+                    <h3 class="user-detail-user"> Productos user #{{user.id}}</h3>
                 </div>
                 <hr>
-                <div ng-repeat="(key,product) in local.products">
+                <div ng-repeat="(key,product) in user.products">
                     <div class="col-lg-3">
                         <h4>{{product.name}}</h4>
                         <img src="{{product.picture}}" width="100%" height="100%">
@@ -73,7 +73,7 @@
                             &nbsp;
                         </div>
                     </div>
-                    <hr ng-if="key < local.products.length-1" class="col-lg-11">
+                    <hr ng-if="key < user.products.length-1" class="col-lg-11">
                 </div>
 
             </div>

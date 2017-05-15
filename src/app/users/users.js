@@ -2,7 +2,7 @@
     app.config(['$stateProvider',
         function ($stateProvider) {
             $stateProvider
-                .state('root.locals', {
+                .state('root.users', {
                     url: '',
                     parent: 'root',
                     resolve: {
@@ -15,25 +15,25 @@
                     abstract: true,
                     views: {
                         "container@": {
-                            templateUrl: 'locals/locals.tpl.html'
+                            templateUrl: 'users/users.tpl.html'
                         }
                     },
                     data: {
-                        pageTitle: 'locals'
+                        pageTitle: 'users'
                     }
                 })
-                .state('root.locals.localgrid', {
+                .state('root.users.usergrid', {
                     url: '/?:{page}:{filter_by}:{date}/:{id}',
-                    parent: 'root.locals',
+                    parent: 'root.users',
                     resolve: {
-                        localsData: (['localsService', '$q', '$log','$stateParams',
-                            function (localsService, $q, $log, $stateParams) {
+                        usersData: (['usersService', '$q', '$log','$stateParams',
+                            function (usersService, $q, $log, $stateParams) {
                                 var def = $q.defer();
 
-                                $log.debug('locals::::ResolveLocalsGrid');
+                                $log.debug('users::::ResolveusersGrid');
 
-                                localsService.getLocals().then(function(data){
-                                    def.resolve({locals: data, filterName:'All locals:'});
+                                usersService.getusers().then(function(data){
+                                    def.resolve({users: data, filterName:'All users:'});
                                 }, function (err) {
                                     def.reject(err);
                                 });
@@ -41,27 +41,27 @@
                             }])
                     },
                     views: {
-                        "subcontainer@root.locals": {
-                            controller: 'localGridController',
-                            templateUrl: 'locals/localGrid.tpl.html'
+                        "subcontainer@root.users": {
+                            controller: 'userGridController',
+                            templateUrl: 'users/userGrid.tpl.html'
                         }
                     },
                     data: {
                         pageTitle: 'Orders'
                     }
                 })
-                .state('root.locals.localdetail', {
-                    url: '/localDetail/{id_local}',
-                    parent: 'root.locals',
+                .state('root.users.userdetail', {
+                    url: '/userDetail/{id_user}',
+                    parent: 'root.users',
                     resolve: {
-                        localData: (['localsService', '$q', '$log','$stateParams',
-                            function (localsService, $q, $log, $stateParams) {
+                        userData: (['usersService', '$q', '$log','$stateParams',
+                            function (usersService, $q, $log, $stateParams) {
                                 var def = $q.defer();
-                                var id = $stateParams.id_local;
-                                $log.debug('locals::::ResolveOrderDetail::'+id);
+                                var id = $stateParams.id_user;
+                                $log.debug('users::::ResolveOrderDetail::'+id);
 
-                                localsService.getLocal({local_id: id}).then(function(data){
-                                    def.resolve({local: data, filterName:'Local: ' + id});
+                                usersService.getuser({user_id: id}).then(function(data){
+                                    def.resolve({user: data, filterName:'user: ' + id});
                                 }, function (err) {
                                     def.reject(err);
                                 });
@@ -69,49 +69,49 @@
                             }])
                     },
                     views: {
-                        "subcontainer@root.locals": {
-                            controller: 'localDetailController',
-                            templateUrl: 'locals/localDetail.tpl.html'
+                        "subcontainer@root.users": {
+                            controller: 'userDetailController',
+                            templateUrl: 'users/userDetail.tpl.html'
                         }
                     },
                     data: {
-                        pageTitle: 'LocalDetail'
+                        pageTitle: 'userDetail'
                     }
                 });
         }]);
 
-    app.controller('localGridController', ['$log','$scope','$state','localsData', 'NgMap','$rootScope','$timeout', 'localsService', '$stateParams',
-        function ($log, $scope, $state, localsData, NgMap, $rootScope, $timeout, localsService, $stateParams) {
+    app.controller('userGridController', ['$log','$scope','$state','usersData', 'NgMap','$rootScope','$timeout', 'usersService', '$stateParams',
+        function ($log, $scope, $state, usersData, NgMap, $rootScope, $timeout, usersService, $stateParams) {
 
             var init = function () {
-                $log.info('App:: Starting localsController');
-                $scope.localsData = localsData;
-                console.log(localsData);
+                $log.info('App:: Starting usersController');
+                $scope.usersData = usersData;
+                console.log(usersData);
 
                 $scope.totalItems = 0;
-                $scope.filterBy = localsData.filterName;
-                $scope.locals = [];
+                $scope.filterBy = usersData.filterName;
+                $scope.users = [];
 
-                if (localsData.locals) {
-                    $scope.locals = localsData.locals;
-                    console.log($scope.locals);
+                if (usersData.users) {
+                    $scope.users = usersData.users;
+                    console.log($scope.users);
                     $scope.positions = [];
-                    $scope.totalItems = $scope.locals.length;
+                    $scope.totalItems = $scope.users.length;
 
                     $scope.currentPage = $stateParams.page ? $stateParams.page : 1;
                     $scope.numPerPage = 6;
                     var begin = (($scope.currentPage - 1) * $scope.numPerPage), end = begin + $scope.numPerPage;
-                    $scope.localsSliced = $scope.locals.slice(begin, end);
+                    $scope.usersSliced = $scope.users.slice(begin, end);
 
 
-                    angular.forEach(localsData.locals, function (localData, index) {
-                        if (angular.isDefined(localData.lat) && angular.isDefined(localData.lng)) {
+                    angular.forEach(usersData.users, function (userData, index) {
+                        if (angular.isDefined(userData.lat) && angular.isDefined(userData.lng)) {
                             $scope.positions.push({
-                                pos:[localData.lat, localData.lng],
-                                name: localData.name,
-                                id_local: localData.id,
-                                direction: localData.direction,
-                                pickup_time: localData.pickup_time
+                                pos:[userData.lat, userData.lng],
+                                name: userData.name,
+                                id_user: userData.id,
+                                direction: userData.direction,
+                                pickup_time: userData.pickup_time
                             });
                         }
                     });
@@ -125,43 +125,43 @@
 
             $scope.mostrar = function() {
                 var start =  $scope.dateStart.date.toJSON().substr(0,10);
-                $state.go('root.locals.localgrid', {option: $scope.option, date: start});
+                $state.go('root.users.usergrid', {option: $scope.option, date: start});
             };
 
             $scope.pageChanged = function () {
                 var begin = (($scope.currentPage - 1) * $scope.numPerPage), end = begin + $scope.numPerPage;
-                $scope.localsSliced = $scope.locals.slice(begin, end);
+                $scope.usersSliced = $scope.users.slice(begin, end);
 
-                $state.go('root.locals.localgrid',{page:$scope.currentPage},{notify:false, reload:false, location:'replace', inherit:true});
+                $state.go('root.users.usergrid',{page:$scope.currentPage},{notify:false, reload:false, location:'replace', inherit:true});
             };
 
-            $scope.openLocal = function (id_local) {
-                $state.go('root.locals.localdetail',{id_local: id_local});
+            $scope.openuser = function (id_user) {
+                $state.go('root.users.userdetail',{id_user: id_user});
             };
 
             init();
 
         }]);
 
-    app.controller('localDetailController', ['$log','$scope','$state','localData', '$rootScope','$timeout', 'localsService','$uibModal',
-        function ($log, $scope, $state, localData, $rootScope, $timeout, localsService,$uibModal) {
+    app.controller('userDetailController', ['$log','$scope','$state','userData', '$rootScope','$timeout', 'usersService','$uibModal',
+        function ($log, $scope, $state, userData, $rootScope, $timeout, usersService,$uibModal) {
 
             var init = function() {
-                $scope.local = {};
+                $scope.user = {};
                 var positions = [];
                 var centerMap = [];
-                console.log(localData);
-                if (localData) {
-                    $scope.local = localData.local;
-                    if (angular.isDefined(localData.local.lat) && angular.isDefined(localData.local.lng)) {
+                console.log(userData);
+                if (userData) {
+                    $scope.user = userData.user;
+                    if (angular.isDefined(userData.user.lat) && angular.isDefined(userData.user.lng)) {
                         positions.push({
-                            pos:[localData.local.lat, localData.local.lng],
-                            name: localData.local.name,
-                            id_local: localData.local.id,
-                            direction: localData.local.direction,
-                            pickup_time: localData.local.pickup_time
+                            pos:[userData.user.lat, userData.user.lng],
+                            name: userData.user.name,
+                            id_user: userData.user.id,
+                            direction: userData.user.direction,
+                            pickup_time: userData.user.pickup_time
                         });
-                        centerMap = [localData.local.lat, localData.local.lng];
+                        centerMap = [userData.user.lat, userData.user.lng];
                     }
                 }
 
@@ -170,12 +170,12 @@
                 });
             };
 
-            $scope.editLocal = function (localData) {
+            $scope.edituser = function (userData) {
                 $scope.modalInstance = $uibModal.open({
-                    templateUrl: 'locals/localModalEdit.tpl.html',
+                    templateUrl: 'users/userModalEdit.tpl.html',
                     size: 'lg',
-                    controller: 'localModalEditController',
-                    resolve: {localData : localData},
+                    controller: 'userModalEditController',
+                    resolve: {userData : userData},
                     scope: $scope
                 });
 
@@ -187,7 +187,7 @@
 
             $scope.editProduct = function (productData) {
                 $scope.modalInstance = $uibModal.open({
-                    templateUrl: 'locals/productModalEdit.tpl.html',
+                    templateUrl: 'users/productModalEdit.tpl.html',
                     size: 'lg',
                     controller: 'productModalEditController',
                     resolve: {productData : productData},
@@ -203,10 +203,10 @@
             init();
         }]);
 
-    app.controller('localModalEditController', ['$scope', '$uibModalInstance', '$log','$rootScope','localData',
-        function ($scope, $uibModalInstance, $log, $rootScope,localData) {
+    app.controller('userModalEditController', ['$scope', '$uibModalInstance', '$log','$rootScope','userData',
+        function ($scope, $uibModalInstance, $log, $rootScope, userData) {
             var init = function () {
-                $scope.local = localData;
+                $scope.user = userData;
             };
             $scope.ok = function (model) {
                 $uibModalInstance.close(model);
@@ -236,9 +236,9 @@
         }]);
 
 
-}(angular.module("weatf.locals", [
+}(angular.module("weatf.users", [
     'ui.router',
     'ngAnimate',
-    'localsService',
+    'usersService',
     'authService'
 ])));

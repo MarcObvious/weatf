@@ -1,0 +1,50 @@
+<div>
+    <div class="modal-header">
+        <h3 class="modal-title" ng-if="user.newuser">Alta nuevo usuario</h3>
+        <h3 class="modal-title" ng-if="!user.newuser">Edición del usuario {{user.id}}</h3>
+    </div>
+    <div class="modal-body clearfix">
+        <div class="col-md-12">
+            <div class="form-group">
+                <div class="col-md-6">
+                    <label>Nombre del user</label>
+                    <input class="form-control" placeholder="Nombre del usuario" ng-model="user.name">
+                </div>
+                <div class="col-md-6">
+                    <label>Dirección</label>
+                    <input class="form-control" placeholder="Dirección" ng-model="user.direction">
+                </div>
+                <div class="col-md-6">
+                    <label>Codigo postal:</label>
+                    <input class="form-control" placeholder="CP" ng-model="user.postcode">
+                </div>
+                <div class="col-md-6">
+                    <label>Desde:</label>
+                    <input class="form-control" placeholder="Hora" ng-model="user.from_hour">
+                </div>
+                <div class="col-md-6">
+                    <label>Hora de recogida:</label>
+                    <input class="form-control" placeholder="Hora de recogida" ng-model="user.pickup_time">
+                </div>
+                <div class="col-md-6">
+                    <label>Imagen:</label>
+                    <input disabled class="form-control" placeholder="Imagen" ng-model="user.picture">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <div class="col-md-12">
+            <div class="col-md-6">
+                <button type="button" class="btn btn-danger btn-block" ng-click="cancel()">
+                    Cancelar <i class="fa fa-ban"></i>
+                </button>
+            </div>
+            <div class="col-md-6">
+                <button type="button" class="btn btn-success btn-block" ng-click="ok(user)">
+                    Guardar usuario <i class="fa fa-floppy-o"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

@@ -11,7 +11,7 @@
                 .setPrefix('')
                 .setStorageType('localStorage')
                 .setStorageCookie(7, '/')
-                .setStorageCookieDomain('lweatf.iaproject.net/')
+                .setStorageCookieDomain('.iaproject.net/')
                 .setNotify(true, true);
 
 
@@ -58,6 +58,7 @@
     'globalService',
     'geolocationService',
     'weatf.locals',
+    'weatf.users',
     'weatf.history',
     'weatf.auth',
     'weatf.notifier',

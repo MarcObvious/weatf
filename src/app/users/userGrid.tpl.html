@@ -1,0 +1,45 @@
+<div class="user-grid row-fluid clearfix">
+    <div class="user-grid-header" >
+        <p>{{filterBy}} <span>({{totalItems}})</span>
+    </div>
+    <div class="col-lg-12 clearfix">
+        <div ng-if="users" class="col-lg-4 col-md-6 user-grid-element" ng-repeat="userData in usersSliced">
+            <div class="panel panel-default" ng-click="openuser(userData.id)" >
+                <div class="panel-body clearfix" style="width: 100%">
+                    <div class="col-lg-12" ng-style="{'background-image':'url({{userData.picture}})'}">
+                        <div class="user-grid-title">
+                            <h3 class="user-grid-user"> ID: #{{userData.id}}</h3>
+                        </div>
+                        <div class="user-grid-text">
+                            <p class="user-grid-strong">{{userData.direction}}</p>
+                            <p>{{userData.postcode}}</p>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-12 clearfix">
+        <div class="col-lg-4 col-md-7 col-lg-push-3" ng-show="totalItems>numPerPage">
+            <div class="pull-right users-pagination">
+                <ul uib-pagination direction-links="true"
+                    previous-text="&lsaquo;" next-text="&rsaquo;"
+                    total-items="totalItems"
+                    items-per-page="numPerPage" max-size="4"
+                    boundary-link-numbers="true" rotate="false"
+                    ng-model="currentPage" ng-change="pageChanged()">
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div ng-if="usersData==false" class="col-lg-12">
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <i>No user info.</i>
+
+            </div>
+        </div>
+    </div>
+</div>

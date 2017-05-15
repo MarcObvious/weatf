@@ -4,11 +4,12 @@
         <login-box></login-box>
 
         <ul class="nav in" id="side-menu" ng-show="logged">
-            <sidebar-search></sidebar-search>
+            <sidebar-locals></sidebar-locals>
+
             <li>
                 <a href="" class="head-text">Organizador:</a>
             </li>
-            <li ng-class="{active: collapseVar==1}">
+            <!--<li ng-class="{active: collapseVar==1}">
                 <a href="" ng-click="check(1)" class="sub-hedd-text">Locales<span class="fa arrow"></span></a>
                 <ul class="nav nav-second-level" uib-collapse="collapseVar!=1">
                     <li ui-sref-active="active" ng-repeat="local in sidebarContent.organizer.locals">
@@ -16,13 +17,16 @@
                         <a ng-if="local.show && local.id!=0" class="sub-sub-hedd-text" ui-sref="root.locals.localdetail({id_local:{{local.id}}})">{{local.n}}</a>
                     </li>
                 </ul>
-            </li>
+            </li>-->
             <li ng-class="{active: collapseVar==2}">
                 <a href="" ng-click="check(2)" class="sub-hedd-text">Usuarios<span class="fa arrow"></span></a>
                 <ul class="nav nav-second-level" uib-collapse="collapseVar!=2">
+                    <li ui-sref-active="active">
+                        <a  class="sub-sub-hedd-text" ng-click="newUser()">Nuevo usuario <span class="head-text">(+)</span></a>
+                    </li>
                     <li ui-sref-active="active" ng-repeat="user in sidebarContent.organizer.users track by $index">
-                        <a ng-if="user.show && user.id==0" class="sub-sub-hedd-text" ui-sref="root.locals.localgrid({ page: 1 })">{{user.n}} <span class="head-text">({{user.c}})</span></a>
-                        <a ng-if="user.show && user.id!=0" class="sub-sub-hedd-text" ui-sref="root.locals.locadetail({id:{{user.id}}})">{{user.n}}</a>
+                        <a ng-if="user.show && user.id==0" class="sub-sub-hedd-text" ui-sref="root.users.usergrid({ page: 1 })">{{user.n}} <span class="head-text">({{user.c}})</span></a>
+                        <a ng-if="user.show && user.id!=0" class="sub-sub-hedd-text" ui-sref="root.users.userdetail({id:{{user.id}}})">{{user.n}}</a>
                     </li>
                 </ul>
             </li>
@@ -35,6 +39,7 @@
                     </li>
                 </ul>
             </li>
+            <sidebar-search></sidebar-search>
             <li>
                 <a href="" class="head-text">Estadisticas:</a>
             </li>

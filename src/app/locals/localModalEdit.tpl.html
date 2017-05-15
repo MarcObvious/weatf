@@ -1,0 +1,57 @@
+<div>
+    <div class="modal-header">
+        <h3 class="modal-title">Edición del local {{local.id}}</h3>
+    </div>
+    <div class="modal-body clearfix">
+        <div class="col-md-12">
+            <div class="form-group">
+                <div class="col-md-6">
+                    <label>Nombre del Local</label>
+                    <input class="form-control" placeholder="Nombre del local" ng-model="local.name">
+                </div>
+                <div class="col-md-6">
+                    <label>Dirección</label>
+                    <input class="form-control" placeholder="Dirección" ng-model="local.direction">
+                </div>
+                <div class="col-md-6">
+                    <label>Codigo postal:</label>
+                    <input class="form-control" placeholder="CP" ng-model="local.postcode">
+                </div>
+                <div class="col-md-6">
+                    <label>Latitud</label>
+                    <input class="form-control" placeholder="Latitud" ng-model="local.lat">
+                </div>
+                <div class="col-md-6">
+                    <label>Longitud</label>
+                    <input class="form-control" placeholder="Longitud" ng-model="local.lng">
+                </div>
+                <div class="col-md-6">
+                    <label>Desde:</label>
+                    <input class="form-control" placeholder="Hora" ng-model="local.from_hour">
+                </div>
+                <div class="col-md-6">
+                    <label>Hora de recogida:</label>
+                    <input class="form-control" placeholder="Hora de recogida" ng-model="local.pickup_time">
+                </div>
+                <div class="col-md-6">
+                    <label>Imagen:</label>
+                    <input disabled class="form-control" placeholder="Imagen" ng-model="local.picture">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <div class="col-md-12">
+            <div class="col-md-6">
+                <button type="button" class="btn btn-danger btn-block" ng-click="cancel()">
+                    Cancelar <i class="fa fa-ban"></i>
+                </button>
+            </div>
+            <div class="col-md-6">
+                <button type="button" class="btn btn-success btn-block" ng-click="ok(local)">
+                    Guardar Local <i class="fa fa-floppy-o"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
