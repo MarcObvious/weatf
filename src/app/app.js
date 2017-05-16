@@ -11,7 +11,7 @@
                 .setPrefix('')
                 .setStorageType('localStorage')
                 .setStorageCookie(7, '/')
-                .setStorageCookieDomain('lweatf.iaproject.net/')
+                .setStorageCookieDomain(COOKIE_DOMAIN)
                 .setNotify(true, true);
 
 
