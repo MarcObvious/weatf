@@ -208,6 +208,7 @@
             var init = function () {
                 $scope.user = userData;
                 $scope.user.locals = [];
+                $scope.localSelected = 'none';
                 globalService.getSideBarLocals().then(function(data){
                     $scope.user.locals = data;
                 }, function (err) {

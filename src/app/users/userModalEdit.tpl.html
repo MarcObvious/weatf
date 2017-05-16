@@ -33,8 +33,8 @@
                 <div class="col-md-6">
                     <label>Asignar local</label>
                     <select class="form-control" ng-model="localSelected">
-                        <option  value="All">--</option>
-                        <option  ng-repeat="local in user.locals" value="{{local.id}}">{{local.n}}</option>
+                        <option value="none">--</option>
+                        <option ng-repeat="local in user.locals" value="{{local.id}}">{{local.n}}</option>
                     </select>
                 </div>
             </div>
