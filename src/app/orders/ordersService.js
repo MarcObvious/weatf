@@ -1,15 +1,15 @@
 /* 
- * orders service
+ * orders Service
  */
-angular.module('orderservice', [])
-        .factory('orderservice', ['$resource', '$q', '$log',
+angular.module('ordersService', [])
+        .factory('ordersService', ['$resource', '$q', '$log',
             function ($resource, $q, $log) {
                 return {
                     api: function (extra_route) {
                         if (!extra_route) {
                             extra_route = '';
                         }
-                        return $resource(API_URL + '/orders/' + extra_route, {}, {
+                        return $resource(API_URL + '/' + extra_route, {}, {
                             query: {
                                 timeout: 15000
                             },
@@ -31,10 +31,10 @@ angular.module('orderservice', [])
                             }
                         });
                     },
-                    getAllorders: function () {
+                    getLocalOrders: function (params) {
                         var def = $q.defer();
-                        this.api().get({}, {}, function (data) {
-                            def.resolve(data);
+                        this.api('getlocalorders').save({}, params, function (data) {
+                            def.resolve(data.data);
                         }, function (err) {
                             def.reject(err);
                         });

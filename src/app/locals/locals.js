@@ -23,15 +23,13 @@
                     }
                 })
                 .state('root.locals.localgrid', {
-                    url: '/?:{page}:{filter_by}:{date}/:{id}',
+                    url: '/?:{page}/:{id}',
                     parent: 'root.locals',
                     resolve: {
                         localsData: (['localsService', '$q', '$log','$stateParams',
                             function (localsService, $q, $log, $stateParams) {
                                 var def = $q.defer();
-
                                 $log.debug('locals::::ResolveLocalsGrid');
-
                                 localsService.getLocals().then(function(data){
                                     def.resolve({locals: data, filterName:'All locals:'});
                                 }, function (err) {

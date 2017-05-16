@@ -62,14 +62,13 @@ angular.module('genericDirectives', [])
         };
     })
 
-    .directive('sidebar',['$location','$state','globalService','$uibModal',
-        function($location, $state, globalService,$uibModal) {
+    .directive('sidebar',['$location','$state','globalService','$uibModal','$rootScope',
+        function($location, $state, globalService, $uibModal, $rootScope) {
             return {
                 templateUrl:'directives/templates/sidebar.tpl.html',
                 restrict: 'E',
                 replace: true,
-                scope: {
-                },
+                scope: {},
                 controller:function($scope, $rootScope, authService){
                     var init = function(){
                         $scope.collapseVar = 999;
@@ -79,6 +78,7 @@ angular.module('genericDirectives', [])
 
                         $scope.logged = false;
                         $scope.sidebarContent = {};
+
                         authService.autentica().then(function(logged){
                             $scope.logged = logged;
                             if ($scope.logged) {
@@ -239,18 +239,21 @@ angular.module('genericDirectives', [])
                             console.log(err);
                         });
                         $scope.localSelected = 'All';
+                        $rootScope.localSelected= $scope.localSelected;
                         $scope.selectedMenu = 'home';
 
                     };
 
                     $scope.clickLocal =  function (){
                         if ($scope.localSelected === 'All'){
+                            $rootScope.localSelected= $scope.localSelected;
                             $state.go('root.locals.localgrid',{page: 1});
                         }
                         else if (parseInt($scope.localSelected) === 0){
                             $scope.newLocal();
                         }
                         else {
+                            $rootScope.localSelected= $scope.localSelected;
                             $state.go('root.locals.localdetail',{id_local: $scope.localSelected});
                         }
                     };
@@ -261,12 +264,14 @@ angular.module('genericDirectives', [])
                             return false;
                         }*/
                         if (id === 'All'){
+                            $rootScope.localSelected= id;
                             $state.go('root.locals.localgrid',{page: 1});
                         }
                         else if (parseInt(id) === 0){
                             $scope.newLocal();
                         }
                         else {
+                            $rootScope.localSelected= id;
                             $state.go('root.locals.localdetail',{id_local: id});
                         }
                     });

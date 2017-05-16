@@ -31,13 +31,8 @@
                 </ul>
             </li>
             <li ng-class="{active: collapseVar==3}">
-                <a href="" ng-click="check(3)" class="sub-hedd-text">Pedidos<span class="fa arrow"></span></a>
-                <ul class="nav nav-second-level" uib-collapse="collapseVar!=3">
-                    <li ui-sref-active="active" ng-repeat="order in sidebarContent.organizer.orders track by $index">
-                        <a ng-if="order.show && order.id==0" class="sub-sub-hedd-text" ui-sref="root.locals.localgrid({ page: 1 })">{{order.n}} <span class="head-text">({{order.c}})</span></a>
-                        <a ng-if="order.show && order.id!=0" class="sub-sub-hedd-text" ui-sref="root.locals.localdetail({id:{{order.id}} })">{{order.n}}</a>
-                    </li>
-                </ul>
+
+                <a ui-sref="root.orders({page:1})"  class="sub-hedd-text">Pedidos</a>
             </li>
             <sidebar-search></sidebar-search>
             <li>

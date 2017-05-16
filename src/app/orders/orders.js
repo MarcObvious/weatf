@@ -4,7 +4,7 @@
         function ($stateProvider) {
             $stateProvider
                 .state('root.orders', {
-                    url: '/orders',
+                    url: '/orders/?:{page}',
                     parent: 'root',
                     views: {
                         "container@": {
@@ -16,60 +16,38 @@
                         autentica: (['authService',  function (authService) {
                             return authService.autentica();
                         }]),
-                        ordersData: (['orderservice', '$q', '$log',
-                            function (orderservice, $q, $log) {
-                                $log.info('orders::ResolveData::');
+                        ordersData: (['ordersService', '$q', '$log','$stateParams','$rootScope',
+                            function (ordersService, $q, $log, $stateParams,$rootScope) {
                                 var def = $q.defer();
-                                var data = {data:[{
-                                    "id": 3,
-                                    "name": "iOS",
-                                    "description": "iOS",
-                                    "configuration": "{\"PlatformId\":\"1\"}",
-                                    "deleted": false,
-                                    "createdAt": "2015-11-20T08:58:37.000Z",
-                                    "updatedAt": "2015-11-20T08:58:37.000Z",
-                                    "Customers": [],
-                                    "Campaign:": [],
-                                    "Devicetokens": []
-                                },{
-                                    "id": 4,
-                                    "name": "Android",
-                                    "description": "Android",
-                                    "configuration": "{\"PlatformId\":\"2\"}",
-                                    "deleted": false,
-                                    "createdAt": "2015-11-23T08:37:31.000Z",
-                                    "updatedAt": "2015-11-23T08:37:31.000Z",
-                                    "Customers": [],
-                                    "Campaign:": [],
-                                    "Devicetokens": []
-                                }]};
-                                def.resolve(data);
-                                /*orderservice.getAllorders().then(function (data) {
-                                    def.resolve(data);
+                                $log.debug('locals::::ResolveOrders');
+
+                                var local_id = $rootScope.localSelected === 'All' ? 0 : $rootScope.localSelected;
+                                ordersService.getLocalOrders({local_id: local_id}).then(function(data){
+                                    def.resolve({orders: data, filterName:'Pedidos local: ' + local_id});
                                 }, function (err) {
                                     def.reject(err);
-                                });*/
+                                });
                                 return def.promise;
                             }])
                     },
                     data: {
-                        pageTitle: 'Programar'
+                        pageTitle: 'Pedidos local'
                     }
                 });
         }]);
 
-    app.controller('ordersController', ['$log','$scope','$state','$http','ngTableParams','$filter','ordersData','$uibModal','orderservice',
-        function ($log,$scope,$state,$http,ngTableParams,$filter,ordersData,$uibModal,orderservice) {
+    app.controller('ordersController', ['$log','$scope','$state','$http','ngTableParams','$filter','ordersData','$uibModal','ordersService',
+        function ($log,$scope,$state,$http,ngTableParams,$filter,ordersData,$uibModal,ordersService) {
 
-            var init = function (msg) {
+            var init = function () {
                 $log.info('App:: Starting ordersController');
                 $scope.model={};
-                $scope.model.pageTitle=$state.current.data.pageTitle;
                 $scope.isCollapsed = false;
-                var data = ordersData.data;
+
+                $scope.filterName = ordersData.filterName;
+                $scope.orders = ordersData.orders;
                 $scope.vm={};
-                $scope.vm.tableParams = new ngTableParams({count:10}, { data: data,counts:[10,15,20]});
-                $scope.alerts = [msg];
+                $scope.vm.tableParams = new ngTableParams({count:10}, { data: $scope.orders,counts:[10,15,20]});
             };
 
             $scope.addAlert = function(msg, type, time) {
@@ -89,10 +67,10 @@
                 });
 
                 $scope.modalInstance.result.then(function(modalResult){
-                    orderservice.submitorders(modalResult.name,modalResult.description,modalResult.configuration)
+                    ordersService.submitorders(modalResult.name,modalResult.description,modalResult.configuration)
                         .then(function(data){
                             $scope.addAlert('orderso creado correctamente!', 'success', 3000);
-                            orderservice.getAllorders().then(function (data) {
+                            ordersService.getAllorders().then(function (data) {
                                 $scope.vm.tableParams = new ngTableParams({count:10}, { data: data.data,counts:[10,15,20]});
                             }, function (err) {
                                 $log.error(err);
@@ -106,41 +84,17 @@
                 });
 
             };
-            $scope.editorders = function (id) {
+            $scope.viewOrderDetail = function (id) {
                 $scope.modalInstance = $uibModal.open({
-                    templateUrl: 'orders/ordersModalEdit.tpl.html',
+                    templateUrl: 'orders/ordersModalView.tpl.html',
                     size: 'lg',
-                    controller: 'ordersModalEditController',
-                    resolve: {
-                        ordersData: (['orderservice', '$q', '$log',
-                            function (orderservice, $q, $log) {
-                                $log.info('orders::ResolveData::');
-                                var def = $q.defer();
-                                orderservice.getorders(id).then(function (data) {
-                                    def.resolve(data);
-                                }, function (err) {
-                                    def.reject(err);
-                                });
-                                return def.promise;
-                            }])
-                    },
+                    controller: 'ordersModalViewController',
+                    resolve: {orderId: id},
                     scope: $scope
                 });
 
                 $scope.modalInstance.result.then(function(modalResult){
-                    orderservice.saveorders(id,modalResult.name,modalResult.description,modalResult.configuration)
-                        .then(function(data){
-                            $scope.addAlert('orderso guardado correctamente!', 'success', 3000);
-                            orderservice.getAllorders().then(function (data) {
-                                $scope.vm.tableParams = new ngTableParams({count:10}, { data: data.data,counts:[10,15,20]});
-                            }, function (err) {
-                                $log.error(err);
-                                $scope.addAlert('Error al recuperar datos!', 'danger', 3000);
-                            });
-                        },function(err){
-                            $log.error(err);
-                            $scope.addAlert('Error al guardar orderso!', 'danger', 3000);
-                        });
+
                 },function(){
                 });
 
@@ -148,9 +102,9 @@
             };
 
             $scope.deleteorders = function(id) {
-                orderservice.deleteorders(id).then(function(data){
+                ordersService.deleteorders(id).then(function(data){
                     $scope.addAlert('orderso eliminado correctamente!', 'success', 3000);
-                    orderservice.getAllorders().then(function (data) {
+                    ordersService.getAllorders().then(function (data) {
                         $scope.vm.tableParams = new ngTableParams({count:10}, { data: data.data,counts:[10,15,20]});
                     }, function (err) {
                         $log.error(err);
@@ -163,9 +117,9 @@
             };
 
             $scope.duplicateorders = function(id) {
-                orderservice.duplicateorders(id).then(function(data){
+                ordersService.duplicateorders(id).then(function(data){
                     $scope.addAlert('orderso duplicado correctamente!', 'success', 3000);
-                    orderservice.getAllorders().then(function (data) {
+                    ordersService.getAllorders().then(function (data) {
                         $scope.vm.tableParams = new ngTableParams({count:10}, { data: data.data,counts:[10,15,20]});
                     }, function (err) {
                         $log.error(err);
@@ -178,7 +132,6 @@
             };
 
             init();
-            //init({ type: 'warning', msg: 'Bienvenido a orders Manager, Duplica, envia o elimina orders!!', time:'3000' });
         }]);
 
     app.controller('ordersModalAddController', ['$scope', '$uibModalInstance', '$log','$rootScope',
@@ -197,14 +150,14 @@
             init();
         }]);
 
-    app.controller('ordersModalEditController', ['$scope', '$uibModalInstance', '$log','$rootScope','ordersData',
-        function ($scope, $uibModalInstance, $log, $rootScope,ordersData) {
+    app.controller('ordersModalViewController', ['$scope', '$uibModalInstance', '$log','$rootScope','orderId',
+        function ($scope, $uibModalInstance, $log, $rootScope,orderId) {
             var init = function (){
                 $scope.status = {};
                 $scope.model={};
-                $scope.model.name = ordersData.data.name;
-                $scope.model.description = ordersData.data.description;
-                $scope.model.configuration = ordersData.data.configuration;
+                $scope.orderId = orderId;
+                $scope.orderDetails = angular.isDefined($scope.orders[orderId].orderdetail) ? $scope.orders[orderId].orderdetail : [];
+                console.log($scope.orderDetails);
             };
 
             $scope.ok = function (model) {
@@ -221,5 +174,5 @@
     'ui.router',
     'ngAnimate',
     'ngTable',
-    'orderservice'
+    'ordersService'
 ])));
