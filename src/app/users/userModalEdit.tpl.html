@@ -30,6 +30,13 @@
                     <label>Imagen:</label>
                     <input disabled class="form-control" placeholder="Imagen url" ng-model="user.picture">
                 </div>
+                <div class="col-md-6">
+                    <label>Asignar local</label>
+                    <select class="form-control" ng-model="localSelected">
+                        <option  value="All">--</option>
+                        <option  ng-repeat="local in user.locals" value="{{local.id}}">{{local.n}}</option>
+                    </select>
+                </div>
             </div>
         </div>
     </div>

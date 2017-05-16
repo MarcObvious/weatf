@@ -203,10 +203,16 @@
             init();
         }]);
 
-    app.controller('userModalEditController', ['$scope', '$uibModalInstance', '$log','$rootScope','userData',
-        function ($scope, $uibModalInstance, $log, $rootScope, userData) {
+    app.controller('userModalEditController', ['$scope', '$uibModalInstance', '$log','$rootScope','userData','globalService',
+        function ($scope, $uibModalInstance, $log, $rootScope, userData, globalService) {
             var init = function () {
                 $scope.user = userData;
+                $scope.user.locals = [];
+                globalService.getSideBarLocals().then(function(data){
+                    $scope.user.locals = data;
+                }, function (err) {
+                    console.log(err);
+                });
             };
             $scope.ok = function (model) {
                 $uibModalInstance.close(model);
@@ -220,7 +226,7 @@
         }]);
 
     app.controller('productModalEditController', ['$scope', '$uibModalInstance', '$log','$rootScope', 'productData',
-        function ($scope, $uibModalInstance, $log, $rootScope,productData) {
+        function ($scope, $uibModalInstance, $log, $rootScope, productData) {
             var init = function () {
                 $scope.product = productData;
             };

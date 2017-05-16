@@ -38,6 +38,12 @@
                     <label>Imagen:</label>
                     <input class="form-control" placeholder="Imagen url" ng-model="local.picture">
                 </div>
+                <div class="col-md-6">
+                    <label>Asignar usuario</label>
+                    <select class="form-control" ng-model="local.user_id">
+                        <option value="{{local.user_id}}" selected>{{local.user_id}}</option>
+                    </select>
+                </div>
             </div>
         </div>
     </div>
