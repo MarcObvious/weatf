@@ -58,6 +58,7 @@
     'globalService',
     'geolocationService',
     'weatf.locals',
+    'weatf.users',
     'weatf.history',
     'weatf.auth',
     'weatf.notifier',

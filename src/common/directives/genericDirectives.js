@@ -1,6 +1,3 @@
-/**
- * Created by hadock on 8/09/15.
- */
 angular.module('genericDirectives', [])
 
     .directive('chat',function(){
@@ -65,8 +62,8 @@ angular.module('genericDirectives', [])
         };
     })
 
-    .directive('sidebar',['$location','$state','globalService',
-        function($location, $state, globalService) {
+    .directive('sidebar',['$location','$state','globalService','$uibModal',
+        function($location, $state, globalService,$uibModal) {
             return {
                 templateUrl:'directives/templates/sidebar.tpl.html',
                 restrict: 'E',
@@ -121,6 +118,21 @@ angular.module('genericDirectives', [])
                             $scope.multiCollapseVar = y;
                         }
 
+                    };
+
+                    $scope.newUser = function () {
+                        $scope.modalInstance = $uibModal.open({
+                            templateUrl: 'users/userModalEdit.tpl.html',
+                            size: 'lg',
+                            controller: 'userModalEditController',
+                            resolve: {userData : {newuser:true}},
+                            scope: $scope
+                        });
+
+                        $scope.modalInstance.result.then(function(modalResult){
+                        },function(){
+
+                        });
                     };
 
                     init();
@@ -210,8 +222,62 @@ angular.module('genericDirectives', [])
             }
         };
     }])
+    .directive('sidebarLocals',['$state', function($state) {
+        return {
+            templateUrl:'directives/templates/sidebar-locals.tpl.html',
+            restrict: 'E',
+            replace: true,
+            scope: {},
+            controller:  ('sidebarLocalsController', ['$scope', 'globalService','$state','$uibModal',
+                function($scope, globalService, $state, $uibModal) {
 
+                    var init = function(){
+                        $scope.locals = [];
+                        globalService.getSideBarLocals().then(function(data){
+                            $scope.locals = data;
+                        }, function (err) {
+                           console.log(err);
+                        });
+                        $scope.localSelected = 'All';
+                        $scope.selectedMenu = 'home';
 
+                    };
+
+                    $scope.$watch('localSelected', function(id, oldValue) {
+                        console.log(id);
+                        if (id === oldValue) {
+                            return false;
+                        }
+                        else if (id === 'All'){
+                            $state.go('root.locals.localgrid',{page: 1});
+                        }
+                        else if (parseInt(id) === 0){
+                            $scope.newLocal();
+                        }
+                        else {
+                            $state.go('root.locals.localdetail',{id_local: id});
+                        }
+                    });
+
+                    $scope.newLocal = function () {
+                        $scope.modalInstance = $uibModal.open({
+                            templateUrl: 'locals/localModalEdit.tpl.html',
+                            size: 'lg',
+                            controller: 'localModalEditController',
+                            resolve: {localData : {newlocal: true}},
+                            scope: $scope
+                        });
+
+                        $scope.modalInstance.result.then(function(modalResult){
+                        },function(){
+
+                        });
+                    };
+
+                    init();
+                }])
+        };
+    }])
 
 
     .directive('contentItem',['$compile','$log', function ($compile,$log) {

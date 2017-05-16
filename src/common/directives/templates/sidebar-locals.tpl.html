@@ -1,0 +1,7 @@
+<li class="sidebar-search">
+    <p class="head-text">Locales</p>
+    <select class="form-control" ng-model="localSelected">
+        <option  value="All">All</option>
+        <option  ng-repeat="local in locals" value="{{local.id}}">{{local.n}}</option>
+    </select>
+</li>

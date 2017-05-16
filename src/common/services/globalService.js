@@ -95,92 +95,54 @@ angular.module('globalService', [])
                     def.resolve();
                     return def.promise;
                 },
-                getSideBarContent: function () {
+                getSideBarLocals: function () {
                     var def = $q.defer();
-                    var filters = {
-                        organizer: {locals:[],users:[],orders:[]}
-                    };
-                    var locals_count = 0, users_count = 0, orders_count = 0;
-
-                    console.log(filters);
-
-
+                    var locals = [];
+                    var locals_count = 0;
 
                     this.api('getlocals/').save({}, {}, function (data) {
                         var localsData = data.data;
                         if(localsData && localsData !== 'no data yet'){
                             angular.forEach(localsData, function (localData, index) {
-                                filters.organizer.locals.push({n: localData.name, c: 1, id: localData.id, show: true});
+                                locals.push({n: localData.name, c: 1, id: localData.id, show: true});
                                 ++locals_count;
                             });
                         }
-                        filters.organizer.locals.push({n: 'All locals', c: locals_count, id: 0, show: true});
+                        locals.push({n: 'Nuevo local', c: locals_count, id: 0, show: true});
                     });
 
+                    def.resolve(locals);
+                    return def.promise;
+                },
+                getSideBarContent: function () {
+                    var def = $q.defer();
+                    var filters = {
+                        organizer: {users:[],orders:[]}
+                    };
+                    var users_count = 0, orders_count = 0;
 
-                    this.api('getusers/').save({}, {}, function (data) {
+                    this.api('getlocalusers/').save({}, {}, function (data) {
                         var usersData = data.data;
-                        console.log(usersData);
                         if(usersData && usersData !== 'no data yet'){
                             angular.forEach(usersData, function (userData, index) {
                                 filters.organizer.users.push({n: userData.name, c: 1, id: userData.id, show: true});
                                 ++users_count;
                             });
                         }
-                        filters.organizer.users.push({n: 'All users', c: users_count, id: 0, show:true});
                     });
+                    filters.organizer.users.push({n: 'Todos los usuarios', c: users_count, id: 0, show:true});
 
+                    this.api('getlocalorders/').save({}, {}, function (data) {
+                        var ordersData = data.data;
+                        if(ordersData && ordersData !== 'no data yet'){
+                            angular.forEach(ordersData, function (orderData, index) {
+                                filters.organizer.orders.push({n: orderData.name, c: 1, id: orderData.id, show: true});
+                                ++users_count;
+                            });
+                        }
+                    });
+                    filters.organizer.orders.push({n: 'Todos los pedidos', c: orders_count, id: 0, show:true});
 
-                    filters.organizer.orders.push({n: 'All orders', c: orders_count, id: 0, show:true});
-
-                    /*
-                     this.api('getlocals').get({}, {}, function (data) {
-
-                     if(data.data) {
-                     cpedidos = data.results;
-                     angular.forEach(data.data, function(order) {
-                     var flag = 0;
-                     angular.forEach(estados.filtro_repartidor, function (repartidor, index) {
-                     if (repartidor.id === order.id_mensajero) {
-                     ++estados.filtro_repartidor[index].c;
-                     flag = 1;
-                     }
-                     });
-
-                     if (flag === 0){
-
-                     estados.filtro_repartidor.push({n: order.mensajero, c: 1, id: order.id_mensajero, show: parseInt(order.id_mensajero) !== 0});
-
-
-                     }
-                     switch (parseInt(order.id_delivery_state)) {
-                     case 1:
-                     ++estados.filtro_estado[0].c;
-                     break;
-                     case 0:
-                     case 2:
-                     ++estados.filtro_estado[1].c;
-                     break;
-                     case 3:
-                     ++estados.filtro_estado[2].c;
-                     break;
-                     case 4:
-                     ++estados.filtro_estado[3].c;
-                     break;
-                     default:
-                     ++estados.filtro_estado[1].c;
-                     break;
-                     }
-
-                     });
-                     }
-                     estados.filtro_estado.push({n: 'Todos los pedidos', c: cpedidos, id:0, show:true});
-                     estados.filtro_repartidor.push({n: 'Todos los repartidores', c: cpedidos, id: 0, show:true});
-
-                     def.resolve(estados);
-                     }, function (err) {
-                     def.reject(err);
-                     });*/
                     def.resolve(filters);
                     return def.promise;
                 }
