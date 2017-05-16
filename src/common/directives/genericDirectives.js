@@ -228,27 +228,39 @@ angular.module('genericDirectives', [])
             restrict: 'E',
             replace: true,
             scope: {},
-            controller:  ('sidebarLocalsController', ['$scope', 'globalService','$state','$uibModal',
-                function($scope, globalService, $state, $uibModal) {
+            controller:  ('sidebarLocalsController', ['$scope', 'globalService','$state','$uibModal','$rootScope',
+                function($scope, globalService, $state, $uibModal,$rootScope) {
 
                     var init = function(){
                         $scope.locals = [];
                         globalService.getSideBarLocals().then(function(data){
                             $scope.locals = data;
                         }, function (err) {
-                           console.log(err);
+                            console.log(err);
                         });
                         $scope.localSelected = 'All';
                         $scope.selectedMenu = 'home';
 
                     };
 
+                    $scope.clickLocal =  function (){
+                        if ($scope.localSelected === 'All'){
+                            $state.go('root.locals.localgrid',{page: 1});
+                        }
+                        else if (parseInt($scope.localSelected) === 0){
+                            $scope.newLocal();
+                        }
+                        else {
+                            $state.go('root.locals.localdetail',{id_local: $scope.localSelected});
+                        }
+                    };
+
                     $scope.$watch('localSelected', function(id, oldValue) {
                         console.log(id);
-                        if (id === oldValue) {
+                       /* if (id === oldValue) {
                             return false;
-                        }
-                        else if (id === 'All'){
+                        }*/
+                        if (id === 'All'){
                             $state.go('root.locals.localgrid',{page: 1});
                         }
                         else if (parseInt(id) === 0){
@@ -273,6 +285,14 @@ angular.module('genericDirectives', [])
 
                         });
                     };
+
+                    $rootScope.$on('local.local_id', function(event, aValues) {
+                        if(aValues.local_id !== undefined) {
+                            if ($scope.localSelected !== aValues.local_id.toString()) {
+                                $scope.localSelected = aValues.local_id.toString();
+                            }
+                        }
+                    });
 
                     init();
                 }])

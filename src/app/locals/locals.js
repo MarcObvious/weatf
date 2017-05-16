@@ -119,6 +119,8 @@
                     $timeout(function() {
                         $rootScope.$emit('positions.positionsChange', {positions: $scope.positions});
                     });
+
+                    $rootScope.$emit('local.local_id', {local_id: 'All'});
                 }
 
             };
@@ -163,7 +165,11 @@
                         });
                         centerMap = [localData.local.lat, localData.local.lng];
                     }
+
+                    $rootScope.$emit('local.local_id', {local_id: localData.local.id});
                 }
+
+
 
                 $timeout(function() {
                     $rootScope.$emit('positions.positionsChange', {centerMap: centerMap, positions: positions});
