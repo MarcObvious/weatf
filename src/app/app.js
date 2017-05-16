@@ -65,6 +65,7 @@
     'weatf.scheduler',
     'weatf.simplepush',
     'weatf.segment',
+    'weatf.orders',
     'LocalStorageModule',
     'ui.bootstrap',
     'templates-app',
