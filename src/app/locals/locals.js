@@ -296,10 +296,13 @@
             init();
         }]);
 
-    app.controller('localModalEditController', ['$scope', '$uibModalInstance', '$log','$rootScope','localData','$uibModal','localsService',
-        function ($scope, $uibModalInstance, $log, $rootScope,localData, $uibModal,localsService) {
+    app.controller('localModalEditController', ['$scope', '$uibModalInstance', '$log','$rootScope','localData','$uibModal','localsService','usersService',
+        function ($scope, $uibModalInstance, $log, $rootScope,localData, $uibModal,localsService, usersService) {
             var init = function () {
                 $scope.local = localData;
+                usersService.getAllUsers().then(function (users) {
+                    $scope.users = data;
+                });
             };
             $scope.ok = function () {
                 $scope.local.picture = $scope.local.raw_picture.base64;
@@ -309,6 +312,7 @@
                     });
                 }
                 else {
+                    $scope.local.id_local = $scope.local.id;
                     localsService.saveLocal($scope.local).then(function(result){
                         console.log(result);
                     });

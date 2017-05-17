@@ -28,6 +28,16 @@ angular.module('usersService', [])
                         }
                     });
                 },
+                getAllUsers: function(){
+                    var def = $q.defer();
+                    this.api('getallusers/').save({}, {}, function(data){
+                        def.resolve(data.data);
+                    }, function (err) {
+                        def.reject(err);
+                    });
+
+                    return def.promise;
+                },
                 getlocalUser: function (params) {
                     var def = $q.defer();
                     this.api('getlocalusers/').save({}, params, function(data){
