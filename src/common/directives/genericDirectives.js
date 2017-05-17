@@ -135,6 +135,20 @@ angular.module('genericDirectives', [])
                         });
                     };
 
+                    $scope.newLocal = function () {
+                        $scope.modalInstance = $uibModal.open({
+                            templateUrl: 'locals/localModalEdit.tpl.html',
+                            size: 'lg',
+                            controller: 'localModalEditController',
+                            resolve: {localData: {newlocal: true}},
+                            scope: $scope
+                        });
+
+                        $scope.modalInstance.result.then(function (modalResult) {
+                        }, function () {
+
+                        });
+                    };
                     init();
                 }
             };
@@ -238,58 +252,23 @@ angular.module('genericDirectives', [])
                         }, function (err) {
                             console.log(err);
                         });
-                        $scope.localSelected = 'All';
-                        $rootScope.localSelected= $scope.localSelected;
+                        $scope.localSelected = 'Todos';
+
                         $scope.selectedMenu = 'home';
 
                     };
 
-                    $scope.clickLocal =  function (){
-                        if ($scope.localSelected === 'All'){
-                            $rootScope.localSelected= $scope.localSelected;
-                            $state.go('root.locals.localgrid',{page: 1});
-                        }
-                        else if (parseInt($scope.localSelected) === 0){
-                            $scope.newLocal();
-                        }
-                        else {
-                            $rootScope.localSelected= $scope.localSelected;
-                            $state.go('root.locals.localdetail',{id_local: $scope.localSelected});
-                        }
-                    };
-
                     $scope.$watch('localSelected', function(id, oldValue) {
                         console.log(id);
-                       /* if (id === oldValue) {
-                            return false;
-                        }*/
-                        if (id === 'All'){
+                        if (id === 'Todos'){
                             $rootScope.localSelected= id;
                             $state.go('root.locals.localgrid',{page: 1});
-                        }
-                        else if (parseInt(id) === 0){
-                            $scope.newLocal();
                         }
                         else {
                             $rootScope.localSelected= id;
                             $state.go('root.locals.localdetail',{id_local: id});
                         }
                     });
-
-                    $scope.newLocal = function () {
-                        $scope.modalInstance = $uibModal.open({
-                            templateUrl: 'locals/localModalEdit.tpl.html',
-                            size: 'lg',
-                            controller: 'localModalEditController',
-                            resolve: {localData : {newlocal: true}},
-                            scope: $scope
-                        });
-
-                        $scope.modalInstance.result.then(function(modalResult){
-                        },function(){
-
-                        });
-                    };
 
                     $rootScope.$on('local.local_id', function(event, aValues) {
                         if(aValues.local_id !== undefined) {

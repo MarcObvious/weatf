@@ -7,44 +7,66 @@
         <div class="col-md-12">
             <div class="form-group">
                 <div class="col-md-6">
-                    <label>Nombre del user</label>
-                    <input class="form-control" placeholder="Nombre del usuario" ng-model="user.name">
+                    <label>Nombre</label>
+                    <input class="form-control" placeholder="Nombre del usuario" ng-model="user.firstname">
                 </div>
                 <div class="col-md-6">
-                    <label>Dirección</label>
-                    <input class="form-control" placeholder="Dirección" ng-model="user.direction">
+                    <label>Apellido</label>
+                    <input class="form-control" placeholder="Apellido del usuario" ng-model="user.lastname">
                 </div>
                 <div class="col-md-6">
-                    <label>Codigo postal:</label>
-                    <input class="form-control" placeholder="CP" ng-model="user.postcode">
+                    <label>Email:</label>
+                    <input class="form-control" placeholder="Email" ng-model="user.email">
                 </div>
                 <div class="col-md-6">
-                    <label>Desde:</label>
-                    <input class="form-control" placeholder="Hora" ng-model="user.from_hour">
+                    <label>Aniversario:</label>
+                    <input class="form-control" placeholder="Aniversario" ng-model="user.birthdate">
                 </div>
                 <div class="col-md-6">
-                    <label>Hora de recogida:</label>
-                    <input class="form-control" placeholder="Hora de recogida" ng-model="user.pickup_time">
+                    <label>Sexo:</label>
+                    <input class="form-control" placeholder="Sexo" ng-model="user.gender">
+                </div>
+                <div class="col-md-6">
+                    <label>Compras:</label>
+                    <input disabled class="form-control" placeholder="Compras" ng-model="user.purchases">
                 </div>
                 <div class="col-md-6">
                     <label>Imagen:</label>
-                    <input disabled class="form-control" placeholder="Imagen url" ng-model="user.picture">
+                    <input disabled class="form-control" placeholder="Imagen url" ng-model="user.profile_picture_url">
                 </div>
                 <div class="col-md-6">
-                    <label>Asignar local</label>
-                    <select class="form-control" ng-model="localSelected">
-                        <option value="none">--</option>
-                        <option ng-repeat="local in user.locals" value="{{local.id}}">{{local.n}}</option>
-                    </select>
+                    <label>Tipo de usuario:</label>
+                    <input disabled class="form-control" placeholder="Tipo de usuario" ng-model="user.user_type">
+                </div>
+                <div class="col-md-6">
+                    <label>Imagen:</label>
+                    <input disabled class="form-control" placeholder="Imagen url" ng-model="user.profile_picture_url">
+                </div>
+                <div class="col-md-6">
+                    <label>Creado a:</label>
+                    <input disabled class="form-control" placeholder="Imagen url" ng-model="user.created_at">
+                </div>
+                <div class="col-md-6">
+                    <label>Actualizado a:</label>
+                    <input disabled class="form-control" placeholder="Imagen url" ng-model="user.updated_at">
+                </div>
+                <div class="col-md-6">
+                    <label>Asignado a local:</label>
+                    <input disabled class="form-control" placeholder="Id local" ng-model="user.local_id">
                 </div>
             </div>
         </div>
     </div>
     <div class="modal-footer">
         <div class="col-md-12">
-            <div class="col-md-6">
+            <div class="col-md-6" ng-if="user.newuser">
                 <button type="button" class="btn btn-danger btn-block" ng-click="cancel()">
-                    Cancelar <i class="fa fa-ban"></i>
+                    Descartar usuario <i class="fa fa-trash"></i>
+                </button>
+            </div>
+            <div class="col-md-6" ng-if="!user.newuser">
+                <button type="button" class="btn btn-danger btn-block" ng-click="cancel()">
+                    Eliminar usuario <i class="fa fa-trash"></i>
                 </button>
             </div>
             <div class="col-md-6">

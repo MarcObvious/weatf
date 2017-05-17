@@ -31,9 +31,9 @@ angular.module('usersService', [])
 
                     return def.promise;
                 },
-                getuser: function (params) {
+                getlocaluser: function (params) {
                     var def = $q.defer();
-                    this.api('getuser/').save(params, {}, function(data){
+                    this.api('getlocalusers/').save({}, params, function(data){
                         def.resolve(data.data);
                     }, function (err) {
                         def.reject(err);

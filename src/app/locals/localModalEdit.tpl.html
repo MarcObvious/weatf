@@ -39,19 +39,30 @@
                     <input class="form-control" placeholder="Imagen url" ng-model="local.picture">
                 </div>
                 <div class="col-md-6">
-                    <label>Asignar usuario</label>
+                    <label>Asignar usuario existente:</label>
                     <select class="form-control" ng-model="local.user_id">
                         <option value="{{local.user_id}}" selected>{{local.user_id}}</option>
                     </select>
+                </div>
+                <div class="col-md-6">
+                    <label>Asignar usuario nuevo:</label>
+                    <button type="button" class="btn btn-success btn-block" ng-click="newUser()">
+                        Nuevo usuario <i class="fa fa-user"></i>
+                    </button>
                 </div>
             </div>
         </div>
     </div>
     <div class="modal-footer">
         <div class="col-md-12">
-            <div class="col-md-6">
+            <div class="col-md-6" ng-if="local.newlocal">
                 <button type="button" class="btn btn-danger btn-block" ng-click="cancel()">
-                    Cancelar <i class="fa fa-ban"></i>
+                    Descartar Local <i class="fa fa-trash"></i>
+                </button>
+            </div>
+            <div class="col-md-6" ng-if="!local.newlocal">
+                <button type="button" class="btn btn-danger btn-block" ng-click="cancel()">
+                    Eliminar Local <i class="fa fa-trash"></i>
                 </button>
             </div>
             <div class="col-md-6">

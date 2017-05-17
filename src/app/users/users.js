@@ -3,7 +3,7 @@
         function ($stateProvider) {
             $stateProvider
                 .state('root.users', {
-                    url: '',
+                    url: '/users',
                     parent: 'root',
                     resolve: {
                         autentica: (['authService','$state', function (authService) {
@@ -51,17 +51,20 @@
                     }
                 })
                 .state('root.users.userdetail', {
-                    url: '/userDetail/{id_user}',
+                    url: '/userdetail/?:{page}',
                     parent: 'root.users',
                     resolve: {
-                        userData: (['usersService', '$q', '$log','$stateParams',
-                            function (usersService, $q, $log, $stateParams) {
+                        userData: (['usersService', '$q', '$log','$stateParams','$rootScope',
+                            function (usersService, $q, $log, $stateParams, $rootScope) {
                                 var def = $q.defer();
-                                var id = $stateParams.id_user;
-                                $log.debug('users::::ResolveOrderDetail::'+id);
+                                //var id = $stateParams.id_user;
+                                console.log('AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAaa');
+                               // $log.debug('users::::ResolveOrderDetail::'+id);
 
-                                usersService.getuser({user_id: id}).then(function(data){
-                                    def.resolve({user: data, filterName:'user: ' + id});
+                                console.log('holaaaaaaaaaaaaaa???');
+                                var local_id = $rootScope.localSelected === 'All' ? 0 : $rootScope.localSelected;
+                                usersService.getlocaluser({local_id: local_id}).then(function(data){
+                                    def.resolve({user: data, filterName:'local: ' + local_id});
                                 }, function (err) {
                                     def.reject(err);
                                 });
@@ -71,7 +74,7 @@
                     views: {
                         "subcontainer@root.users": {
                             controller: 'userDetailController',
-                            templateUrl: 'users/userDetail.tpl.html'
+                            templateUrl: 'users/usersDetail.tpl.html'
                         }
                     },
                     data: {
@@ -147,7 +150,7 @@
         function ($log, $scope, $state, userData, $rootScope, $timeout, usersService,$uibModal) {
 
             var init = function() {
-                $scope.user = {};
+                /*$scope.user = {};
                 var positions = [];
                 var centerMap = [];
                 console.log(userData);
@@ -167,7 +170,7 @@
 
                 $timeout(function() {
                     $rootScope.$emit('positions.positionsChange', {centerMap: centerMap, positions: positions});
-                });
+                });*/
             };
 
             $scope.edituser = function (userData) {
@@ -206,14 +209,13 @@
     app.controller('userModalEditController', ['$scope', '$uibModalInstance', '$log','$rootScope','userData','globalService',
         function ($scope, $uibModalInstance, $log, $rootScope, userData, globalService) {
             var init = function () {
-                $scope.user = userData;
-                $scope.user.locals = [];
-                $scope.localSelected = 'none';
-                globalService.getSideBarLocals().then(function(data){
+                $scope.user = userData ? userData : {};
+
+                /*globalService.getSideBarLocals().then(function(data){
                     $scope.user.locals = data;
                 }, function (err) {
                     console.log(err);
-                });
+                });*/
             };
             $scope.ok = function (model) {
                 $uibModalInstance.close(model);

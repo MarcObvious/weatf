@@ -2,8 +2,8 @@
  * Global Services Test Módule
  */
 angular.module('globalService', [])
-    .factory('globalService', ['$resource', '$q', '$log', 'localStorageService',
-        function ($resource, $q, $log, localStorageService) {
+    .factory('globalService', ['$resource', '$q', '$log', 'localStorageService','$rootScope',
+        function ($resource, $q, $log, localStorageService,$rootScope) {
             return {
                 api: function (extra_route) {
                     if (!extra_route) {
@@ -108,7 +108,7 @@ angular.module('globalService', [])
                                 ++locals_count;
                             });
                         }
-                        locals.push({n: 'Nuevo local', c: locals_count, id: 0, show: true});
+                        //locals.push({n: 'Nuevo local', c: locals_count, id: 0, show: true});
                     });
 
                     def.resolve(locals);
@@ -121,7 +121,7 @@ angular.module('globalService', [])
                     };
                     var users_count = 0, orders_count = 0;
 
-                    this.api('getlocalusers/').save({}, {}, function (data) {
+                   /* this.api('getlocalusers/').save({}, {}, function (data) {
                         var usersData = data.data;
                         if(usersData && usersData !== 'no data yet'){
                             angular.forEach(usersData, function (userData, index) {
@@ -129,10 +129,10 @@ angular.module('globalService', [])
                                 ++users_count;
                             });
                         }
-                    });
+                    });*/
                     filters.organizer.users.push({n: 'Todos los usuarios', c: users_count, id: 0, show:true});
 
-                    this.api('getlocalorders/').save({}, {}, function (data) {
+                    /*this.api('getlocalorders/').save({}, {}, function (data) {
                         var ordersData = data.data;
                         if(ordersData && ordersData !== 'no data yet'){
                             angular.forEach(ordersData, function (orderData, index) {
@@ -141,7 +141,7 @@ angular.module('globalService', [])
                             });
                         }
                     });
-                    filters.organizer.orders.push({n: 'Todos los pedidos', c: orders_count, id: 0, show:true});
+                    filters.organizer.orders.push({n: 'Todos los pedidos', c: orders_count, id: 0, show:true});*/
 
                     def.resolve(filters);
                     return def.promise;

@@ -4,7 +4,7 @@
         function ($stateProvider) {
             $stateProvider
                 .state('root.orders', {
-                    url: '/orders/?:{page}',
+                    url: '/orders/?:{id_local}:{page}',
                     parent: 'root',
                     views: {
                         "container@": {
@@ -20,13 +20,22 @@
                             function (ordersService, $q, $log, $stateParams,$rootScope) {
                                 var def = $q.defer();
                                 $log.debug('locals::::ResolveOrders');
+                                if ($stateParams.id_local !== undefined) {
+                                    ordersService.getLocalOrders({local_id: $stateParams.id_local}).then(function(data){
+                                        def.resolve({orders: data, filterName:'Pedidos local: ' + $stateParams.id_local});
+                                    }, function (err) {
+                                        def.reject(err);
+                                    });
+                                }
+                                else {
+                                    //TODO ALL ORDERS (root)
+                                    ordersService.getLocalOrders({local_id: 1}).then(function(data){
+                                        def.resolve({orders: data, filterName:'Pedidos local: ' + local_id});
+                                    }, function (err) {
+                                        def.reject(err);
+                                    });
+                                }
 
-                                var local_id = $rootScope.localSelected === 'All' ? 0 : $rootScope.localSelected;
-                                ordersService.getLocalOrders({local_id: local_id}).then(function(data){
-                                    def.resolve({orders: data, filterName:'Pedidos local: ' + local_id});
-                                }, function (err) {
-                                    def.reject(err);
-                                });
                                 return def.promise;
                             }])
                     },
@@ -97,8 +106,6 @@
 
                 },function(){
                 });
-
-
             };
 
             $scope.deleteorders = function(id) {

@@ -23,7 +23,7 @@
                     }
                 })
                 .state('root.locals.localgrid', {
-                    url: '/?:{page}/:{id}',
+                    url: '/?:{page}',
                     parent: 'root.locals',
                     resolve: {
                         localsData: (['localsService', '$q', '$log','$stateParams',
@@ -31,7 +31,7 @@
                                 var def = $q.defer();
                                 $log.debug('locals::::ResolveLocalsGrid');
                                 localsService.getLocals().then(function(data){
-                                    def.resolve({locals: data, filterName:'All locals:'});
+                                    def.resolve({locals: data, filterName:'Todos los locales:', page: $stateParams.page});
                                 }, function (err) {
                                     def.reject(err);
                                 });
@@ -55,11 +55,20 @@
                         localData: (['localsService', '$q', '$log','$stateParams',
                             function (localsService, $q, $log, $stateParams) {
                                 var def = $q.defer();
-                                var id = $stateParams.id_local;
-                                $log.debug('locals::::ResolveOrderDetail::'+id);
-
-                                localsService.getLocal({local_id: id}).then(function(data){
-                                    def.resolve({local: data, filterName:'Local: ' + id});
+                                $log.debug('locals::::ResolveOrderDetail::'+$stateParams.id_local);
+                                localsService.getLocal({local_id: $stateParams.id_local}).then(function(data){
+                                    def.resolve({local: data, filterName:'Local: ' + $stateParams.id_local});
+                                }, function (err) {
+                                    def.reject(err);
+                                });
+                                return def.promise;
+                            }]),
+                        ordersData: (['ordersService', '$q', '$log','$stateParams',
+                            function (ordersService, $q, $log, $stateParams) {
+                                var def = $q.defer();
+                                $log.debug('locals::::ResolveOrders'+$stateParams.id_local);
+                                ordersService.getLocalOrders({local_id: $stateParams.id_local}).then(function(data){
+                                    def.resolve(data);
                                 }, function (err) {
                                     def.reject(err);
                                 });
@@ -78,13 +87,12 @@
                 });
         }]);
 
-    app.controller('localGridController', ['$log','$scope','$state','localsData', 'NgMap','$rootScope','$timeout', 'localsService', '$stateParams',
-        function ($log, $scope, $state, localsData, NgMap, $rootScope, $timeout, localsService, $stateParams) {
+    app.controller('localGridController', ['$log','$scope','$state','localsData', 'NgMap','$rootScope','$timeout', 'localsService','$uibModal',
+        function ($log, $scope, $state, localsData, NgMap, $rootScope, $timeout, localsService, $uibModal) {
 
             var init = function () {
                 $log.info('App:: Starting localsController');
                 $scope.localsData = localsData;
-                console.log(localsData);
 
                 $scope.totalItems = 0;
                 $scope.filterBy = localsData.filterName;
@@ -96,8 +104,8 @@
                     $scope.positions = [];
                     $scope.totalItems = $scope.locals.length;
 
-                    $scope.currentPage = $stateParams.page ? $stateParams.page : 1;
-                    $scope.numPerPage = 6;
+                    $scope.currentPage = localsData.page ? localsData.page : 1;
+                    $scope.numPerPage = 5;
                     var begin = (($scope.currentPage - 1) * $scope.numPerPage), end = begin + $scope.numPerPage;
                     $scope.localsSliced = $scope.locals.slice(begin, end);
 
@@ -118,9 +126,24 @@
                         $rootScope.$emit('positions.positionsChange', {positions: $scope.positions});
                     });
 
-                    $rootScope.$emit('local.local_id', {local_id: 'All'});
+                    $rootScope.$emit('local.local_id', {local_id: 'Todos'});
                 }
 
+            };
+
+            $scope.newLocal = function () {
+                $scope.modalInstance = $uibModal.open({
+                    templateUrl: 'locals/localModalEdit.tpl.html',
+                    size: 'lg',
+                    controller: 'localModalEditController',
+                    resolve: {localData : {newlocal: true}},
+                    scope: $scope
+                });
+
+                $scope.modalInstance.result.then(function(modalResult){
+                },function(){
+
+                });
             };
 
             $scope.mostrar = function() {
@@ -143,14 +166,14 @@
 
         }]);
 
-    app.controller('localDetailController', ['$log','$scope','$state','localData', '$rootScope','$timeout', 'localsService','$uibModal',
-        function ($log, $scope, $state, localData, $rootScope, $timeout, localsService,$uibModal) {
+    app.controller('localDetailController', ['$log','$scope','$state','localData', '$rootScope','$timeout', 'localsService','$uibModal','ordersData','ngTableParams',
+        function ($log, $scope, $state, localData, $rootScope, $timeout, localsService, $uibModal, ordersData, NgTableParams) {
 
             var init = function() {
                 $scope.local = {};
+                $scope.orders = {};
                 var positions = [];
                 var centerMap = [];
-                console.log(localData);
                 if (localData) {
                     $scope.local = localData.local;
                     if (angular.isDefined(localData.local.lat) && angular.isDefined(localData.local.lng)) {
@@ -163,11 +186,14 @@
                         });
                         centerMap = [localData.local.lat, localData.local.lng];
                     }
-
                     $rootScope.$emit('local.local_id', {local_id: localData.local.id});
                 }
 
-
+                if (ordersData){
+                    $scope.orders = ordersData;
+                    $scope.vm={};
+                    $scope.vm.tableParams = new NgTableParams({count:10}, { data: ordersData,counts:[10,15,20]});
+                }
 
                 $timeout(function() {
                     $rootScope.$emit('positions.positionsChange', {centerMap: centerMap, positions: positions});
@@ -197,6 +223,31 @@
                     resolve: {productData : productData},
                     scope: $scope
                 });
+                $scope.modalInstance.result.then(function(modalResult){
+                },function(){
+
+                });
+            };
+
+            $scope.editUser = function (local_id) {
+                $scope.modalInstance = $uibModal.open({
+                    templateUrl: 'users/userModalEdit.tpl.html',
+                    size: 'lg',
+                    controller: 'userModalEditController',
+                    resolve: {
+                        userData: (['usersService','$q',
+                            function (usersService, $q) {
+                                var def = $q.defer();
+                                usersService.getlocaluser({local_id: local_id}).then(function(data){
+                                    def.resolve(data);
+                                }, function (err) {
+                                    def.reject(err);
+                                });
+                                return def.promise;
+                            }])
+                    },
+                    scope: $scope
+                });
 
                 $scope.modalInstance.result.then(function(modalResult){
                 },function(){
@@ -204,11 +255,26 @@
                 });
             };
 
+            $scope.viewOrderDetail = function (id) {
+                $scope.modalInstance = $uibModal.open({
+                    templateUrl: 'orders/ordersModalView.tpl.html',
+                    size: 'lg',
+                    controller: 'ordersModalViewController',
+                    resolve: {orderId: id},
+                    scope: $scope
+                });
+
+                $scope.modalInstance.result.then(function(modalResult){
+
+                },function(){
+                });
+            };
+
             init();
         }]);
 
-    app.controller('localModalEditController', ['$scope', '$uibModalInstance', '$log','$rootScope','localData',
-        function ($scope, $uibModalInstance, $log, $rootScope,localData) {
+    app.controller('localModalEditController', ['$scope', '$uibModalInstance', '$log','$rootScope','localData','$uibModal',
+        function ($scope, $uibModalInstance, $log, $rootScope,localData,$uibModal) {
             var init = function () {
                 $scope.local = localData;
             };
@@ -220,12 +286,29 @@
                 $uibModalInstance.dismiss('Exit');
             };
 
+            $scope.newUser = function () {
+                console.log('click');
+                $scope.modalInstance = $uibModal.open({
+                    templateUrl: 'users/userModalEdit.tpl.html',
+                    size: 'lg',
+                    controller: 'userModalEditController',
+                    resolve: {userData : {newuser:true}},
+                    scope: $scope
+                });
+
+                $scope.modalInstance.result.then(function(modalResult){
+                },function(){
+
+                });
+            };
+
             init();
         }]);
 
     app.controller('productModalEditController', ['$scope', '$uibModalInstance', '$log','$rootScope', 'productData',
-        function ($scope, $uibModalInstance, $log, $rootScope,productData) {
+        function ($scope, $uibModalInstance, $log, $rootScope, productData) {
             var init = function () {
+                console.log(productData);
                 $scope.product = productData;
             };
             $scope.ok = function (model) {
