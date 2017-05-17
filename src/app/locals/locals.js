@@ -301,7 +301,7 @@
             var init = function () {
                 $scope.local = localData;
                 usersService.getAllUsers().then(function (users) {
-                    $scope.users = data;
+                    $scope.users = users;
                 });
             };
             $scope.ok = function () {
