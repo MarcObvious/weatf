@@ -166,8 +166,8 @@
 
         }]);
 
-    app.controller('localDetailController', ['$log','$scope','$state','localData', '$rootScope','$timeout', 'localsService','$uibModal','ordersData','ngTableParams',
-        function ($log, $scope, $state, localData, $rootScope, $timeout, localsService, $uibModal, ordersData, NgTableParams) {
+    app.controller('localDetailController', ['$log','$scope','$state','localData', '$rootScope','$timeout', 'localsService','$uibModal','ordersData','ngTableParams','productsService',
+        function ($log, $scope, $state, localData, $rootScope, $timeout, localsService, $uibModal, ordersData, NgTableParams, productsService) {
 
             var init = function() {
                 $scope.local = {};
@@ -215,12 +215,35 @@
                 });
             };
 
-            $scope.editProduct = function (productData) {
+            $scope.newProduct = function () {
                 $scope.modalInstance = $uibModal.open({
                     templateUrl: 'locals/productModalEdit.tpl.html',
                     size: 'lg',
                     controller: 'productModalEditController',
-                    resolve: {productData : productData},
+                    resolve: {productData :{newproduct: true}},
+                    scope: $scope
+                });
+                $scope.modalInstance.result.then(function(modalResult){
+                },function(){
+
+                });
+            };
+
+            $scope.editProduct = function (id_product) {
+                $scope.modalInstance = $uibModal.open({
+                    templateUrl: 'locals/productModalEdit.tpl.html',
+                    size: 'lg',
+                    controller: 'productModalEditController',
+                    resolve: {productData : (['productsService','$q',
+                        function (productsService, $q) {
+                            var def = $q.defer();
+                            productsService.getProduct({product_id: id_product}).then(function(data){
+                                def.resolve(data);
+                            }, function (err) {
+                                def.reject(err);
+                            });
+                            return def.promise;
+                        }])},
                     scope: $scope
                 });
                 $scope.modalInstance.result.then(function(modalResult){
@@ -343,5 +366,6 @@
     'ui.router',
     'ngAnimate',
     'localsService',
+    'productsService',
     'authService'
 ])));

@@ -32,12 +32,14 @@
                 </div>
                 <div class="col-md-6">
                     <label>Imagen:</label>
-                    <input disabled class="form-control" placeholder="Imagen" ng-model="product.picture">
+                    <!--<input disabled class="form-control" placeholder="Imagen" ng-model="product.picture">-->
+                    <input type='file' ng-model='product.picture' base-sixty-four-input>
                 </div>
                 <div class="col-md-12">
                     <label>Descripción</label>
                     <textarea class="form-control" rows="5" placeholder="Descripción" ng-model="product.description"></textarea>
                 </div>
+                {{product.picture}}
 
             </div>
         </div>

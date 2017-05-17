@@ -76,6 +76,7 @@
     'genericDirectives',
     'ngMap',
     'ngTable',
-    'ngCsv'
+    'ngCsv',
+    'naif.base64'
 
 ])));
