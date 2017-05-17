@@ -1,7 +1,7 @@
 <div>
     <div class="modal-header">
         <h3 class="modal-title" ng-if="product.newproduct">Alta de producto nuevo</h3>
-        <h3 class="modal-title" ng-if="!product.newproduct">Edición del producto {{product.id}}</h3>
+        <h3 class="modal-title" ng-if="!product.newproduct">Edición del producto {{product.name}}</h3>
     </div>
     <div class="modal-body clearfix">
         <div class="col-md-12">
@@ -12,7 +12,13 @@
                 </div>
                 <div class="col-md-6">
                     <label>Tipo:</label>
+                    <select class="form-control" ng-model="product.type">
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                </select>
+<!--
                     <input class="form-control" placeholder="Tipo" ng-model="product.type">
+-->
                 </div>
                 <div class="col-md-6">
                     <label>Precio inicial:</label>
@@ -39,24 +45,27 @@
                     <label>Descripción</label>
                     <textarea class="form-control" rows="5" placeholder="Descripción" ng-model="product.description"></textarea>
                 </div>
-                {{product.picture}}
-
             </div>
         </div>
     </div>
     <div class="modal-footer">
         <div class="col-md-12">
-            <div class="col-md-6" ng-if="!product.newproduct">
-                <button type="button" class="btn btn-danger btn-block" ng-click="cancel()">
+            <div class="col-md-4">
+                <button type="button" class="btn btn-warning btn-block" ng-click="cancel()">
+                    Cancelar <i class="fa fa-ban"></i>
+                </button>
+            </div>
+            <div class="col-md-4" ng-if="!product.newproduct">
+                <button type="button" class="btn btn-danger btn-block" ng-click="diss()">
                     Eliminar producto <i class="fa fa-trash"></i>
                 </button>
             </div>
-            <div class="col-md-6" ng-if="product.newproduct">
+            <div class="col-md-4" ng-if="product.newproduct">
                 <button type="button" class="btn btn-danger btn-block" ng-click="cancel()">
                     Descartar producto <i class="fa fa-trash"></i>
                 </button>
             </div>
-            <div class="col-md-6">
+            <div class="col-md-4">
                 <button type="button" class="btn btn-success btn-block" ng-click="ok(product)">
                     Guardar Producto <i class="fa fa-floppy-o"></i>
                 </button>

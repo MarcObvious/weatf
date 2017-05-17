@@ -28,6 +28,7 @@
         function ($scope, $uibModalInstance, $log, $rootScope, userData, usersService) {
             var init = function () {
                 $scope.user = userData ? userData : {};
+                $scope.user.gender = userData.gender ? userData.gender : "0";
             };
             $scope.ok = function (model) {
                 usersService.saveUser($scope.user).then(function(result){

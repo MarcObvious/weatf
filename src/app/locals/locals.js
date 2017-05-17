@@ -302,6 +302,7 @@
                 $scope.local = localData;
             };
             $scope.ok = function () {
+                $scope.local.picture = $scope.local.raw_picture.base64;
                 if ($scope.local.newlocal) {
                     localsService.createLocal($scope.local).then(function(result){
                         console.log(result);
@@ -349,6 +350,7 @@
             var init = function () {
                 console.log(productData);
                 $scope.product = productData;
+                $scope.product.type = $scope.product.type ? $scope.product.type : "1";
             };
             $scope.ok = function (model) {
                 $uibModalInstance.close(model);

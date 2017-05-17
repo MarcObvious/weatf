@@ -28,7 +28,11 @@
                 </div>
                 <div class="col-md-6">
                     <label>Sexo:</label>
-                    <input class="form-control" placeholder="Sexo" ng-model="user.gender">
+                    <select class="form-control" ng-model="user.gender">
+                        <option value="1">H</option>
+                        <option value="2">M</option>
+                        <option value="0">Desconocido</option>
+                    </select>
                 </div>
                 <div class="col-md-6">
                     <label>Compras:</label>
