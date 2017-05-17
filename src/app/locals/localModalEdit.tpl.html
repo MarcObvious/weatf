@@ -47,7 +47,7 @@
                     <label>Asignar usuario existente:</label>
                     <!--<input class="form-control" placeholder="Id usuario" ng-model="local.user_id">-->
                     <select class="form-control" ng-model="local.user_id">
-                        <option value="{{local.user_id}}" selected>{{local.user_id}}</option>
+                        <option ng-repeat="user in users" value="{{user.id}}" selected>{{user.email}}</option>
                     </select>
                 </div>
                 <div class="col-md-6">

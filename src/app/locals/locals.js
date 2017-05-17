@@ -301,7 +301,13 @@
             var init = function () {
                 $scope.local = localData;
                 usersService.getAllUsers().then(function (users) {
-                    $scope.users = users;
+                    var users_final = [];
+                    angular.forEach(users, function (user) {
+                        if (angular.isDefined(user.user_type) && user.user_type ===2) {
+                            users_final = user;
+                        }
+                    });
+                    $scope.users = users_final;
                 });
             };
             $scope.ok = function () {
