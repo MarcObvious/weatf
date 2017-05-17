@@ -14,24 +14,21 @@ angular.module('usersService', [])
                             timeout: 15000,
                             method: 'POST'
                         },
+                        update: {
+                            timeout: 15000,
+                            method: 'PUT'
+                        },
                         get: {
                             timeout: 15000,
                             method: 'GET'
+                        },
+                        remove: {
+                            timeout: 15000,
+                            method: 'DELETE'
                         }
                     });
                 },
-
-                getusers: function (params) {
-                    var def = $q.defer();
-                    this.api('getusers/').save({}, {}, function(data){
-                        def.resolve(data.data);
-                    }, function (err) {
-                        def.reject(err);
-                    });
-
-                    return def.promise;
-                },
-                getlocaluser: function (params) {
+                getlocalUser: function (params) {
                     var def = $q.defer();
                     this.api('getlocalusers/').save({}, params, function(data){
                         def.resolve(data.data);
@@ -40,7 +37,37 @@ angular.module('usersService', [])
                     });
 
                     return def.promise;
-                }
+                },
+                createUser: function (params) {
+                    var def = $q.defer();
+                    this.api('createuser/').save({}, params, function(data){
+                        def.resolve(data.data);
+                    }, function (err) {
+                        def.reject(err);
+                    });
+                    return def.promise;
+                },
+                saveUser: function (params) {
+                    var def = $q.defer();
+                    this.api('updateuser/').update({}, params, function(data){
+                        def.resolve(data.data);
+                    }, function (err) {
+                        def.reject(err);
+                    });
+                    return def.promise;
+                },
+                deleteUser: function (params) {
+                    var def = $q.defer();
+                    this.api('deleteuser/').remove({}, params, function(data){
+                        def.resolve(data.data);
+                    }, function (err) {
+                        def.reject(err);
+                    });
+
+                    return def.promise;
+                },
+
+
 
 
             };

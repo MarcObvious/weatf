@@ -238,7 +238,7 @@
                         userData: (['usersService','$q',
                             function (usersService, $q) {
                                 var def = $q.defer();
-                                usersService.getlocaluser({local_id: local_id}).then(function(data){
+                                usersService.getlocalUser({local_id: local_id}).then(function(data){
                                     def.resolve(data);
                                 }, function (err) {
                                     def.reject(err);
@@ -273,21 +273,37 @@
             init();
         }]);
 
-    app.controller('localModalEditController', ['$scope', '$uibModalInstance', '$log','$rootScope','localData','$uibModal',
-        function ($scope, $uibModalInstance, $log, $rootScope,localData,$uibModal) {
+    app.controller('localModalEditController', ['$scope', '$uibModalInstance', '$log','$rootScope','localData','$uibModal','localsService',
+        function ($scope, $uibModalInstance, $log, $rootScope,localData, $uibModal,localsService) {
             var init = function () {
                 $scope.local = localData;
             };
-            $scope.ok = function (model) {
-                $uibModalInstance.close(model);
+            $scope.ok = function () {
+                if ($scope.local.newlocal) {
+                    localsService.createLocal($scope.local).then(function(result){
+                        console.log(result);
+                    });
+                }
+                else {
+                    localsService.saveLocal($scope.local).then(function(result){
+                        console.log(result);
+                    });
+                }
+                $uibModalInstance.close($scope.local);
             };
 
-            $scope.cancel = function (model) {
+            $scope.cancel = function () {
+                $uibModalInstance.dismiss('Exit');
+            };
+
+            $scope.delete = function (local_id) {
+                localsService.deleteLocal({local_id:local_id}).then(function(result){
+                    console.log(result);
+                });
                 $uibModalInstance.dismiss('Exit');
             };
 
             $scope.newUser = function () {
-                console.log('click');
                 $scope.modalInstance = $uibModal.open({
                     templateUrl: 'users/userModalEdit.tpl.html',
                     size: 'lg',

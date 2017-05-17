@@ -14,9 +14,17 @@ angular.module('localsService', [])
                             timeout: 15000,
                             method: 'POST'
                         },
+                        update: {
+                            timeout: 15000,
+                            method: 'PUT'
+                        },
                         get: {
                             timeout: 15000,
                             method: 'GET'
+                        },
+                        remove: {
+                            timeout: 15000,
+                            method: 'DELETE'
                         }
                     });
                 },
@@ -24,6 +32,35 @@ angular.module('localsService', [])
                 getLocals: function (params) {
                     var def = $q.defer();
                     this.api('getlocals/').save({}, {}, function(data){
+                        def.resolve(data.data);
+                    }, function (err) {
+                        def.reject(err);
+                    });
+
+                    return def.promise;
+                },
+                createLocal: function (params) {
+                    var def = $q.defer();
+                    this.api('createlocal/').save({}, params, function(data){
+                        def.resolve(data.data);
+                    }, function (err) {
+                        def.reject(err);
+                    });
+                    return def.promise;
+                },
+                saveLocal: function (params) {
+                    var def = $q.defer();
+                    this.api('updatelocal/').update({}, params, function(data){
+                        def.resolve(data.data);
+                    }, function (err) {
+                        def.reject(err);
+                    });
+
+                    return def.promise;
+                },
+                deleteLocal: function (params) {
+                    var def = $q.defer();
+                    this.api('deletelocal/').remove({}, params, function(data){
                         def.resolve(data.data);
                     }, function (err) {
                         def.reject(err);
