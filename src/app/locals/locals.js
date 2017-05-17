@@ -312,7 +312,7 @@
                     });
                 }
                 else {
-                    $scope.local.local_id = $scope.local.id;
+                    $scope.local.id_local = $scope.local.id;
                     localsService.saveLocal($scope.local).then(function(result){
                         console.log(result);
                     });
