@@ -1,6 +1,6 @@
 angular.module('authService', [])
-    .factory('authService', ['$resource', '$q', '$log', 'globalService','$state','localStorageService',
-        function ($resource, $q, $log, globalService, $state, localStorageService) {
+    .factory('authService', ['$resource', '$q', '$log', 'globalService','$state','localStorageService','$rootScope',
+        function ($resource, $q, $log, globalService, $state, localStorageService,$rootScope) {
             return {
                 api: function (extra_route) {
                     if (!extra_route) {
@@ -32,6 +32,8 @@ angular.module('authService', [])
                 autentica: function () {
                     var authToken = localStorageService.get(CUSTOM_HEADER);
                     var user_data = localStorageService.get('user_data');
+                    $rootScope.username = localStorageService.get('user_name');
+                    $rootScope.useremail = localStorageService.get('user_email');
                     if(authToken && user_data) {
                         return true;
                     }
@@ -47,6 +49,8 @@ angular.module('authService', [])
                     this.api('login').save({},{email:username, password:password}, function (data){
                         if (data.message === 'Usuario identificado'){
                             localStorageService.set('user_data', true);
+                            localStorageService.set('user_name', data.data.email);
+                            localStorageService.set('user_email', data.data.firstname +' '+data.data.lastname);
                             def.resolve(data.data);
                         }
                         else {
@@ -61,6 +65,8 @@ angular.module('authService', [])
                     this.api('logout').save({},{}, function (data){
                         localStorageService.remove(CUSTOM_HEADER);
                         localStorageService.remove('user_data');
+                        localStorageService.remove('user_name');
+                        localStorageService.remove('user_email');
                         window.location = '/auth';
                         def.resolve(true);
                     });

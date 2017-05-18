@@ -102,7 +102,6 @@
 
                 if (localsData.locals) {
                     $scope.locals = localsData.locals;
-                    console.log($scope.locals);
                     $scope.positions = [];
                     $scope.totalItems = $scope.locals.length;
 

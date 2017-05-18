@@ -142,7 +142,6 @@
                 $scope.model={};
                 $scope.orderId = orderId;
                 $scope.orderDetails = angular.isDefined($scope.orders[orderId].orderdetail) ? $scope.orders[orderId].orderdetail : [];
-                console.log($scope.orderDetails);
             };
 
             $scope.ok = function (model) {

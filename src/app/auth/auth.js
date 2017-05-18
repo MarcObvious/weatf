@@ -5,14 +5,6 @@
                 .state('root.auth', {
                     url: '/auth',
                     parent: 'root',
-                    resolve: {
-                        /*autentica: (['globalService',  function (globalService) {
-                            console.log('AUTH!?');
-
-                            return true;
-                        }])*/
-
-                    },
                     views: {
                         "container@": {
                             controller: 'authController',
@@ -47,6 +39,8 @@
                     $scope.date = new Date();
                     $scope.login = {};
                     $scope.logged = authService.autentica();
+                    $scope.login.email = $rootScope.useremail;
+                    $scope.login.name = $rootScope.username;
                     $rootScope.$emit('logged.loggedChange', {logged: $scope.logged});
                 };
 
@@ -54,15 +48,18 @@
                     authService.submitLogout();
                     $scope.logged = false;
                     $rootScope.$emit('logged.loggedChange', {logged: false});
-                    $state.go('root.auth',{},{refresh:true});
+                    //$state.go('root.auth',{},{refresh:true});
                 };
+
+                $rootScope.$watch('useremail', function (p1, p2, p3) {
+                    $scope.login.email = $rootScope.useremail;
+                    $scope.login.name = $rootScope.username;
+                });
 
                 $scope.submitLogin = function(){
                     authService.submitLogin($scope.login.username, $scope.login.password).then(function (data) {
                         if(data) {
                             $scope.logged = true;
-                            $scope.login.email = data.email;
-                            $scope.login.name = data.firstname +' '+data.lastname;
                             $rootScope.$emit('logged.loggedChange', {logged: true});
                             $state.go('root.locals.localgrid');
                             return true;
