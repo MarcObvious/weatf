@@ -60,7 +60,7 @@
                     authService.submitLogout();
                     $scope.logged = false;
                     $rootScope.$emit('logged.loggedChange', {logged: false});
-                    $state.go('root.auth');
+                    $state.go('root.auth',{},{refresh:true});
                 };
 
                 $scope.submitLogin = function(){

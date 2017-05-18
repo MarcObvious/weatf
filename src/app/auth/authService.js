@@ -8,7 +8,7 @@ angular.module('authService', [])
                     if (!extra_route) {
                         extra_route = '';
                     }
-                    return $resource(API_URL + '/login' + extra_route, {}, {
+                    return $resource(API_URL + '/' + extra_route, {}, {
                         query: {
                             timeout: 15000
                         },
@@ -49,7 +49,7 @@ angular.module('authService', [])
                     // globalService.removeStorage(CUSTOM_HEADER);
                     // globalService.removeStorage('user_data');
 
-                    this.api().save({},{email:username, password:password}, function (data){
+                    this.api('login').save({},{email:username, password:password}, function (data){
                         if (data.message === 'Usuario identificado'){
                             console.log(data);
                             _user_data = data;
@@ -63,10 +63,19 @@ angular.module('authService', [])
 
                     return def.promise;
                 },
+
                 submitLogout: function () {
-                    globalService.removeStorage(CUSTOM_HEADER);
+                    var def = $q.defer();
+                   //
                     globalService.removeStorage('user_data');
-                    return true;
+
+                    this.api('logout').save({},{}, function (data){
+                        globalService.removeStorage(CUSTOM_HEADER);
+                        def.resolve(true);
+                    });
+
+                    return def.promise;
+
                 }
             };
         }]);
