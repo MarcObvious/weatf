@@ -392,7 +392,7 @@
                     $scope.product.picture = $scope.product.raw_picture.base64;
                 }
                 if ($scope.product.newproduct) {
-                    productsService.createProduct($scope.local).then(function(result){
+                    productsService.createProduct($scope.product).then(function(result){
                         console.log(result);
                     });
                 }
