@@ -46,8 +46,8 @@
                 if (angular.isDefined($scope.user.raw_picture.base64)){
                     $scope.user.picture = $scope.user.raw_picture.base64;
                 }
-
-                $scope.user.birthdate = $scope.dates.birthday.toISOString().slice(0,12);
+                var mal = $scope.dates.birthday.toISOString().slice(0,10);
+                $scope.user.birthdate = mal.slice(8,10) + '-' + mal.slice(5,7) + '-'+mal.slice(0,4);
                 if ($scope.user.newuser) {
                     usersService.createUser($scope.user).then(function(result){
                         console.log(result);
