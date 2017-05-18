@@ -220,7 +220,7 @@
                     templateUrl: 'locals/productModalEdit.tpl.html',
                     size: 'lg',
                     controller: 'productModalEditController',
-                    resolve: {productData :{newproduct: true}},
+                    resolve: {productData :{newproduct: true, local_id:$scope.local.id}},
                     scope: $scope
                 });
                 $scope.modalInstance.result.then(function(modalResult){
