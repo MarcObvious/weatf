@@ -308,7 +308,7 @@
         function ($scope, $uibModalInstance, $log, $rootScope,localData, $uibModal,localsService, usersService) {
             var init = function () {
                 $scope.local = localData;
-
+                $scope.local.raw_picture ={};
                 $scope.dates = {};
                 $scope.dates.from_hour = angular.isDefined(localData.from_hour) ? new Date('2017-05-05 '+localData.from_hour) : new Date();
                 $scope.dates.to_hour = angular.isDefined(localData.to_hour) ? new Date('2017-05-05 '+localData.to_hour) : new Date();
@@ -379,6 +379,7 @@
         function ($scope, $uibModalInstance, $log, $rootScope, productData, productsService) {
             var init = function () {
                 $scope.product = productData;
+                $scope.product.raw_picture ={};
                 $scope.product.type = $scope.product.type ? $scope.product.type.toString() : "1";
             };
 

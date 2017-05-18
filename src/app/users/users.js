@@ -28,6 +28,7 @@
         function ($scope, $uibModalInstance, $log, $rootScope, userData, usersService) {
             var init = function () {
                 $scope.user = userData ? userData : {};
+                $scope.user.raw_picture ={};
                 $scope.user.gender = userData.gender ? userData.gender : "0";
 
                 $scope.dates = {};
@@ -46,7 +47,7 @@
                     $scope.user.picture = $scope.user.raw_picture.base64;
                 }
 
-                $scope.user.birthdate = $scope.dates.birthday.toISOString();
+                $scope.user.birthdate = $scope.dates.birthday.toISOString().slice(0,10);
                 if ($scope.user.newuser) {
                     usersService.createUser($scope.user).then(function(result){
                         console.log(result);
