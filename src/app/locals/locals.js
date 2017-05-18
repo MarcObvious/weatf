@@ -210,8 +210,8 @@
                 });
 
                 $scope.modalInstance.result.then(function(modalResult){
+                    $scope.local = modalResult;
                 },function(){
-
                 });
             };
 
@@ -333,15 +333,17 @@
                 if ($scope.local.newlocal) {
                     localsService.createLocal($scope.local).then(function(result){
                         console.log(result);
+                        $uibModalInstance.close(result);
                     });
                 }
                 else {
                     $scope.local.local_id = $scope.local.id;
                     localsService.saveLocal($scope.local).then(function(result){
                         console.log(result);
+                        $uibModalInstance.close(result);
                     });
                 }
-                $uibModalInstance.close($scope.local);
+
             };
 
             $scope.cancel = function () {
