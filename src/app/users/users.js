@@ -51,6 +51,7 @@
                 if ($scope.user.newuser) {
                     usersService.createUser($scope.user).then(function(result){
                         console.log(result);
+                        $uibModalInstance.close(result);
                     });
                 }
                 else {
@@ -59,9 +60,10 @@
                     $scope.user.user_id = $scope.user.id;
                     usersService.saveUser($scope.user).then(function(result){
                         console.log(result);
+                        $uibModalInstance.close(result);
                     });
                 }
-                $uibModalInstance.close($scope.user);
+
             };
 
             $scope.cancel = function () {

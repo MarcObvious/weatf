@@ -309,6 +309,7 @@
             var init = function () {
                 $scope.local = localData;
                 $scope.local.raw_picture ={};
+                $scope.local.user_id = angular.isDefined($scope.local.user_id) ? $scope.local.user_id.toString() : "0";
                 $scope.dates = {};
                 $scope.dates.from_hour = angular.isDefined(localData.from_hour) ? new Date('2017-05-05 '+localData.from_hour) : new Date();
                 $scope.dates.to_hour = angular.isDefined(localData.to_hour) ? new Date('2017-05-05 '+localData.to_hour) : new Date();
@@ -364,10 +365,11 @@
                 });
 
                 $scope.modalInstance.result.then(function(userResult){
-                    $scope.users.push(userResult);
-                    $scope.local.user_id = userResult.id;
+                    if(angular.isDefined(userResult.id)){
+                        $scope.users.push(userResult);
+                        $scope.local.user_id = userResult.id.toString();
+                    }
                 },function(){
-
 
                 });
             };
