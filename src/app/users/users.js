@@ -42,7 +42,10 @@
             };
 
             $scope.save = function () {
-                $scope.user.picture = $scope.user.raw_picture.base64;
+                if (angular.isDefined($scope.user.raw_picture.base64)){
+                    $scope.user.picture = $scope.user.raw_picture.base64;
+                }
+
                 $scope.user.birthdate = $scope.dates.birthday.toISOString();
                 if ($scope.user.newuser) {
                     usersService.createUser($scope.user).then(function(result){

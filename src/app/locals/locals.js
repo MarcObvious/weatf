@@ -323,7 +323,9 @@
                 });
             };
             $scope.save = function () {
-                $scope.local.picture = $scope.local.raw_picture.base64;
+                if (angular.isDefined($scope.local.raw_picture.base64)){
+                    $scope.local.picture = $scope.local.raw_picture.base64;
+                }
 
                 $scope.local.from_hour = $scope.dates.from_hour.toISOString().slice(11,19);
                 $scope.local.to_hour =  $scope.dates.to_hour.toISOString().slice(11,19);
@@ -381,7 +383,9 @@
             };
 
             $scope.save = function () {
-                $scope.product.picture = $scope.product.raw_picture.base64;
+                if (angular.isDefined($scope.product.raw_picture.base64)){
+                    $scope.product.picture = $scope.product.raw_picture.base64;
+                }
                 if ($scope.product.newlocal) {
                     productsService.createProduct($scope.local).then(function(result){
                         console.log(result);
