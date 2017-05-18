@@ -37,9 +37,12 @@
                     <input class="form-control" placeholder="Stock" ng-model="product.stock">
                 </div>
                 <div class="col-md-6">
+                    <label>Imagen Url:</label>
+                    <input disabled class="form-control" placeholder="Imagen" ng-model="product.picture">
+                </div>
+                <div class="col-md-6">
                     <label>Imagen:</label>
-                    <!--<input disabled class="form-control" placeholder="Imagen" ng-model="product.picture">-->
-                    <input type='file' ng-model='product.picture' base-sixty-four-input>
+                    <input class="form-control" type='file' ng-model='product.raw_picture' base-sixty-four-input>
                 </div>
                 <div class="col-md-12">
                     <label>Descripción</label>
@@ -56,7 +59,7 @@
                 </button>
             </div>
             <div class="col-md-4" ng-if="!product.newproduct">
-                <button type="button" class="btn btn-danger btn-block" ng-click="diss()">
+                <button type="button" class="btn btn-danger btn-block" ng-click="delete(product.id)">
                     Eliminar producto <i class="fa fa-trash"></i>
                 </button>
             </div>
@@ -66,7 +69,7 @@
                 </button>
             </div>
             <div class="col-md-4">
-                <button type="button" class="btn btn-success btn-block" ng-click="ok(product)">
+                <button type="button" class="btn btn-success btn-block" ng-click="save()">
                     Guardar Producto <i class="fa fa-floppy-o"></i>
                 </button>
             </div>

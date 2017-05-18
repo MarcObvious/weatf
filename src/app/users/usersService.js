@@ -75,10 +75,7 @@ angular.module('usersService', [])
                     });
 
                     return def.promise;
-                },
-
-
-
+                }
 
             };
         }]);

@@ -213,8 +213,6 @@ angular.module('genericDirectives', [])
         };
     }])
 
-
-
     .directive('sidebarSearch',['$state', function($state) {
         return {
             templateUrl:'directives/templates/sidebar-search.tpl.html',
@@ -228,7 +226,7 @@ angular.module('genericDirectives', [])
                 };
 
                 $scope.searchF = function () {
-                    $state.go('root.home.orderdetail',{id_order:$scope.string_search});
+                    $state.go('root.locals.localdetail',{id_local:$scope.string_search});
                     $scope.string_search = '';
                 };
 

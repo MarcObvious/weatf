@@ -310,7 +310,7 @@
                     $scope.users = users_final;
                 });
             };
-            $scope.ok = function () {
+            $scope.save = function () {
                 $scope.local.picture = $scope.local.raw_picture.base64;
                 if ($scope.local.newlocal) {
                     localsService.createLocal($scope.local).then(function(result){
@@ -355,18 +355,37 @@
             init();
         }]);
 
-    app.controller('productModalEditController', ['$scope', '$uibModalInstance', '$log','$rootScope', 'productData',
-        function ($scope, $uibModalInstance, $log, $rootScope, productData) {
+    app.controller('productModalEditController', ['$scope', '$uibModalInstance', '$log','$rootScope', 'productData', 'productsService',
+        function ($scope, $uibModalInstance, $log, $rootScope, productData, productsService) {
             var init = function () {
-                console.log(productData);
                 $scope.product = productData;
-                $scope.product.type = $scope.product.type ? $scope.product.type : "1";
-            };
-            $scope.ok = function (model) {
-                $uibModalInstance.close(model);
+                $scope.product.type = $scope.product.type ? $scope.product.type.toString() : "1";
             };
 
-            $scope.cancel = function (model) {
+            $scope.save = function () {
+                $scope.product.picture = $scope.product.raw_picture.base64;
+                if ($scope.product.newlocal) {
+                    productsService.createProduct($scope.local).then(function(result){
+                        console.log(result);
+                    });
+                }
+                else {
+                    $scope.product.product_id = $scope.product.id;
+                    productsService.saveProduct($scope.product).then(function(result){
+                        console.log(result);
+                    });
+                }
+                $uibModalInstance.close($scope.product);
+            };
+
+            $scope.cancel = function () {
+                $uibModalInstance.dismiss('Exit');
+            };
+
+            $scope.delete = function (product_id) {
+                productsService.deleteProduct({product_id:product_id}).then(function(result){
+                    console.log(result);
+                });
                 $uibModalInstance.dismiss('Exit');
             };
 

@@ -1,7 +1,7 @@
 <div>
     <div class="modal-header">
         <h3 class="modal-title" ng-if="user.newuser">Alta nuevo usuario</h3>
-        <h3 class="modal-title" ng-if="!user.newuser">Edición del usuario {{user.id}}</h3>
+        <h3 class="modal-title" ng-if="!user.newuser">Edición del usuario {{user.email}}</h3>
     </div>
     <div class="modal-body clearfix">
         <div class="col-md-12">
@@ -39,24 +39,20 @@
                     <input disabled class="form-control" placeholder="Compras" ng-model="user.purchases">
                 </div>
                 <div class="col-md-6">
-                    <label>Imagen:</label>
-                    <input disabled class="form-control" placeholder="Imagen url" ng-model="user.profile_picture_url">
-                </div>
-                <div class="col-md-6">
                     <label>Tipo de usuario:</label>
                     <input disabled class="form-control" placeholder="Tipo de usuario" ng-model="user.user_type">
                 </div>
                 <div class="col-md-6">
-                    <label>Imagen:</label>
+                    <label>Imagen url:</label>
                     <input disabled class="form-control" placeholder="Imagen url" ng-model="user.profile_picture_url">
                 </div>
                 <div class="col-md-6">
                     <label>Creado a:</label>
-                    <input disabled class="form-control" placeholder="Imagen url" ng-model="user.created_at">
+                    <input disabled class="form-control" placeholder="Creado a" ng-model="user.created_at">
                 </div>
                 <div class="col-md-6">
                     <label>Actualizado a:</label>
-                    <input disabled class="form-control" placeholder="Imagen url" ng-model="user.updated_at">
+                    <input disabled class="form-control" placeholder="Actualizado a" ng-model="user.updated_at">
                 </div>
                 <div class="col-md-6">
                     <label>Asignado a local:</label>
@@ -67,18 +63,23 @@
     </div>
     <div class="modal-footer">
         <div class="col-md-12">
-            <div class="col-md-6" ng-if="user.newuser">
+            <div class="col-md-4">
+                <button type="button" class="btn btn-warning btn-block" ng-click="cancel()">
+                    Cancelar <i class="fa fa-ban"></i>
+                </button>
+            </div>
+            <div class="col-md-4" ng-if="user.newuser">
                 <button type="button" class="btn btn-danger btn-block" ng-click="cancel()">
                     Descartar usuario <i class="fa fa-trash"></i>
                 </button>
             </div>
-            <div class="col-md-6" ng-if="!user.newuser">
-                <button type="button" class="btn btn-danger btn-block" ng-click="cancel()">
+            <div class="col-md-4" ng-if="!user.newuser">
+                <button type="button" class="btn btn-danger btn-block" ng-click="delete()">
                     Eliminar usuario <i class="fa fa-trash"></i>
                 </button>
             </div>
-            <div class="col-md-6">
-                <button type="button" class="btn btn-success btn-block" ng-click="ok(user)">
+            <div class="col-md-4">
+                <button type="button" class="btn btn-success btn-block" ng-click="save(user)">
                     Guardar usuario <i class="fa fa-floppy-o"></i>
                 </button>
             </div>

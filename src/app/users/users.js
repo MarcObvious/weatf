@@ -30,7 +30,7 @@
                 $scope.user = userData ? userData : {};
                 $scope.user.gender = userData.gender ? userData.gender : "0";
             };
-            $scope.ok = function (model) {
+           /* $scope.ok = function (model) {
                 usersService.saveUser($scope.user).then(function(result){
                     console.log(result);
                 });
@@ -39,12 +39,39 @@
 
             $scope.cancel = function (model) {
                 $uibModalInstance.dismiss('Exit');
+            };*/
+
+            $scope.save = function () {
+                $scope.user.picture = $scope.user.raw_picture.base64;
+                if ($scope.user.newuser) {
+                    usersService.createUser($scope.user).then(function(result){
+                        console.log(result);
+                    });
+                }
+                else {
+                    $scope.user.user_id = $scope.user.id;
+                    usersService.saveUser($scope.user).then(function(result){
+                        console.log(result);
+                    });
+                }
+                $uibModalInstance.close($scope.user);
+            };
+
+            $scope.cancel = function () {
+                $uibModalInstance.dismiss('Exit');
+            };
+
+            $scope.delete = function (user_id) {
+                usersService.deleteUser({user_id:user_id}).then(function(result){
+                    console.log(result);
+                });
+                $uibModalInstance.dismiss('Exit');
             };
 
             init();
         }]);
 
-    app.controller('productModalEditController', ['$scope', '$uibModalInstance', '$log','$rootScope', 'productData',
+    /*app.controller('productModalEditController', ['$scope', '$uibModalInstance', '$log','$rootScope', 'productData',
         function ($scope, $uibModalInstance, $log, $rootScope, productData) {
             var init = function () {
                 $scope.product = productData;
@@ -58,7 +85,7 @@
             };
 
             init();
-        }]);
+        }]);*/
 
 
 }(angular.module("weatf.users", [
