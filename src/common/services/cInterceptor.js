@@ -47,7 +47,7 @@ angular.module('cInterceptor', [])
                     return parameterValue;
                 };
 
-                if(rejection.data.code === 401) {
+                if(rejection.data && rejection.data.code === 401) {
                     console.log('unautorized');
                     $rootScope.customHeader = '';
                     localStorageService.remove(CUSTOM_HEADER);

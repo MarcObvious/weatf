@@ -1,5 +1,5 @@
 {
-  "name": "Mbd",
+  "name": "Weatf",
   "version": "0.0.1",
   "description": "AngularJS boilerplate for WebApps",
   "main": "bin/index.html",
@@ -21,7 +21,7 @@
   "bugs": {
     "url": ""
   },
-  "homepage": "http://lmbd.iaproject.net",
+  "homepage": "http://wse.iaproject.net",
   "dependencies": {
     "coffeelint": "^1.8.1",
     "connect-modrewrite": "^0.7.9",
