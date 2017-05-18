@@ -391,7 +391,7 @@
                 if (angular.isDefined($scope.product.raw_picture.base64)){
                     $scope.product.picture = $scope.product.raw_picture.base64;
                 }
-                if ($scope.product.newlocal) {
+                if ($scope.product.newproduct) {
                     productsService.createProduct($scope.local).then(function(result){
                         console.log(result);
                     });

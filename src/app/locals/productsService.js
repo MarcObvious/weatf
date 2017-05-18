@@ -30,7 +30,7 @@ angular.module('productsService', [])
                 },
                 createProduct: function (params) {
                     var def = $q.defer();
-                    this.api('createproduct/').save({}, params, function(data){
+                    this.api('createproducts/').save({}, params, function(data){
                         def.resolve(data.data);
                     }, function (err) {
                         def.reject(err);
