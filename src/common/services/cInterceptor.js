@@ -27,14 +27,19 @@ angular.module('cInterceptor', [])
                 return config;
             },
             'response': function (response) {
+
+                if(response.data.code === 401) {
+                    $rootScope.customHeader = '';
+                    sessionStorage.removeItem(CUSTOM_HEADER);
+                }
                 //Save data custom header to send in next request
-                /*      if (response.headers(CUSTOM_HEADER) !== null) {
-                 $rootScope.customHeader = response.headers(CUSTOM_HEADER);
-                 sessionStorage.setItem(CUSTOM_HEADER, response.headers(CUSTOM_HEADER));
-                 } else {
-                 $rootScope.customHeader = sessionStorage.getItem(CUSTOM_HEADER);
-                 }
-                 response.headers('Allow', '*');*/
+                /*if (response.headers(CUSTOM_HEADER) !== null) {
+                    $rootScope.customHeader = response.headers(CUSTOM_HEADER);
+                    sessionStorage.setItem(CUSTOM_HEADER, response.headers(CUSTOM_HEADER));
+                } else {
+                    $rootScope.customHeader = sessionStorage.getItem(CUSTOM_HEADER);
+                }
+                response.headers('Allow', '*');*/
                 return response;
             },
             'responseError': function (rejection) {
