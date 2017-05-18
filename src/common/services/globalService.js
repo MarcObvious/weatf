@@ -3,7 +3,7 @@
  */
 angular.module('globalService', [])
     .factory('globalService', ['$resource', '$q', '$log', 'localStorageService','$rootScope',
-        function ($resource, $q, $log, localStorageService,$rootScope) {
+        function ($resource, $q, $log, localStorageService, $rootScope) {
             return {
                 api: function (extra_route) {
                     if (!extra_route) {
@@ -26,23 +26,27 @@ angular.module('globalService', [])
                 getAuthToken: function() {
                     //sessionStorage.setItem(CUSTOM_HEADER, '');
                     var def = $q.defer();
-                    var _this = this;
-                    this.getStorage(CUSTOM_HEADER).then(function(authToken){
-                        if (!authToken || authToken === 'no_token'){
-                            _this.api('init').save({}, {}, function (data) {
-                                var authToken = data.data.userinfo.authtoken;
-                                if(authToken) {
-                                    _this.setStorage(CUSTOM_HEADER, authToken);
-                                    sessionStorage.setItem(CUSTOM_HEADER, authToken);
-                                }
-                                def.resolve(authToken);
-                            });
-                        }
-                        else {
-                            sessionStorage.setItem(CUSTOM_HEADER, authToken);
+
+                    var authToken = localStorageService.get(CUSTOM_HEADER);
+
+                    if (!authToken){
+                        this.api('init').save({}, {}, function (data) {
+                            var authToken = data.data.userinfo.authtoken;
+                            if(authToken) {
+                                localStorageService.set(CUSTOM_HEADER, authToken);
+                            }
                             def.resolve(authToken);
-                        }
-                    });
+                        });
+                    }
+                    else {
+                        localStorageService.set(CUSTOM_HEADER, authToken);
+                        def.resolve(authToken);
+                    }
+
+
+                   /* this.getStorage(CUSTOM_HEADER).then(function(authToken){
+
+                    });*/
                     return def.promise;
                 },
                 getAction: function () {

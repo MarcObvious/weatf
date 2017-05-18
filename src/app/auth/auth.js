@@ -6,13 +6,11 @@
                     url: '/auth',
                     parent: 'root',
                     resolve: {
-                        autentica: (['globalService',  function (globalService) {
+                        /*autentica: (['globalService',  function (globalService) {
                             console.log('AUTH!?');
-                            globalService.getAuthToken().then(function (authtoken) {
-                                console.log(authtoken);
-                            });
+
                             return true;
-                        }])
+                        }])*/
 
                     },
                     views: {
@@ -48,12 +46,8 @@
                     $scope.selectedMenu = 'home';
                     $scope.date = new Date();
                     $scope.login = {};
-                    $scope.logged = false;
-                    authService.autentica().then(function(logged){
-                        $scope.logged = logged;
-                        $rootScope.$emit('logged.loggedChange', {logged: $scope.logged});
-                    });
-
+                    $scope.logged = authService.autentica();
+                    $rootScope.$emit('logged.loggedChange', {logged: $scope.logged});
                 };
 
                 $scope.submitLogout = function() {

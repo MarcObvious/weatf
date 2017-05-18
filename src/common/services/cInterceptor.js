@@ -4,13 +4,13 @@
  */
 
 angular.module('cInterceptor', [])
-    .factory('cInterceptor', ['$q', '$rootScope', function ($q, $rootScope) {
+    .factory('cInterceptor', ['$q', '$rootScope','localStorageService', function ($q, $rootScope, localStorageService) {
         return {
             'request': function (config) {
                 config.headers = config.headers || {};
 
                 //Get saved data of your custom header from sessionStorage
-                $rootScope.customHeader = sessionStorage.getItem(CUSTOM_HEADER);
+                $rootScope.customHeader = localStorageService.get(CUSTOM_HEADER);
 
                 //$rootScope.customHeader = API_KEY;
                 //console.log('interceptor');
@@ -27,11 +27,6 @@ angular.module('cInterceptor', [])
                 return config;
             },
             'response': function (response) {
-
-                if(response.data.code === 401) {
-                    $rootScope.customHeader = '';
-                    sessionStorage.removeItem(CUSTOM_HEADER);
-                }
                 //Save data custom header to send in next request
                 /*if (response.headers(CUSTOM_HEADER) !== null) {
                     $rootScope.customHeader = response.headers(CUSTOM_HEADER);
@@ -51,6 +46,13 @@ angular.module('cInterceptor', [])
                     }
                     return parameterValue;
                 };
+
+                if(rejection.data.code === 401) {
+                    console.log('unautorized');
+                    $rootScope.customHeader = '';
+                    localStorageService.remove(CUSTOM_HEADER);
+                    localStorageService.remove('user_data');
+                }
 
                 //var code = getUrlParam('code');
                 return $q.reject(rejection);

@@ -7,9 +7,7 @@
                     parent: 'root',
                     resolve: {
                         autentica: (['authService','$state', function (authService) {
-                            authService.autentica().then(function(logged){
-                                return logged;
-                            });
+                            return authService.autentica();
                         }])
                     },
                     abstract: true,
@@ -26,15 +24,19 @@
                     url: '/?:{page}',
                     parent: 'root.locals',
                     resolve: {
-                        localsData: (['localsService', '$q', '$log','$stateParams',
-                            function (localsService, $q, $log, $stateParams) {
+                        localsData: (['localsService', '$q', '$log','$stateParams','authService',
+                            function (localsService, $q, $log, $stateParams,authService) {
                                 var def = $q.defer();
+                                var logged=authService.autentica();
+                                if (logged) {
                                 $log.debug('locals::::ResolveLocalsGrid');
                                 localsService.getLocals().then(function(data){
                                     def.resolve({locals: data, filterName:'Todos los locales:', page: $stateParams.page});
                                 }, function (err) {
                                     def.reject(err);
                                 });
+                                }
+                                else{def.reject();}
                                 return def.promise;
                             }])
                     },

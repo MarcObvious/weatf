@@ -7,9 +7,7 @@
                     parent: 'root',
                     resolve: {
                         autentica: (['authService','$state', function (authService) {
-                            authService.autentica().then(function(logged){
-                                return logged;
-                            });
+                            return authService.autentica();
                         }])
                     },
                     abstract: true,

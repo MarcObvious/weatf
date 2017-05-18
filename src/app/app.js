@@ -2,7 +2,7 @@
 
     app.config(['$stateProvider', '$urlRouterProvider', '$httpProvider', '$locationProvider', 'localStorageServiceProvider',
         function ($stateProvider, $urlRouterProvider, $httpProvider, $locationProvider, localStorageServiceProvider) {
-            $urlRouterProvider.otherwise('/');
+            $urlRouterProvider.otherwise('/auth');
             $httpProvider.interceptors.push('cInterceptor');
             $httpProvider.defaults.useXDomain = true;
             delete $httpProvider.defaults.headers.common['X-Requested-With'];
@@ -13,7 +13,6 @@
                 .setStorageCookie(7, '/')
                 .setStorageCookieDomain(COOKIE_DOMAIN)
                 .setNotify(true, true);
-
 
             //Root view, very important resolve data async before states
             $stateProvider
@@ -36,11 +35,15 @@
         }
     ]);
 
-    app.run(['$log', function ($log) {
+    app.run(['$log','globalService', function ($log,globalService) {
+        globalService.getAuthToken().then(function (authtoken) {
+            console.log(authtoken);
+        });
     }]);
 
-    app.controller('AppController', ['$scope', '$log','geolocationService', function ($scope, $log, geolocationService) {
+    app.controller('AppController', ['$scope', '$log','globalService', function ($scope, $log,globalService) {
         $log.info('App:: Starting AppController');
+
         //$log.info('App::Geolocation::' + geolocationService.getNearestCity());
     }]);
 

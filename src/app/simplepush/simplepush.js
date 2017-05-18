@@ -8,7 +8,7 @@
                     resolve:{
                         autentica: (['authService',  function (authService) {
                             return authService.autentica();
-                        }]),
+                        }])
                     },
                     views: {
                         "container@": {

@@ -62,33 +62,28 @@ angular.module('genericDirectives', [])
         };
     })
 
-    .directive('sidebar',['$location','$state','globalService','$uibModal','$rootScope',
-        function($location, $state, globalService, $uibModal, $rootScope) {
+    .directive('sidebar',['$location','$state','globalService','$uibModal','$rootScope','authService',
+        function($location, $state, globalService, $uibModal, $rootScope,authService) {
             return {
                 templateUrl:'directives/templates/sidebar.tpl.html',
                 restrict: 'E',
                 replace: true,
                 scope: {},
-                controller:function($scope, $rootScope, authService){
+                controller:function($scope, $rootScope){
                     var init = function(){
                         $scope.collapseVar = 999;
                         $scope.multiCollapseVar = 0;
 
                         $scope.check(1);
 
-                        $scope.logged = false;
                         $scope.sidebarContent = {};
 
-                        authService.autentica().then(function(logged){
-                            $scope.logged = logged;
-                            if ($scope.logged) {
-                                globalService.getSideBarContent().then(function(content){
-                                    $scope.sidebarContent = content;
-                                });
-                            }
-                        });
-
-
+                        $scope.logged = authService.autentica();
+                        if ($scope.logged) {
+                            globalService.getSideBarContent().then(function(content){
+                                $scope.sidebarContent = content;
+                            });
+                        }
                     };
 
                     $rootScope.$on('logged.loggedChange', function(event, aValues) {
@@ -240,24 +235,39 @@ angular.module('genericDirectives', [])
             restrict: 'E',
             replace: true,
             scope: {},
-            controller:  ('sidebarLocalsController', ['$scope', 'globalService','$state','$uibModal','$rootScope',
-                function($scope, globalService, $state, $uibModal,$rootScope) {
+            controller:  ('sidebarLocalsController', ['$scope', 'globalService','$state','$uibModal','$rootScope','authService',
+                function($scope, globalService, $state, $uibModal,$rootScope,authService) {
 
                     var init = function(){
                         $scope.locals = [];
-                        globalService.getSideBarLocals().then(function(data){
-                            $scope.locals = data;
-                        }, function (err) {
-                            console.log(err);
-                        });
+                        $scope.logged = authService.autentica();
+
+                        if ($scope.logged) {
+                            globalService.getSideBarLocals().then(function(data){
+                                $scope.locals = data;
+                            }, function (err) {
+                                console.log(err);
+                            });
+                        }
+
                         $scope.localSelected = 'Todos';
 
                         $scope.selectedMenu = 'home';
 
                     };
 
+                    $rootScope.$on('logged.loggedChange', function(event, aValues) {
+                        $scope.logged = aValues.logged;
+                        if ($scope.logged) {
+                            globalService.getSideBarLocals().then(function(data){
+                                $scope.locals = data;
+                            }, function (err) {
+                                console.log(err);
+                            });
+                        }
+                    });
+
                     $scope.$watch('localSelected', function(id, oldValue) {
-                        console.log(id);
                         if (id === 'Todos'){
                             $rootScope.localSelected= id;
                             $state.go('root.locals.localgrid',{page: 1});

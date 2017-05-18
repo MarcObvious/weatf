@@ -1,8 +1,6 @@
 angular.module('authService', [])
-    .factory('authService', ['$resource', '$q', '$log', 'globalService','$state',
-        function ($resource, $q, $log, globalService, $state) {
-            var _user_data = {};
-            var _logged = false;
+    .factory('authService', ['$resource', '$q', '$log', 'globalService','$state','localStorageService',
+        function ($resource, $q, $log, globalService, $state, localStorageService) {
             return {
                 api: function (extra_route) {
                     if (!extra_route) {
@@ -32,48 +30,40 @@ angular.module('authService', [])
                     return def.promise;
                 },
                 autentica: function () {
-                    var def = $q.defer();
-                    globalService.getStorage(CUSTOM_HEADER).then(function(authToken) {
-                        if(authToken!== 'no_token' && _logged) {
-                            def.resolve(true);
+                    var authToken = localStorageService.get(CUSTOM_HEADER);
+                    var user_data = localStorageService.get('user_data');
+                    if(authToken && user_data) {
+                        return true;
+                    }
+                    else {
+                        if(window.location.href.indexOf('/auth') === -1) {
+                            window.location = '/auth';
                         }
-                        else {
-                            $state.go('root.auth');
-                            def.reject();
-                        }
-                    });
-                    return def.promise;
+                        return false;
+                    }
                 },
                 submitLogin: function (username,password) {
                     var def = $q.defer();
-                    // globalService.removeStorage(CUSTOM_HEADER);
-                    // globalService.removeStorage('user_data');
-
                     this.api('login').save({},{email:username, password:password}, function (data){
                         if (data.message === 'Usuario identificado'){
-                            console.log(data);
-                            _user_data = data;
-                            _logged = true;
+                            localStorageService.set('user_data', true);
                             def.resolve(data.data);
                         }
                         else {
                             def.reject();
                         }
                     });
-
                     return def.promise;
                 },
 
                 submitLogout: function () {
                     var def = $q.defer();
-                   //
-                    globalService.removeStorage('user_data');
-
                     this.api('logout').save({},{}, function (data){
-                        globalService.removeStorage(CUSTOM_HEADER);
+                        localStorageService.remove(CUSTOM_HEADER);
+                        localStorageService.remove('user_data');
+                        window.location = '/auth';
                         def.resolve(true);
                     });
-
                     return def.promise;
 
                 }
