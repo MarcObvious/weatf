@@ -361,8 +361,11 @@
                     scope: $scope
                 });
 
-                $scope.modalInstance.result.then(function(modalResult){
+                $scope.modalInstance.result.then(function(userResult){
+                    $scope.users.push(userResult);
+                    $scope.local.user_id = userResult.id;
                 },function(){
+
 
                 });
             };
