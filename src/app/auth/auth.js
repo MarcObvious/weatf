@@ -65,8 +65,10 @@
 
                 $scope.submitLogin = function(){
                     authService.submitLogin($scope.login.username, $scope.login.password).then(function (data) {
-                        if(data === true) {
+                        if(data) {
                             $scope.logged = true;
+                            $scope.login.email = data.email;
+                            $scope.login.name = data.firstname +' '+data.lastname;
                             $rootScope.$emit('logged.loggedChange', {logged: true});
                             $state.go('root.locals.localgrid');
                             return true;

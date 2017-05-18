@@ -1,7 +1,7 @@
 <div class="sidebar-loginBox">
     <div ng-show="logged">
-        <h4 class="str">Administrador <span class="head-text" ng-click="submitLogout()"><i class="fa fa-sign-in" aria-hidden="true"></i></span></h4>
-        <p>Admin xx xxx</p>
+        <h4 class="str">{{login.name}} <span class="head-text" ng-click="submitLogout()"><i class="fa fa-sign-in" aria-hidden="true"></i></span></h4>
+        <p>{{login.email}}</p>
         {{date | date:'hh:mm'}} - {{date | date:'longDate'}}
         <hr>
     </div>

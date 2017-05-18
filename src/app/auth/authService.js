@@ -47,13 +47,18 @@ angular.module('authService', [])
                 submitLogin: function (username,password) {
                     var def = $q.defer();
                     // globalService.removeStorage(CUSTOM_HEADER);
-                   // globalService.removeStorage('user_data');
+                    // globalService.removeStorage('user_data');
 
                     this.api().save({},{email:username, password:password}, function (data){
-                        console.log(data);
-                        _user_data = data;
-                        _logged = true;
-                        def.resolve(true);
+                        if (data.message === 'Usuario identificado'){
+                            console.log(data);
+                            _user_data = data;
+                            _logged = true;
+                            def.resolve(data.data);
+                        }
+                        else {
+                            def.reject();
+                        }
                     });
 
                     return def.promise;
