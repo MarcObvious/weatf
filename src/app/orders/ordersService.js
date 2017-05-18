@@ -94,6 +94,16 @@ angular.module('ordersService', [])
                             def.reject(err);
                         });
                         return def.promise;
+                    },
+                    cancelOrder: function (params) {
+                        var def = $q.defer();
+                        this.api('cancel_order/').save({}, params, function(data){
+                            def.resolve(data.data);
+                        }, function (err) {
+                            def.reject(err);
+                        });
+
+                        return def.promise;
                     }
                 };
             }]);

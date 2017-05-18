@@ -17,7 +17,7 @@
                             return authService.autentica();
                         }]),
                         ordersData: (['ordersService', '$q', '$log','$stateParams','$rootScope',
-                            function (ordersService, $q, $log, $stateParams,$rootScope) {
+                            function (ordersService, $q, $log, $stateParams, $rootScope) {
                                 var def = $q.defer();
                                 $log.debug('locals::::ResolveOrders');
                                 if ($stateParams.id_local !== undefined) {
@@ -30,7 +30,7 @@
                                 else {
                                     //TODO ALL ORDERS (root)
                                     ordersService.getLocalOrders({local_id: 1}).then(function(data){
-                                        def.resolve({orders: data, filterName:'Pedidos local: ' + local_id});
+                                        def.resolve({orders: data, filterName:'Pedidos de todos los locales'});
                                     }, function (err) {
                                         def.reject(err);
                                     });
@@ -108,33 +108,11 @@
                 });
             };
 
-            $scope.deleteorders = function(id) {
-                ordersService.deleteorders(id).then(function(data){
-                    $scope.addAlert('orderso eliminado correctamente!', 'success', 3000);
-                    ordersService.getAllorders().then(function (data) {
-                        $scope.vm.tableParams = new ngTableParams({count:10}, { data: data.data,counts:[10,15,20]});
-                    }, function (err) {
-                        $log.error(err);
-                        $scope.addAlert('Error al recuperar datos!', 'danger', 3000);
-                    });
-                },function(err){
-                    $log.error(err);
-                    $scope.addAlert('Error al guardar orderso!', 'danger', 3000);
-                });
-            };
+            $scope.cancelOrder = function (params) {
+                ordersService.cancelOrder(params).then(function(result){
+                    console.log(result);
+                }, function (err) {
 
-            $scope.duplicateorders = function(id) {
-                ordersService.duplicateorders(id).then(function(data){
-                    $scope.addAlert('orderso duplicado correctamente!', 'success', 3000);
-                    ordersService.getAllorders().then(function (data) {
-                        $scope.vm.tableParams = new ngTableParams({count:10}, { data: data.data,counts:[10,15,20]});
-                    }, function (err) {
-                        $log.error(err);
-                        $scope.addAlert('Error al recuperar datos!', 'danger', 3000);
-                    });
-                },function(err){
-                    $log.error(err);
-                    $scope.addAlert('Error al duplicar orderso!', 'danger', 3000);
                 });
             };
 

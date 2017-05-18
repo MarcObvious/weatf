@@ -29,26 +29,29 @@
             var init = function () {
                 $scope.user = userData ? userData : {};
                 $scope.user.gender = userData.gender ? userData.gender : "0";
-            };
-           /* $scope.ok = function (model) {
-                usersService.saveUser($scope.user).then(function(result){
-                    console.log(result);
-                });
-                $uibModalInstance.close(model);
+
+                $scope.dates = {};
+                $scope.dates.format = 'dd-MM-yyyy';
+                $scope.dates.dateOptions = { formatYear: 'yy', startingDay: 1 };
+                $scope.dates.birthday = angular.isDefined(userData.birthdate) ? new Date(userData.birthdate) : new Date();
+                $scope.dates.opened = false;
             };
 
-            $scope.cancel = function (model) {
-                $uibModalInstance.dismiss('Exit');
-            };*/
+            $scope.openDatepicker = function() {
+                $scope.dates.opened = true;
+            };
 
             $scope.save = function () {
                 $scope.user.picture = $scope.user.raw_picture.base64;
+                $scope.user.birthdate = $scope.dates.birthday.toISOString();
                 if ($scope.user.newuser) {
                     usersService.createUser($scope.user).then(function(result){
                         console.log(result);
                     });
                 }
                 else {
+                    delete $scope.user.created_at;
+                    delete $scope.user.updated_at;
                     $scope.user.user_id = $scope.user.id;
                     usersService.saveUser($scope.user).then(function(result){
                         console.log(result);

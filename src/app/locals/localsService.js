@@ -77,6 +77,16 @@ angular.module('localsService', [])
                     });
 
                     return def.promise;
+                },
+                cancelOrder: function (params) {
+                    var def = $q.defer();
+                    this.api('cancel_order/').save({}, params, function(data){
+                        def.resolve(data.data);
+                    }, function (err) {
+                        def.reject(err);
+                    });
+
+                    return def.promise;
                 }
 
 

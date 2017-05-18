@@ -293,6 +293,14 @@
                 });
             };
 
+            $scope.cancelOrder = function (params) {
+                localsService.cancelOrder(params).then(function(result){
+                    console.log(result);
+                }, function (err) {
+
+                });
+            };
+
             init();
         }]);
 
@@ -300,11 +308,15 @@
         function ($scope, $uibModalInstance, $log, $rootScope,localData, $uibModal,localsService, usersService) {
             var init = function () {
                 $scope.local = localData;
+
+                $scope.dates = {};
+                $scope.dates.from_hour = angular.isDefined(localData.from_hour) ? new Date('2017-05-05 '+localData.from_hour) : new Date();
+                $scope.dates.to_hour = angular.isDefined(localData.to_hour) ? new Date('2017-05-05 '+localData.to_hour) : new Date();
                 usersService.getAllUsers().then(function (users) {
                     var users_final = [];
                     angular.forEach(users, function (user) {
                         if (angular.isDefined(user.user_type) && user.user_type ===2) {
-                            users_final = user;
+                            users_final.push(user);
                         }
                     });
                     $scope.users = users_final;
@@ -312,6 +324,9 @@
             };
             $scope.save = function () {
                 $scope.local.picture = $scope.local.raw_picture.base64;
+
+                $scope.local.from_hour = $scope.dates.from_hour.toISOString().slice(11,19);
+                $scope.local.to_hour =  $scope.dates.to_hour.toISOString().slice(11,19);
                 if ($scope.local.newlocal) {
                     localsService.createLocal($scope.local).then(function(result){
                         console.log(result);

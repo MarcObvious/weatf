@@ -1,4 +1,4 @@
-<div>
+<div class="usersClass">
     <div class="modal-header">
         <h3 class="modal-title" ng-if="user.newuser">Alta nuevo usuario</h3>
         <h3 class="modal-title" ng-if="!user.newuser">Edición del usuario {{user.email}}</h3>
@@ -8,27 +8,37 @@
             <div class="form-group">
                 <div class="col-md-6">
                     <label>Nombre</label>
-                    <input class="form-control" placeholder="Nombre del usuario" ng-model="user.firstname">
+                    <input class="form-control input-modal" placeholder="Nombre del usuario" ng-model="user.firstname">
                 </div>
                 <div class="col-md-6">
                     <label>Apellido</label>
-                    <input class="form-control" placeholder="Apellido del usuario" ng-model="user.lastname">
+                    <input class="form-control input-modal" placeholder="Apellido del usuario" ng-model="user.lastname">
                 </div>
                 <div class="col-md-6">
                     <label>Email:</label>
-                    <input class="form-control" placeholder="Email" ng-model="user.email">
+                    <input class="form-control input-modal" placeholder="Email" ng-model="user.email">
                 </div>
                 <div class="col-md-6">
                     <label>Phone:</label>
-                    <input class="form-control" placeholder="Telefono" ng-model="user.phone">
+                    <input class="form-control input-modal" placeholder="Telefono" ng-model="user.phone">
                 </div>
                 <div class="col-md-6">
                     <label>Aniversario:</label>
-                    <input class="form-control" placeholder="Aniversario" ng-model="user.birthdate">
+                    <p class="input-group">
+                        <input title="Aniversario" type="text" name="birthday"
+                               class="form-control" is-open="dates.opened"
+                               ng-model="dates.birthday" popup-placement="bottom"
+                               uib-datepicker-popup="{{dateStart.format}}"
+                               datepicker-options="dates.dateOptions"
+                               placeholder="Aniversario"/>
+                        <span class="input-group-btn">
+                            <button type="button" class="btn btn-success" ng-click="openDatepicker()"><i class="fa fa-calendar"></i></button>
+                        </span>
+                    </p>
                 </div>
                 <div class="col-md-6">
                     <label>Sexo:</label>
-                    <select class="form-control" ng-model="user.gender">
+                    <select class="form-control input-modal" ng-model="user.gender">
                         <option value="1">H</option>
                         <option value="2">M</option>
                         <option value="0">Desconocido</option>
@@ -36,50 +46,54 @@
                 </div>
                 <div class="col-md-6">
                     <label>Compras:</label>
-                    <input disabled class="form-control" placeholder="Compras" ng-model="user.purchases">
+                    <input disabled class="form-control input-modal" placeholder="Compras" ng-model="user.purchases">
                 </div>
                 <div class="col-md-6">
                     <label>Tipo de usuario:</label>
-                    <input disabled class="form-control" placeholder="Tipo de usuario" ng-model="user.user_type">
+                    <input class="form-control input-modal" placeholder="Tipo de usuario" ng-model="user.user_type">
                 </div>
                 <div class="col-md-6">
                     <label>Imagen url:</label>
-                    <input disabled class="form-control" placeholder="Imagen url" ng-model="user.profile_picture_url">
+                    <input disabled class="form-control input-modal" placeholder="Imagen url" ng-model="user.profile_picture_url">
                 </div>
                 <div class="col-md-6">
-                    <label>Creado a:</label>
-                    <input disabled class="form-control" placeholder="Creado a" ng-model="user.created_at">
+                    <label>Imagen:</label>
+                    <input class="form-control input-modal" type='file' ng-model='user.raw_picture' base-sixty-four-input>
                 </div>
-                <div class="col-md-6">
-                    <label>Actualizado a:</label>
-                    <input disabled class="form-control" placeholder="Actualizado a" ng-model="user.updated_at">
-                </div>
-                <div class="col-md-6">
-                    <label>Asignado a local:</label>
-                    <input disabled class="form-control" placeholder="Id local" ng-model="user.local_id">
-                </div>
+                <!-- <div class="col-md-6">
+                     <label>Creado a:</label>
+                     <input disabled class="form-control input-modal" placeholder="Creado a" ng-model="user.created_at">
+                 </div>
+                 <div class="col-md-6">
+                     <label>Actualizado a:</label>
+                     <input disabled class="form-control input-modal" placeholder="Actualizado a" ng-model="user.updated_at">
+                 </div>
+                 <div class="col-md-6">
+                     <label>Asignado a local:</label>
+                     <input disabled class="form-control input-modal" placeholder="Id local" ng-model="user.local_id">
+                 </div>-->
             </div>
         </div>
     </div>
     <div class="modal-footer">
         <div class="col-md-12">
             <div class="col-md-4">
-                <button type="button" class="btn btn-warning btn-block" ng-click="cancel()">
+                <button type="button" class="btn btn-warning btn-block input-modal" ng-click="cancel()">
                     Cancelar <i class="fa fa-ban"></i>
                 </button>
             </div>
             <div class="col-md-4" ng-if="user.newuser">
-                <button type="button" class="btn btn-danger btn-block" ng-click="cancel()">
+                <button type="button" class="btn btn-danger btn-block input-modal" ng-click="cancel()">
                     Descartar usuario <i class="fa fa-trash"></i>
                 </button>
             </div>
             <div class="col-md-4" ng-if="!user.newuser">
-                <button type="button" class="btn btn-danger btn-block" ng-click="delete()">
+                <button type="button" class="btn btn-danger btn-block input-modal" ng-click="delete()">
                     Eliminar usuario <i class="fa fa-trash"></i>
                 </button>
             </div>
             <div class="col-md-4">
-                <button type="button" class="btn btn-success btn-block" ng-click="save(user)">
+                <button type="button" class="btn btn-success btn-block input-modal" ng-click="save(user)">
                     Guardar usuario <i class="fa fa-floppy-o"></i>
                 </button>
             </div>

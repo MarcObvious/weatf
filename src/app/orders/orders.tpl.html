@@ -20,10 +20,10 @@
                         <td title="'Fecha actualización'" filter="{ updated_at: 'text'}" sortable="'updated_at'">
                             {{order.updated_at|date:'yyyy-MM-dd hh:mm'}}</td>
                         <td title="'Acciones'" class="text-center">
-                            <button class="btn btn-success btn-xs" uib-tooltip="Ver detalles del pedido" tooltip-placement="left" tooltip-trigger="mouseenter" ng-click="viewOrderDetail($index)">
+                            <button class="btn btn-warning btn-xs" uib-tooltip="Ver detalles del pedido" tooltip-placement="left" tooltip-trigger="mouseenter" ng-click="viewOrderDetail($index)">
                                 <i class="fa fa-eye"></i>
                             </button>
-                            <button class="btn btn-danger btn-xs" uib-tooltip="Eliminar pedido" tooltip-placement="left" tooltip-trigger="mouseenter" ng-click="deleteorders(order.id)">
+                            <button class="btn btn-danger btn-xs" uib-tooltip="Eliminar pedido" tooltip-placement="left" tooltip-trigger="mouseenter" ng-click="cancelOrder({local_id: order.orderdetail[0].local_id, order_id: order.id})">
                                 <i class="fa fa-trash-o"></i>
                             </button>
                         </td>

@@ -8,45 +8,45 @@
             <div class="form-group">
                 <div class="col-md-6">
                     <label>Nombre del producto</label>
-                    <input class="form-control" placeholder="Nombre del producto" ng-model="product.name">
+                    <input class="form-control input-modal" placeholder="Nombre del producto" ng-model="product.name">
                 </div>
                 <div class="col-md-6">
                     <label>Tipo:</label>
-                    <select class="form-control" ng-model="product.type">
+                    <select class="form-control input-modal" ng-model="product.type">
                     <option value="1">1</option>
                     <option value="2">2</option>
                 </select>
 <!--
-                    <input class="form-control" placeholder="Tipo" ng-model="product.type">
+                    <input class="form-control input-modal" placeholder="Tipo" ng-model="product.type">
 -->
                 </div>
                 <div class="col-md-6">
                     <label>Precio inicial:</label>
-                    <input class="form-control" placeholder="Precio inicial" ng-model="product.previous_price">
+                    <input class="form-control input-modal" placeholder="Precio inicial" ng-model="product.previous_price">
                 </div>
                 <div class="col-md-6">
                     <label>Precio final:</label>
-                    <input class="form-control" placeholder="Precio final" ng-model="product.final_price">
+                    <input class="form-control input-modal" placeholder="Precio final" ng-model="product.final_price">
                 </div>
                 <div class="col-md-6">
                     <label>IVA:</label>
-                    <input class="form-control" placeholder="Iva" ng-model="product.tax_rate">
+                    <input class="form-control input-modal" placeholder="Iva" ng-model="product.tax_rate">
                 </div>
                 <div class="col-md-6">
                     <label>Stock:</label>
-                    <input class="form-control" placeholder="Stock" ng-model="product.stock">
+                    <input class="form-control input-modal" placeholder="Stock" ng-model="product.stock">
                 </div>
                 <div class="col-md-6">
                     <label>Imagen Url:</label>
-                    <input disabled class="form-control" placeholder="Imagen" ng-model="product.picture">
+                    <input disabled class="form-control input-modal" placeholder="Imagen" ng-model="product.picture">
                 </div>
                 <div class="col-md-6">
                     <label>Imagen:</label>
-                    <input class="form-control" type='file' ng-model='product.raw_picture' base-sixty-four-input>
+                    <input class="form-control input-modal" type='file' ng-model='product.raw_picture' base-sixty-four-input>
                 </div>
                 <div class="col-md-12">
                     <label>Descripción</label>
-                    <textarea class="form-control" rows="5" placeholder="Descripción" ng-model="product.description"></textarea>
+                    <textarea class="form-control input-modal" rows="5" placeholder="Descripción" ng-model="product.description"></textarea>
                 </div>
             </div>
         </div>
@@ -54,22 +54,22 @@
     <div class="modal-footer">
         <div class="col-md-12">
             <div class="col-md-4">
-                <button type="button" class="btn btn-warning btn-block" ng-click="cancel()">
+                <button type="button" class="btn btn-warning btn-block input-modal" ng-click="cancel()">
                     Cancelar <i class="fa fa-ban"></i>
                 </button>
             </div>
             <div class="col-md-4" ng-if="!product.newproduct">
-                <button type="button" class="btn btn-danger btn-block" ng-click="delete(product.id)">
+                <button type="button" class="btn btn-danger btn-block input-modal" ng-click="delete(product.id)">
                     Eliminar producto <i class="fa fa-trash"></i>
                 </button>
             </div>
             <div class="col-md-4" ng-if="product.newproduct">
-                <button type="button" class="btn btn-danger btn-block" ng-click="cancel()">
+                <button type="button" class="btn btn-danger btn-block input-modal" ng-click="cancel()">
                     Descartar producto <i class="fa fa-trash"></i>
                 </button>
             </div>
             <div class="col-md-4">
-                <button type="button" class="btn btn-success btn-block" ng-click="save()">
+                <button type="button" class="btn btn-success btn-block input-modal" ng-click="save()">
                     Guardar Producto <i class="fa fa-floppy-o"></i>
                 </button>
             </div>

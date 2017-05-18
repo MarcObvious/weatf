@@ -8,56 +8,58 @@
             <div class="form-group">
                 <div class="col-md-6">
                     <label>Nombre del Local</label>
-                    <input class="form-control" placeholder="Nombre del local" ng-model="local.name">
+                    <input class="form-control input-modal" placeholder="Nombre del local" ng-model="local.name">
                 </div>
                 <div class="col-md-6">
                     <label>Dirección</label>
-                    <input class="form-control" placeholder="Dirección" ng-model="local.direction">
+                    <input class="form-control input-modal" placeholder="Dirección" ng-model="local.direction">
                 </div>
                 <div class="col-md-6">
                     <label>Codigo postal:</label>
-                    <input class="form-control" placeholder="CP" ng-model="local.postcode">
+                    <input class="form-control input-modal" placeholder="CP" ng-model="local.postcode">
                 </div>
                 <div class="col-md-6">
                     <label>Telefono:</label>
-                    <input class="form-control" placeholder="Telefono" ng-model="local.phone">
+                    <input class="form-control input-modal" placeholder="Telefono" ng-model="local.phone">
                 </div>
                 <div class="col-md-6">
                     <label>Latitud</label>
-                    <input class="form-control" placeholder="Latitud" ng-model="local.lat">
+                    <input class="form-control input-modal" placeholder="Latitud" ng-model="local.lat">
                 </div>
                 <div class="col-md-6">
                     <label>Longitud</label>
-                    <input class="form-control" placeholder="Longitud" ng-model="local.lng">
+                    <input class="form-control input-modal" placeholder="Longitud" ng-model="local.lng">
                 </div>
                 <div class="col-md-6">
                     <label>Desde:</label>
-                    <input class="form-control" placeholder="Hora" ng-model="local.from_hour">
+                    <!--<input class="form-control input-modal" placeholder="Hora" ng-model="local.from_hour">-->
+                    <div uib-timepicker class="input-modal" ng-model="dates.from_hour" show-spinners="false" show-meridian="false"></div>
                 </div>
                 <div class="col-md-6">
                     <label>Hasta:</label>
-                    <input class="form-control" placeholder="Hora de recogida" ng-model="local.to_hour">
+                    <div uib-timepicker class="input-modal" ng-model="dates.to_hour" show-spinners="false" show-meridian="false"></div>
+                    <!--<input class="form-control input-modal" placeholder="Hora de recogida" ng-model="local.to_hour">-->
                 </div>
                 <div class="col-md-6">
                     <label>Asignar usuario existente:</label>
-                    <!--<input class="form-control" placeholder="Id usuario" ng-model="local.user_id">-->
-                    <select class="form-control" ng-model="local.user_id">
+                    <!--<input class="form-control input-modal" placeholder="Id usuario" ng-model="local.user_id">-->
+                    <select class="form-control input-modal" ng-model="local.user_id">
                         <option ng-repeat="user in users" value="{{user.id}}" selected>{{user.email}}</option>
                     </select>
                 </div>
                 <div class="col-md-6">
                     <label>Asignar usuario nuevo:</label>
-                    <button type="button" class="btn btn-success btn-block" ng-click="newUser()">
+                    <button type="button" class="btn btn-success btn-block input-modal" ng-click="newUser()">
                         Nuevo usuario <i class="fa fa-user"></i>
                     </button>
                 </div>
                 <div class="col-md-6">
                     <label>Imagen Url:</label>
-                    <input disabled class="form-control" placeholder="Imagen" ng-model="local.picture">
+                    <input disabled class="form-control input-modal" placeholder="Imagen" ng-model="local.picture">
                 </div>
                 <div class="col-md-6">
                     <label>Imagen:</label>
-                    <input class="form-control" type='file' ng-model='local.raw_picture' base-sixty-four-input>
+                    <input class="form-control input-modal" type='file' ng-model='local.raw_picture' base-sixty-four-input>
                 </div>
 
             </div>
@@ -66,22 +68,22 @@
     <div class="modal-footer">
         <div class="col-md-12">
             <div class="col-md-4">
-                <button type="button" class="btn btn-warning btn-block" ng-click="cancel()">
+                <button type="button" class="btn btn-warning btn-block input-modal" ng-click="cancel()">
                     Cancelar <i class="fa fa-ban"></i>
                 </button>
             </div>
             <div class="col-md-4" ng-if="local.newlocal">
-                <button type="button" class="btn btn-danger btn-block" ng-click="cancel()">
+                <button type="button" class="btn btn-danger btn-block input-modal" ng-click="cancel()">
                     Descartar Local <i class="fa fa-trash"></i>
                 </button>
             </div>
             <div class="col-md-4" ng-if="!local.newlocal">
-                <button type="button" class="btn btn-danger btn-block" ng-click="delete(local.id)">
+                <button type="button" class="btn btn-danger btn-block input-modal" ng-click="delete(local.id)">
                     Eliminar Local <i class="fa fa-trash"></i>
                 </button>
             </div>
             <div class="col-md-4">
-                <button type="button" class="btn btn-success btn-block" ng-click="save()">
+                <button type="button" class="btn btn-success btn-block input-modal" ng-click="save()">
                     Guardar Local <i class="fa fa-floppy-o"></i>
                 </button>
             </div>
