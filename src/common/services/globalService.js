@@ -104,7 +104,7 @@ angular.module('globalService', [])
                     var locals = [];
                     var locals_count = 0;
 
-                    this.api('getlocals/').save({}, {}, function (data) {
+                    this.api('getalllocals/').save({}, {}, function (data) {
                         var localsData = data.data;
                         if(localsData && localsData !== 'no data yet'){
                             angular.forEach(localsData, function (localData, index) {

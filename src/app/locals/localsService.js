@@ -31,7 +31,7 @@ angular.module('localsService', [])
 
                 getLocals: function (params) {
                     var def = $q.defer();
-                    this.api('getlocals/').save({}, {}, function(data){
+                    this.api('getalllocals/').save({}, {}, function(data){
                         def.resolve(data.data);
                     }, function (err) {
                         def.reject(err);
