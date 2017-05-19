@@ -79,23 +79,6 @@
             init();
         }]);
 
-    /*app.controller('productModalEditController', ['$scope', '$uibModalInstance', '$log','$rootScope', 'productData',
-        function ($scope, $uibModalInstance, $log, $rootScope, productData) {
-            var init = function () {
-                $scope.product = productData;
-            };
-            $scope.ok = function (model) {
-                $uibModalInstance.close(model);
-            };
-
-            $scope.cancel = function (model) {
-                $uibModalInstance.dismiss('Exit');
-            };
-
-            init();
-        }]);*/
-
-
 }(angular.module("weatf.users", [
     'ui.router',
     'ngAnimate',
