@@ -329,8 +329,8 @@
                     $scope.local.picture = $scope.local.raw_picture.base64;
                 }
 
-                $scope.local.from_hour = $scope.dates.from_hour.toISOString().slice(11,19);
-                $scope.local.to_hour =  $scope.dates.to_hour.toISOString().slice(11,19);
+                $scope.local.from_hour = $scope.dates.from_hour.toString().slice(16,21);
+                $scope.local.to_hour =  $scope.dates.to_hour.toString().slice(16,21);
                 if ($scope.local.newlocal) {
                     localsService.createLocal($scope.local).then(function(result){
                         console.log(result);
