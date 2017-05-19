@@ -27,7 +27,8 @@
             var init = function () {
                 $scope.user = userData ? userData : {};
                 $scope.user.raw_picture ={};
-                $scope.user.gender = userData.gender ? userData.gender : "0";
+                $scope.user.gender = userData.gender ? userData.gender.toString() : "0";
+                $scope.user.user_type = userData.user_type ? userData.user_type.toString() : "1";
 
                 $scope.dates = {};
                 $scope.dates.format = 'dd-MM-yyyy';

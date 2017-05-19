@@ -50,7 +50,12 @@
                 </div>
                 <div class="col-md-6">
                     <label>Tipo de usuario:</label>
-                    <input class="form-control input-modal" placeholder="Tipo de usuario" ng-model="user.user_type">
+                    <select class="form-control input-modal" ng-model="user.user_type">
+                        <option value="10">Root</option>
+                        <option value="5">Admin</option>
+                        <option value="2">Local</option>
+                        <option value="1">Cliente</option>
+                    </select>
                 </div>
                 <div class="col-md-6">
                     <label>Imagen url:</label>
