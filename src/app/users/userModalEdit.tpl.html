@@ -66,6 +66,18 @@
                     </select>
                 </div>
                 <div class="col-md-6">
+                    <label>Asignar usuario padre existente:</label>
+                    <select class="form-control input-modal" ng-model="local.user_id">
+                        <option ng-repeat="user in users" value="{{user.id}}" selected>{{user.email}}</option>
+                    </select>
+                </div>
+                <div class="col-md-6">
+                    <label>Asignar usuario padre nuevo:</label>
+                    <button type="button" class="btn btn-success btn-block input-modal" ng-click="newUser()">
+                        Nuevo usuario <i class="fa fa-user"></i>
+                    </button>
+                </div>
+                <div class="col-md-6">
                     <label>Imagen url:</label>
                     <input disabled class="form-control input-modal" placeholder="Imagen url" ng-model="user.profile_picture_url">
                 </div>

@@ -1,34 +1,34 @@
 <div>
     <div class="modal-header">
-        <h3 class="modal-title" ng-if="local.newlocal"><i class="fa fa-home"></i> Alta nuevo local</h3>
-        <h3 class="modal-title" ng-if="!local.newlocal"><i class="fa fa-home"></i> Edición del local {{local.name}}</h3>
+        <h3 class="modal-title" ng-if="localModal.newlocal"><i class="fa fa-home"></i> Alta nuevo local</h3>
+        <h3 class="modal-title" ng-if="!localModal.newlocal"><i class="fa fa-home"></i> Edición del local {{localModal.name}}</h3>
     </div>
     <div class="modal-body clearfix">
         <div class="col-md-12">
             <div class="form-group">
                 <div class="col-md-6">
                     <label>Nombre del Local</label>
-                    <input class="form-control input-modal" placeholder="Nombre del local" ng-model="local.name">
+                    <input class="form-control input-modal" placeholder="Nombre del local" ng-model="localModal.name">
                 </div>
                 <div class="col-md-6">
                     <label>Dirección</label>
-                    <input class="form-control input-modal" placeholder="Dirección" ng-model="local.direction">
+                    <input class="form-control input-modal" placeholder="Dirección" ng-model="localModal.direction">
                 </div>
                 <div class="col-md-6">
                     <label>Codigo postal:</label>
-                    <input class="form-control input-modal" placeholder="CP" ng-model="local.postcode">
+                    <input class="form-control input-modal" placeholder="CP" ng-model="localModal.postcode">
                 </div>
                 <div class="col-md-6">
                     <label>Telefono:</label>
-                    <input class="form-control input-modal" placeholder="Telefono" ng-model="local.phone">
+                    <input class="form-control input-modal" placeholder="Telefono" ng-model="localModal.phone">
                 </div>
                 <div class="col-md-6">
                     <label>Latitud</label>
-                    <input class="form-control input-modal" placeholder="Latitud" ng-model="local.lat">
+                    <input class="form-control input-modal" placeholder="Latitud" ng-model="localModal.lat">
                 </div>
                 <div class="col-md-6">
                     <label>Longitud</label>
-                    <input class="form-control input-modal" placeholder="Longitud" ng-model="local.lng">
+                    <input class="form-control input-modal" placeholder="Longitud" ng-model="localModal.lng">
                 </div>
                 <div class="col-xs-6">
                     <label>Desde:</label>
@@ -40,8 +40,8 @@
                 </div>
                 <div class="col-md-6">
                     <label>Asignar usuario existente:</label>
-                    <!--<input class="form-control input-modal" placeholder="Id usuario" ng-model="local.user_id">-->
-                    <select class="form-control input-modal" ng-model="local.user_id">
+                    <!--<input class="form-control input-modal" placeholder="Id usuario" ng-model="localModal.user_id">-->
+                    <select class="form-control input-modal" ng-model="localModal.user_id">
                         <option ng-repeat="user in users" value="{{user.id}}" selected>{{user.email}}</option>
                     </select>
                 </div>
@@ -53,11 +53,11 @@
                 </div>
                 <div class="col-md-6">
                     <label>Imagen Url:</label>
-                    <input disabled class="form-control input-modal" placeholder="Imagen" ng-model="local.picture">
+                    <input disabled class="form-control input-modal" placeholder="Imagen" ng-model="localModal.picture">
                 </div>
                 <div class="col-md-6">
                     <label>Imagen:</label>
-                    <input class="form-control input-modal" type='file' ng-model='local.raw_picture' base-sixty-four-input>
+                    <input class="form-control input-modal" type='file' ng-model='localModal.raw_picture' base-sixty-four-input>
                 </div>
 
             </div>
@@ -70,13 +70,13 @@
                     Cancelar <i class="fa fa-ban"></i>
                 </button>
             </div>
-            <div class="col-md-4" ng-if="local.newlocal">
+            <div class="col-md-4" ng-if="localModal.newlocal">
                 <button type="button" class="btn btn-danger btn-block input-modal" ng-click="cancel()">
                     Descartar Local <i class="fa fa-trash"></i>
                 </button>
             </div>
-            <div class="col-md-4" ng-if="!local.newlocal">
-                <button type="button" class="btn btn-danger btn-block input-modal" ng-click="delete(local.id)">
+            <div class="col-md-4" ng-if="!localModal.newlocal">
+                <button type="button" class="btn btn-danger btn-block input-modal" ng-click="delete(localModal.id)">
                     Eliminar Local <i class="fa fa-trash"></i>
                 </button>
             </div>

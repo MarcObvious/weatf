@@ -64,17 +64,6 @@
                                     def.reject(err);
                                 });
                                 return def.promise;
-                            }]),
-                        ordersData: (['ordersService', '$q', '$log','$stateParams','$rootScope',
-                            function (ordersService, $q, $log, $stateParams,$rootScope) {
-                                var def = $q.defer();
-                                $log.debug('locals::::ResolveOrders'+$stateParams.id_local);
-                                ordersService.getLocalOrders({local_id: $stateParams.id_local}).then(function(data){
-                                    def.resolve(data.data);
-                                }, function (err) {
-                                    def.reject(err);
-                                });
-                                return def.promise;
                             }])
                     },
                     views: {
@@ -166,8 +155,8 @@
 
         }]);
 
-    app.controller('localDetailController', ['$log','$scope','$state','localData', '$rootScope','$timeout', 'localsService','$uibModal','ordersData','ngTableParams','productsService',
-        function ($log, $scope, $state, localData, $rootScope, $timeout, localsService, $uibModal, ordersData, NgTableParams, productsService) {
+    app.controller('localDetailController', ['$log','$scope','$state','localData', '$rootScope','$timeout', 'localsService','$uibModal','productsService',
+        function ($log, $scope, $state, localData, $rootScope, $timeout, localsService, $uibModal, productsService) {
 
             var init = function() {
                 $scope.local = {};
@@ -189,12 +178,6 @@
                     }
                     $scope.local.products = $scope.local.products || [];
                     $rootScope.$emit('local.local_id', {local_id: localData.local.id});
-                }
-
-                if (ordersData){
-                    $scope.orders = ordersData;
-                    $scope.vm={};
-                    $scope.vm.tableParams = new NgTableParams({count:10}, { data: ordersData,counts:[10,15,20]});
                 }
 
                 $timeout(function() {
@@ -294,38 +277,15 @@
                 });
             };
 
-            $scope.viewOrderDetail = function (id) {
-                $scope.modalInstance = $uibModal.open({
-                    templateUrl: 'orders/ordersModalView.tpl.html',
-                    size: 'lg',
-                    controller: 'ordersModalViewController',
-                    resolve: {orderId: id},
-                    scope: $scope
-                });
-
-                $scope.modalInstance.result.then(function(modalResult){
-
-                },function(){
-                });
-            };
-
-            $scope.cancelOrder = function (params) {
-                localsService.cancelOrder(params).then(function(result){
-                    console.log(result);
-                }, function (err) {
-
-                });
-            };
-
             init();
         }]);
 
     app.controller('localModalEditController', ['$scope', '$uibModalInstance', '$log','$rootScope','localData','$uibModal','localsService','usersService',
         function ($scope, $uibModalInstance, $log, $rootScope,localData, $uibModal,localsService, usersService) {
             var init = function () {
-                $scope.local = localData;
-                $scope.local.raw_picture ={};
-                $scope.local.user_id = angular.isDefined($scope.local.user_id) ? $scope.local.user_id.toString() : "0";
+                $scope.localModal = localData;
+                $scope.localModal.raw_picture ={};
+                $scope.localModal.user_id = angular.isDefined($scope.localModal.user_id) ? $scope.localModal.user_id.toString() : "0";
                 $scope.dates = {};
                 $scope.dates.from_hour = angular.isDefined(localData.from_hour) ? new Date('2017-05-05 '+localData.from_hour) : new Date();
                 $scope.dates.to_hour = angular.isDefined(localData.to_hour) ? new Date('2017-05-05 '+localData.to_hour) : new Date();
@@ -340,22 +300,22 @@
                 });
             };
             $scope.save = function () {
-                if (angular.isDefined($scope.local.raw_picture.base64)){
-                    $scope.local.picture = $scope.local.raw_picture.base64;
+                if (angular.isDefined($scope.localModal.raw_picture.base64)){
+                    $scope.localModal.picture = $scope.localModal.raw_picture.base64;
                 }
 
-                $scope.local.from_hour = $scope.dates.from_hour.toString().slice(16,21);
-                $scope.local.to_hour =  $scope.dates.to_hour.toString().slice(16,21);
-                if ($scope.local.newlocal) {
-                    localsService.createLocal($scope.local).then(function(result){
+                $scope.localModal.from_hour = $scope.dates.from_hour.toString().slice(16,21);
+                $scope.localModal.to_hour =  $scope.dates.to_hour.toString().slice(16,21);
+                if ($scope.localModal.newlocal) {
+                    localsService.createLocal($scope.localModal).then(function(result){
                         console.log(result);
                         $uibModalInstance.close(result.data);
                     }, function(err){
                     });
                 }
                 else {
-                    $scope.local.local_id = $scope.local.id;
-                    localsService.saveLocal($scope.local).then(function(result){
+                    $scope.localModal.local_id = $scope.localModal.id;
+                    localsService.saveLocal($scope.localModal).then(function(result){
                         $uibModalInstance.close(result.data);
                     }, function(err){
                     });
@@ -387,7 +347,7 @@
                 $scope.modalInstance.result.then(function(userResult){
                     if(angular.isDefined(userResult.id)){
                         $scope.users.push(userResult);
-                        $scope.local.user_id = userResult.id.toString();
+                        $scope.localModal.user_id = userResult.id.toString();
                     }
                 },function(err){
                 });

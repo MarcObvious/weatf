@@ -8,34 +8,24 @@
                     parent: 'root',
                     views: {
                         "container@": {
-                            templateUrl: 'orders/orders.tpl.html'
-                        },
-                        "subcontainer@" :{
                             controller: 'ordersController',
-                            templateUrl: 'orders/ordersTable.tpl.html'
+                            templateUrl: 'orders/orders.tpl.html'
                         }
                     },
                     resolve:{
                         autentica: (['authService',  function (authService) {
                             return authService.autentica();
                         }]),
-                        ordersData: (['ordersService', '$q', '$log','$stateParams','$rootScope',
-                            function (ordersService, $q, $log, $stateParams, $rootScope) {
+                        ordersData: (['ordersService', '$q', '$log','$stateParams',
+                            function (ordersService, $q, $log, $stateParams) {
                                 var def = $q.defer();
                                 $log.debug('locals::::ResolveOrders');
+
                                 if ($stateParams.id_local !== undefined) {
-                                    ordersService.getLocalOrders({local_id: $stateParams.id_local}).then(function(data){
-                                        def.resolve({orders: data.data, filterName:'Pedidos local: ' + $stateParams.id_local});
-                                    }, function (err) {
-                                        def.reject(err);
-                                    });
+                                    def.resolve({filterName:'Pedidos local: ' + $stateParams.id_local, id_local:$stateParams.id_local});
                                 }
                                 else {
-                                    ordersService.getAllOrders().then(function(data){
-                                        def.resolve({orders: data.data, filterName:'Pedidos de todos los locales'});
-                                    }, function (err) {
-                                        def.reject(err);
-                                    });
+                                    def.resolve({filterName:'Pedidos de todos los locales'});
                                 }
 
                                 return def.promise;
@@ -47,78 +37,17 @@
                 });
         }]);
 
-    app.controller('ordersController', ['$log','$scope','$state','$http','ngTableParams','$filter','ordersData','$uibModal','ordersService',
-        function ($log,$scope,$state,$http,ngTableParams,$filter,ordersData,$uibModal,ordersService) {
+    app.controller('ordersController', ['$log','$scope','ordersData',
+        function ($log,$scope,ordersData) {
 
             var init = function () {
                 $log.info('App:: Starting ordersController');
-                $scope.model={};
-                $scope.isCollapsed = false;
 
                 $scope.filterName = ordersData.filterName;
-                $scope.orders = ordersData.orders;
-                $scope.vm={};
-                $scope.vm.tableParams = new ngTableParams({count:10}, { data: $scope.orders,counts:[10,15,20]});
+                $scope.id_local = ordersData.id_local;
             };
 
-            $scope.addAlert = function(msg, type, time) {
-                $scope.alerts.push({msg: msg, type: type, time:time});
-            };
-
-            $scope.closeAlert = function(index) {
-                $scope.alerts.splice(index, 1);
-            };
-
-            $scope.addorders = function () {
-                $scope.modalInstance = $uibModal.open({
-                    templateUrl: 'orders/ordersModalAdd.tpl.html',
-                    size: 'lg',
-                    controller: 'ordersModalAddController',
-                    scope: $scope
-                });
-
-                $scope.modalInstance.result.then(function(modalResult){
-                    ordersService.submitorders(modalResult.name,modalResult.description,modalResult.configuration)
-                        .then(function(data){
-                            $scope.addAlert('orderso creado correctamente!', 'success', 3000);
-                            ordersService.getAllOrders().then(function (data) {
-                                $scope.vm.tableParams = new ngTableParams({count:10}, { data: data.data,counts:[10,15,20]});
-                            }, function (err) {
-                                $log.error(err);
-                                $scope.addAlert('Error al recuperar datos!', 'danger', 3000);
-                            });
-                        },function(err){
-                            $log.error(err);
-                            $scope.addAlert('Error al crear orderso!', 'danger', 3000);
-                        });
-                },function(){
-                });
-
-            };
-            $scope.viewOrderDetail = function (id) {
-                $scope.modalInstance = $uibModal.open({
-                    templateUrl: 'orders/ordersModalView.tpl.html',
-                    size: 'lg',
-                    controller: 'ordersModalViewController',
-                    resolve: {orderId: id},
-                    scope: $scope
-                });
-
-                $scope.modalInstance.result.then(function(modalResult){
-
-                },function(){
-                });
-            };
-
-            $scope.cancelOrder = function (params) {
-                ordersService.cancelOrder(params).then(function(result){
-                    console.log(result);
-                }, function (err) {
-
-                });
-            };
-
-            init();
+             init();
         }]);
 
     app.controller('ordersModalAddController', ['$scope', '$uibModalInstance', '$log','$rootScope',
@@ -156,6 +85,101 @@
             init();
         }]);
 
+    app.directive('ordersTable',['$state', function($state) {
+        return {
+            templateUrl:'orders/ordersTable.tpl.html',
+            restrict: 'E',
+            replace: true,
+            controller:  (['$log','$scope','$state','$http','ngTableParams','$filter','$uibModal','ordersService',
+                function ($log,$scope,$state,$http,ngTableParams,$filter,$uibModal,ordersService) {
+
+                    var init = function () {
+                        $log.info('App:: Starting ordersController');
+
+                        $scope.model={};
+                        $scope.isCollapsed = false;
+                        $scope.vm={};
+
+                        var date = new Date();
+
+                        $scope.dateStart = {};
+                        $scope.dateStart.format = 'dd-MM-yyyy';
+                        $scope.dateStart.dateOptions = { formatYear: 'yy', startingDay: 1 };
+                        $scope.dateStart.date = new Date(date.getTime() - 24*60*60*10000*7);
+                        $scope.dateStart.opened = false;
+
+                        $scope.dateEnd = {};
+                        $scope.dateEnd.format = 'dd-MM-yyyy';
+                        $scope.dateEnd.dateOptions = { formatYear: 'yy', startingDay: 1 };
+                        $scope.dateEnd.date = date;
+                        $scope.dateEnd.opened = false;
+
+                        var start =  $scope.dateStart.date.toJSON().substr(0,10);
+                        var end =  $scope.dateEnd.date.toJSON().substr(0,10);
+                        getOrders(start, end);
+
+                    };
+
+                    var getOrders = function(start,end) {
+                        if ($scope.localid !== undefined) {
+                            ordersService.getLocalOrders({local_id: $scope.localid, start:start, end:end}).then(function(data){
+                                $scope.filterName = 'Pedidos local: ' + $scope.localid;
+                                $scope.orders = data.data;
+                                $scope.vm.tableParams = new ngTableParams({count:10}, { data: $scope.orders,counts:[10,15,20]});
+                            }, function (err) {
+                                $scope.vm.tableParams = new ngTableParams({count:10}, { data: [],counts:[10,15,20]});
+                            });
+                        }
+                        else {
+                            ordersService.getAllOrders({start:start, end:end}).then(function (data) {
+                                $scope.filterName = 'Pedidos de todos los locales';
+                                $scope.orders = data.data;
+                                $scope.vm.tableParams = new ngTableParams({count:10}, { data: $scope.orders,counts:[10,15,20]});
+                            }, function (err) {
+                                $scope.vm.tableParams = new ngTableParams({count:10}, { data: [],counts:[10,15,20]});
+                            });
+                        }
+                    };
+
+                    $scope.openDatepicker = function(date) {
+                        $scope[date].opened = true;
+                    };
+
+
+                    $scope.viewOrderDetail = function (id) {
+                        $scope.modalInstance = $uibModal.open({
+                            templateUrl: 'orders/ordersModalView.tpl.html',
+                            size: 'lg',
+                            controller: 'ordersModalViewController',
+                            resolve: {orderId: id},
+                            scope: $scope
+                        });
+
+                        $scope.modalInstance.result.then(function(modalResult){
+
+                        },function(){
+                        });
+                    };
+
+                    $scope.cancelOrder = function (params) {
+                        ordersService.cancelOrder(params).then(function(result){
+                        }, function (err) {
+                        });
+                    };
+
+                    $scope.mostrar = function() {
+                        var start =  $scope.dateStart.date.toJSON().substr(0,10);
+                        var end =  $scope.dateEnd.date.toJSON().substr(0,10);
+                        getOrders(start, end);
+                    };
+
+                   init();
+                }]),
+            scope: {
+                localid: '='
+            }
+        };
+    }]);
 }(angular.module("weatf.orders", [
     'ui.router',
     'ngAnimate',

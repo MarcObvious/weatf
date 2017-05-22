@@ -35,6 +35,16 @@
                 $scope.dates.dateOptions = { formatYear: 'yy', startingDay: 1 };
                 $scope.dates.birthday = angular.isDefined(userData.birthdate) ? new Date(userData.birthdate) : new Date();
                 $scope.dates.opened = false;
+
+                usersService.getAllUsers().then(function (users) {
+                    var users_final = [];
+                    angular.forEach(users, function (user) {
+                        if (angular.isDefined(user.email)) {
+                            users_final.push(user);
+                        }
+                    });
+                    $scope.users = users_final;
+                });
             };
 
             $scope.openDatepicker = function() {
@@ -56,7 +66,7 @@
                 else {
                     delete $scope.user.created_at;
                     delete $scope.user.updated_at;
-                    $scope.user.user_id = $scope.user.id;
+                    //$scope.user.user_id = $scope.user.id;
                     usersService.saveUser($scope.user).then(function(result){
                         $uibModalInstance.close(result.data);
                     }, function(err){
