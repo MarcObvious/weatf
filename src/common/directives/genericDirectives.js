@@ -58,7 +58,21 @@ angular.module('genericDirectives', [])
         return {
             templateUrl:'directives/templates/feedback.tpl.html',
             restrict: 'E',
-            replace: true
+            replace: true,
+            controller: ('feedbackController', ['$scope', '$log', '$rootScope',
+                function($scope, $log, $rootScope) {
+                    var init = function() {
+                    };
+
+                    $scope.addAlert = function(msg, type, time) {
+                        $rootScope.alerts.push({msg: msg, type: type, time:time});
+                    };
+
+                    $scope.closeAlert = function(index) {
+                        $rootScope.alerts.splice(index, 1);
+                    };
+                    init();
+                }])
         };
     })
 
@@ -140,6 +154,7 @@ angular.module('genericDirectives', [])
                         });
 
                         $scope.modalInstance.result.then(function (modalResult) {
+                            $state.go('root.locals.localdetail', {id_local:modalResult.id});
                         }, function () {
 
                         });

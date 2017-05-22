@@ -22,15 +22,14 @@
                                 $log.debug('locals::::ResolveOrders');
                                 if ($stateParams.id_local !== undefined) {
                                     ordersService.getLocalOrders({local_id: $stateParams.id_local}).then(function(data){
-                                        def.resolve({orders: data, filterName:'Pedidos local: ' + $stateParams.id_local});
+                                        def.resolve({orders: data.data, filterName:'Pedidos local: ' + $stateParams.id_local});
                                     }, function (err) {
                                         def.reject(err);
                                     });
                                 }
                                 else {
-                                    //TODO ALL ORDERS (root)
-                                    ordersService.getLocalOrders({local_id: 1}).then(function(data){
-                                        def.resolve({orders: data, filterName:'Pedidos de todos los locales'});
+                                    ordersService.getAllOrders().then(function(data){
+                                        def.resolve({orders: data.data, filterName:'Pedidos de todos los locales'});
                                     }, function (err) {
                                         def.reject(err);
                                     });
@@ -79,7 +78,7 @@
                     ordersService.submitorders(modalResult.name,modalResult.description,modalResult.configuration)
                         .then(function(data){
                             $scope.addAlert('orderso creado correctamente!', 'success', 3000);
-                            ordersService.getAllorders().then(function (data) {
+                            ordersService.getAllOrders().then(function (data) {
                                 $scope.vm.tableParams = new ngTableParams({count:10}, { data: data.data,counts:[10,15,20]});
                             }, function (err) {
                                 $log.error(err);

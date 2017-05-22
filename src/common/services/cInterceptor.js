@@ -27,6 +27,10 @@ angular.module('cInterceptor', [])
                 return config;
             },
             'response': function (response) {
+
+                if(response.data && response.data.message) {
+                    $rootScope.alerts.push({ type: 'success', msg: response.data.message, time:'3000' });
+                }
                 //Save data custom header to send in next request
                 /*if (response.headers(CUSTOM_HEADER) !== null) {
                     $rootScope.customHeader = response.headers(CUSTOM_HEADER);
@@ -47,6 +51,9 @@ angular.module('cInterceptor', [])
                     return parameterValue;
                 };
 
+                if(rejection.data && rejection.data.message) {
+                    $rootScope.alerts.push({ type: 'danger', msg: rejection.data.message, time:'3000' });
+                }
                 if(rejection.data && rejection.data.code === 401) {
                     console.log('unautorized');
                     $rootScope.customHeader = '';

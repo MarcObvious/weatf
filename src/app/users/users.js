@@ -49,8 +49,8 @@
                 $scope.user.birthdate = mal.slice(8,10) + '-' + mal.slice(5,7) + '-' + mal.slice(0,4);
                 if ($scope.user.newuser) {
                     usersService.createUser($scope.user).then(function(result){
-                        console.log(result);
-                        $uibModalInstance.close(result);
+                        $uibModalInstance.close(result.data);
+                    }, function(err){
                     });
                 }
                 else {
@@ -58,8 +58,8 @@
                     delete $scope.user.updated_at;
                     $scope.user.user_id = $scope.user.id;
                     usersService.saveUser($scope.user).then(function(result){
-                        console.log(result);
-                        $uibModalInstance.close(result);
+                        $uibModalInstance.close(result.data);
+                    }, function(err){
                     });
                 }
 
@@ -71,9 +71,10 @@
 
             $scope.delete = function (user_id) {
                 usersService.deleteUser({user_id:user_id}).then(function(result){
-                    console.log(result);
+                    $uibModalInstance.dismiss('Exit');
+
+                }, function(err){
                 });
-                $uibModalInstance.dismiss('Exit');
             };
 
             init();

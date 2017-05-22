@@ -41,7 +41,7 @@ angular.module('usersService', [])
                 getlocalUser: function (params) {
                     var def = $q.defer();
                     this.api('getlocalusers/').save({}, params, function(data){
-                        def.resolve(data.data);
+                        def.resolve(data);
                     }, function (err) {
                         def.reject(err);
                     });
@@ -51,7 +51,7 @@ angular.module('usersService', [])
                 createUser: function (params) {
                     var def = $q.defer();
                     this.api('createuser/').save({}, params, function(data){
-                        def.resolve(data.data);
+                        def.resolve(data);
                     }, function (err) {
                         def.reject(err);
                     });
@@ -60,7 +60,7 @@ angular.module('usersService', [])
                 saveUser: function (params) {
                     var def = $q.defer();
                     this.api('updateuser/').update({}, params, function(data){
-                        def.resolve(data.data);
+                        def.resolve(data);
                     }, function (err) {
                         def.reject(err);
                     });
@@ -69,7 +69,7 @@ angular.module('usersService', [])
                 deleteUser: function (params) {
                     var def = $q.defer();
                     this.api('deleteuser/').remove({}, params, function(data){
-                        def.resolve(data.data);
+                        def.resolve(data);
                     }, function (err) {
                         def.reject(err);
                     });

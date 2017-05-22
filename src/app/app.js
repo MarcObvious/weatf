@@ -41,10 +41,9 @@
         });
     }]);
 
-    app.controller('AppController', ['$scope', '$log','globalService', function ($scope, $log,globalService) {
+    app.controller('AppController', ['$scope', '$log','$rootScope', function ($scope, $log, $rootScope) {
         $log.info('App:: Starting AppController');
-
-        //$log.info('App::Geolocation::' + geolocationService.getNearestCity());
+        $rootScope.alerts = [];
     }]);
 
     app.controller('FrontController', ['$scope', '$log', function ($scope, $log) {

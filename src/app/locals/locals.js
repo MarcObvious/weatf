@@ -29,12 +29,12 @@
                                 var def = $q.defer();
                                 var logged=authService.autentica();
                                 if (logged) {
-                                $log.debug('locals::::ResolveLocalsGrid');
-                                localsService.getLocals().then(function(data){
-                                    def.resolve({locals: data, filterName:'Todos los locales:', page: $stateParams.page});
-                                }, function (err) {
-                                    def.reject(err);
-                                });
+                                    $log.debug('locals::::ResolveLocalsGrid');
+                                    localsService.getLocals().then(function(data){
+                                        def.resolve({locals: data.data, filterName:'Todos los locales:', page: $stateParams.page});
+                                    }, function (err) {
+                                        def.reject(err);
+                                    });
                                 }
                                 else{def.reject();}
                                 return def.promise;
@@ -54,23 +54,23 @@
                     url: '/localDetail/{id_local}',
                     parent: 'root.locals',
                     resolve: {
-                        localData: (['localsService', '$q', '$log','$stateParams',
-                            function (localsService, $q, $log, $stateParams) {
+                        localData: (['localsService', '$q', '$log','$stateParams','$rootScope',
+                            function (localsService, $q, $log, $stateParams,$rootScope) {
                                 var def = $q.defer();
                                 $log.debug('locals::::ResolveOrderDetail::'+$stateParams.id_local);
                                 localsService.getLocal({local_id: $stateParams.id_local}).then(function(data){
-                                    def.resolve({local: data, filterName:'Local: ' + $stateParams.id_local});
+                                    def.resolve({local: data.data, filterName:'Local: ' + $stateParams.id_local});
                                 }, function (err) {
                                     def.reject(err);
                                 });
                                 return def.promise;
                             }]),
-                        ordersData: (['ordersService', '$q', '$log','$stateParams',
-                            function (ordersService, $q, $log, $stateParams) {
+                        ordersData: (['ordersService', '$q', '$log','$stateParams','$rootScope',
+                            function (ordersService, $q, $log, $stateParams,$rootScope) {
                                 var def = $q.defer();
                                 $log.debug('locals::::ResolveOrders'+$stateParams.id_local);
                                 ordersService.getLocalOrders({local_id: $stateParams.id_local}).then(function(data){
-                                    def.resolve(data);
+                                    def.resolve(data.data);
                                 }, function (err) {
                                     def.reject(err);
                                 });
@@ -143,7 +143,6 @@
 
                 $scope.modalInstance.result.then(function(modalResult){
                 },function(){
-
                 });
             };
 
@@ -173,6 +172,7 @@
             var init = function() {
                 $scope.local = {};
                 $scope.orders = {};
+                $scope.alerts = [];
                 var positions = [];
                 var centerMap = [];
                 if (localData) {
@@ -187,6 +187,7 @@
                         });
                         centerMap = [localData.local.lat, localData.local.lng];
                     }
+                    $scope.local.products = $scope.local.products || [];
                     $rootScope.$emit('local.local_id', {local_id: localData.local.id});
                 }
 
@@ -210,8 +211,10 @@
                     scope: $scope
                 });
 
-                $scope.modalInstance.result.then(function(modalResult){
-                    $scope.local = modalResult;
+                $scope.modalInstance.result.then(function(localResult){
+                    var prods = $scope.local.products;
+                    $scope.local = localResult;
+                    $scope.local.products = prods;
                 },function(){
                 });
             };
@@ -224,7 +227,8 @@
                     resolve: {productData :{newproduct: true, local_id:$scope.local.id}},
                     scope: $scope
                 });
-                $scope.modalInstance.result.then(function(modalResult){
+                $scope.modalInstance.result.then(function(productResult){
+                    $scope.local.products.push(productResult);
                 },function(){
 
                 });
@@ -239,7 +243,7 @@
                         function (productsService, $q) {
                             var def = $q.defer();
                             productsService.getProduct({product_id: id_product}).then(function(data){
-                                def.resolve(data);
+                                def.resolve(data.data);
                             }, function (err) {
                                 def.reject(err);
                             });
@@ -247,7 +251,18 @@
                         }])},
                     scope: $scope
                 });
-                $scope.modalInstance.result.then(function(modalResult){
+                $scope.modalInstance.result.then(function(productResult){
+                   console.log($scope.local.products);
+                    var products = [];
+                    console.log(products);
+                    angular.forEach($scope.local.products, function(product){
+                        console.log(product);
+                        if (product.id !== productResult.id)  {
+                            products.push(product);
+                        }
+                    });
+                    products.push(productResult);
+                    $scope.local.products = products;
                 },function(){
 
                 });
@@ -263,7 +278,7 @@
                             function (usersService, $q) {
                                 var def = $q.defer();
                                 usersService.getlocalUser({local_id: local_id}).then(function(data){
-                                    def.resolve(data);
+                                    def.resolve(data.data);
                                 }, function (err) {
                                     def.reject(err);
                                 });
@@ -334,14 +349,15 @@
                 if ($scope.local.newlocal) {
                     localsService.createLocal($scope.local).then(function(result){
                         console.log(result);
-                        $uibModalInstance.close(result);
+                        $uibModalInstance.close(result.data);
+                    }, function(err){
                     });
                 }
                 else {
                     $scope.local.local_id = $scope.local.id;
                     localsService.saveLocal($scope.local).then(function(result){
-                        console.log(result);
-                        $uibModalInstance.close(result);
+                        $uibModalInstance.close(result.data);
+                    }, function(err){
                     });
                 }
 
@@ -353,9 +369,10 @@
 
             $scope.delete = function (local_id) {
                 localsService.deleteLocal({local_id:local_id}).then(function(result){
-                    console.log(result);
+                    $uibModalInstance.dismiss('Exit');
+                }, function(err){
                 });
-                $uibModalInstance.dismiss('Exit');
+
             };
 
             $scope.newUser = function () {
@@ -372,8 +389,7 @@
                         $scope.users.push(userResult);
                         $scope.local.user_id = userResult.id.toString();
                     }
-                },function(){
-
+                },function(err){
                 });
             };
 
@@ -394,13 +410,15 @@
                 }
                 if ($scope.product.newproduct) {
                     productsService.createProduct($scope.product).then(function(result){
-                        console.log(result);
+                        $uibModalInstance.close(result);
+                    }, function(err){
                     });
                 }
                 else {
                     $scope.product.product_id = $scope.product.id;
                     productsService.saveProduct($scope.product).then(function(result){
-                        console.log(result);
+                        $uibModalInstance.close(result);
+                    }, function(err){
                     });
                 }
                 $uibModalInstance.close($scope.product);
@@ -412,9 +430,10 @@
 
             $scope.delete = function (product_id) {
                 productsService.deleteProduct({product_id:product_id}).then(function(result){
-                    console.log(result);
+                    $uibModalInstance.close('Exit');
+                }, function(err){
                 });
-                $uibModalInstance.dismiss('Exit');
+
             };
 
             init();

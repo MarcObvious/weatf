@@ -34,7 +34,16 @@ angular.module('ordersService', [])
                     getLocalOrders: function (params) {
                         var def = $q.defer();
                         this.api('getlocalorders').save({}, params, function (data) {
-                            def.resolve(data.data);
+                            def.resolve(data);
+                        }, function (err) {
+                            def.reject(err);
+                        });
+                        return def.promise;
+                    },
+                    getAllOrders: function (params) {
+                        var def = $q.defer();
+                        this.api('getallorders').save({}, params, function (data) {
+                            def.resolve(data);
                         }, function (err) {
                             def.reject(err);
                         });

@@ -51,12 +51,16 @@ angular.module('authService', [])
                             localStorageService.set('user_data', true);
                             localStorageService.set('user_name', data.data.email);
                             localStorageService.set('user_email', data.data.firstname +' '+data.data.lastname);
-                            def.resolve(data.data);
+                            def.resolve(data);
                         }
                         else {
-                            def.reject();
+                            def.reject(data);
                         }
+
+                    }, function (err) {
+                        def.reject(err);
                     });
+
                     return def.promise;
                 },
 
@@ -67,8 +71,10 @@ angular.module('authService', [])
                         localStorageService.remove('user_data');
                         localStorageService.remove('user_name');
                         localStorageService.remove('user_email');
+                        def.resolve(data);
                         window.location = '/auth';
-                        def.resolve(true);
+                    }, function (err) {
+                        def.reject(err);
                     });
                     return def.promise;
 

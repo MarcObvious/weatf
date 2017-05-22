@@ -32,7 +32,7 @@ angular.module('localsService', [])
                 getLocals: function (params) {
                     var def = $q.defer();
                     this.api('getalllocals/').save({}, {}, function(data){
-                        def.resolve(data.data);
+                        def.resolve(data);
                     }, function (err) {
                         def.reject(err);
                     });
@@ -42,7 +42,7 @@ angular.module('localsService', [])
                 createLocal: function (params) {
                     var def = $q.defer();
                     this.api('createlocal/').save({}, params, function(data){
-                        def.resolve(data.data);
+                        def.resolve(data);
                     }, function (err) {
                         def.reject(err);
                     });
@@ -51,7 +51,7 @@ angular.module('localsService', [])
                 saveLocal: function (params) {
                     var def = $q.defer();
                     this.api('updatelocal/').update({}, params, function(data){
-                        def.resolve(data.data);
+                        def.resolve(data);
                     }, function (err) {
                         def.reject(err);
                     });
@@ -61,7 +61,7 @@ angular.module('localsService', [])
                 deleteLocal: function (params) {
                     var def = $q.defer();
                     this.api('deletelocal/').remove({}, params, function(data){
-                        def.resolve(data.data);
+                        def.resolve(data);
                     }, function (err) {
                         def.reject(err);
                     });
@@ -71,7 +71,7 @@ angular.module('localsService', [])
                 getLocal: function (params) {
                     var def = $q.defer();
                     this.api('getlocal/').save(params, {}, function(data){
-                        def.resolve(data.data);
+                        def.resolve(data);
                     }, function (err) {
                         def.reject(err);
                     });
@@ -81,7 +81,7 @@ angular.module('localsService', [])
                 cancelOrder: function (params) {
                     var def = $q.defer();
                     this.api('cancel_order/').save({}, params, function(data){
-                        def.resolve(data.data);
+                        def.resolve(data);
                     }, function (err) {
                         def.reject(err);
                     });

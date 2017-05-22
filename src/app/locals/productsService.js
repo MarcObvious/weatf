@@ -31,7 +31,7 @@ angular.module('productsService', [])
                 createProduct: function (params) {
                     var def = $q.defer();
                     this.api('createproducts/').save({}, params, function(data){
-                        def.resolve(data.data);
+                        def.resolve(data);
                     }, function (err) {
                         def.reject(err);
                     });
@@ -40,7 +40,7 @@ angular.module('productsService', [])
                 saveProduct: function (params) {
                     var def = $q.defer();
                     this.api('updateproduct/').update({}, params, function(data){
-                        def.resolve(data.data);
+                        def.resolve(data);
                     }, function (err) {
                         def.reject(err);
                     });
@@ -49,7 +49,7 @@ angular.module('productsService', [])
                 deleteProduct: function (params) {
                     var def = $q.defer();
                     this.api('deleteproduct/').remove({}, params, function(data){
-                        def.resolve(data.data);
+                        def.resolve(data);
                     }, function (err) {
                         def.reject(err);
                     });
@@ -58,7 +58,7 @@ angular.module('productsService', [])
                 getProduct: function (params) {
                     var def = $q.defer();
                     this.api('getproduct/').save(params, {}, function(data){
-                        def.resolve(data.data);
+                        def.resolve(data);
                     }, function (err) {
                         def.reject(err);
                     });

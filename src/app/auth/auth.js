@@ -58,18 +58,12 @@
 
                 $scope.submitLogin = function(){
                     authService.submitLogin($scope.login.username, $scope.login.password).then(function (data) {
-                        if(data) {
+                        if(data.message === 'Usuario identificado') {
                             $scope.logged = true;
                             $rootScope.$emit('logged.loggedChange', {logged: true});
                             $state.go('root.locals.localgrid');
-                            return true;
-                        }
-                        else {
-                            alert('Credenciales incorrectas');
                         }
                     }, function (err) {
-                        alert('Credenciales incorrectas');
-                        $log.error(err);
                     });
                 };
 
