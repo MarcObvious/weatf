@@ -4,7 +4,8 @@
  */
 
 angular.module('cInterceptor', [])
-    .factory('cInterceptor', ['$q', '$rootScope','localStorageService', function ($q, $rootScope, localStorageService) {
+    .factory('cInterceptor', ['$q', '$rootScope','localStorageService',
+        function ($q, $rootScope, localStorageService) {
         return {
             'request': function (config) {
                 config.headers = config.headers || {};
@@ -55,7 +56,6 @@ angular.module('cInterceptor', [])
                     $rootScope.alerts.push({ type: 'danger', msg: rejection.data.message, time:'3000' });
                 }
                 if(rejection.data && rejection.data.code === 401) {
-                    console.log('unautorized');
                     $rootScope.customHeader = '';
                     localStorageService.remove(CUSTOM_HEADER);
                     localStorageService.remove('user_data');
