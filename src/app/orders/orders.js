@@ -8,8 +8,11 @@
                     parent: 'root',
                     views: {
                         "container@": {
-                            controller: 'ordersController',
                             templateUrl: 'orders/orders.tpl.html'
+                        },
+                        "subcontainer@" :{
+                            controller: 'ordersController',
+                            templateUrl: 'orders/ordersTable.tpl.html'
                         }
                     },
                     resolve:{

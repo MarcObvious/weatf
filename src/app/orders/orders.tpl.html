@@ -7,52 +7,7 @@
         </div>
         <div class="panel panel-default">
             <div class="panel-body">
-                <div class="hidden-xs hidden-sm">
-                    <table ng-table="vm.tableParams" class="table table-striped table-bordered table-hover" show-filter="true">
-                        <tr ng-repeat="order in $data track by $index">
-                            <td title="'Pedido'" filter="{ id: 'number'}" sortable="'id'">
-                                {{order.id}}</td>
-                            <td title="'Estado'" filter="{ order_state: 'number'}" sortable="'order_state'">
-                                {{order.order_state_name}}</td>
-                            <td title="'Usuario'" filter="{ user_id: 'text'}" sortable="'user_id'">
-                                {{order.user_id}}</td>
-                            <td title="'Fecha creación'" filter="{ created_at: 'text'}" sortable="'created_at'">
-                                {{order.created_at}}</td>
-                            <td title="'Fecha actualización'" filter="{ updated_at: 'text'}" sortable="'updated_at'">
-                                {{order.updated_at}}</td>
-                            <td title="'Acciones'" class="text-center">
-                                <button class="btn btn-warning btn-xs" uib-tooltip="Ver detalles del pedido" tooltip-placement="left" tooltip-trigger="mouseenter" ng-click="viewOrderDetail($index)">
-                                    <i class="fa fa-eye"></i>
-                                </button>
-                                <button class="btn btn-danger btn-xs" uib-tooltip="Eliminar pedido" tooltip-placement="left" tooltip-trigger="mouseenter" ng-click="cancelOrder({local_id: order.orderdetail[0].local_id, order_id: order.id})">
-                                    <i class="fa fa-trash-o"></i>
-                                </button>
-                            </td>
-                        </tr>
-                    </table>
-                </div>
-                <div class="hidden-md hidden-lg" style="margin-left: -20px; margin-right: -20px;">
-                    <table ng-table="vm.tableParams" class="table table-striped table-bordered table-hover" show-filter="true">
-                        <tr ng-repeat="order in $data track by $index">
-                            <td title="'#P.'" filter="{ id: 'number'}" sortable="'id'">
-                                {{order.id}}</td>
-                            <td title="'Estado'" filter="{ order_state: 'number'}" sortable="'order_state'">
-                                {{order.order_state_name}}</td>
-                            <td title="'#U.'" filter="{ user_id: 'text'}" sortable="'user_id'">
-                                {{order.user_id}}</td>
-                            <td title="'Creación'" filter="{ created_at: 'text'}" sortable="'created_at'">
-                                {{order.created_at|limitTo: 9:2}}</td>
-                            <td title="'Acc.'" class="text-center">
-                                <button class="btn btn-warning btn-xs" uib-tooltip="Ver detalles del pedido" tooltip-placement="left" tooltip-trigger="mouseenter" ng-click="viewOrderDetail($index)">
-                                    <i class="fa fa-eye"></i>
-                                </button>
-                                <button class="btn btn-danger btn-xs" uib-tooltip="Anular pedido" tooltip-placement="left" tooltip-trigger="mouseenter" ng-click="cancelOrder({local_id: order.orderdetail[0].local_id, order_id: order.id})">
-                                    <i class="fa fa-trash-o"></i>
-                                </button>
-                            </td>
-                        </tr>
-                    </table>
-                </div>
+                <div ui-view="subcontainer" id="localGrid"></div>
             </div>
             <!-- /.panel-body -->
         </div>
