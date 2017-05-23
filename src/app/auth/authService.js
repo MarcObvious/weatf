@@ -34,6 +34,7 @@ angular.module('authService', [])
                     var user_data = localStorageService.get('user_data');
                     $rootScope.username = localStorageService.get('user_name');
                     $rootScope.useremail = localStorageService.get('user_email');
+                    $rootScope.usertype = localStorageService.get('user_type');
                     if(authToken && user_data) {
                         return true;
                     }
@@ -51,6 +52,7 @@ angular.module('authService', [])
                             localStorageService.set('user_data', true);
                             localStorageService.set('user_name', data.data.email);
                             localStorageService.set('user_email', data.data.firstname +' '+data.data.lastname);
+                            localStorageService.set('user_type', data.data.user_type);
                             def.resolve(data);
                         }
                         else {
@@ -71,6 +73,7 @@ angular.module('authService', [])
                         localStorageService.remove('user_data');
                         localStorageService.remove('user_name');
                         localStorageService.remove('user_email');
+                        localStorageService.remove('user_type');
                         def.resolve(data);
                         window.location = '/auth';
                     }, function (err) {

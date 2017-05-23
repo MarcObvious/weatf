@@ -119,7 +119,7 @@
                 if (angular.isDefined($scope.userModal.raw_picture.base64)){
                     $scope.userModal.picture = $scope.userModal.raw_picture.base64;
                 }
-                if (angular.isDefined($scope.userModal.directions.phone)){
+                if (angular.isDefined($scope.userModal.directions) && angular.isDefined($scope.userModal.directions.phone)){
                     $scope.userModal.phone = $scope.userModal.directions.phone;
                 }
 

@@ -87,9 +87,7 @@ angular.module('genericDirectives', [])
                     var init = function(){
                         $scope.collapseVar = 999;
                         $scope.multiCollapseVar = 0;
-
                         $scope.check(1);
-
                         $scope.sidebarContent = {};
 
                         $scope.logged = authService.autentica();
@@ -103,6 +101,7 @@ angular.module('genericDirectives', [])
                     $rootScope.$on('logged.loggedChange', function(event, aValues) {
                         $scope.logged = aValues.logged;
                         if ($scope.logged) {
+                            $scope.user_type = $rootScope.usertype;
                             globalService.getSideBarContent().then(function(content){
                                 $scope.sidebarContent = content;
                             });

@@ -97,7 +97,7 @@
                     $scope.totalItems = $scope.locals.length;
 
                     $scope.currentPage = localsData.page ? localsData.page : 1;
-                    $scope.numPerPage = 5;
+                    $scope.numPerPage = $rootScope.usertype === 1 ? 6 : 5;
                     var begin = (($scope.currentPage - 1) * $scope.numPerPage), end = begin + $scope.numPerPage;
                     $scope.localsSliced = $scope.locals.slice(begin, end);
 
