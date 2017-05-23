@@ -115,6 +115,9 @@
                 if (angular.isDefined($scope.userModal.raw_picture.base64)){
                     $scope.userModal.picture = $scope.userModal.raw_picture.base64;
                 }
+                if($scope.userModal.user_type === 1 || $scope.userModal.user_type === 10){
+                    delete $scope.userModal.user_id;
+                }
                 var mal = $scope.dates.birthday.toISOString().slice(0,10);
                 $scope.userModal.birthdate = mal.slice(8,10) + '-' + mal.slice(5,7) + '-' + mal.slice(0,4);
                 if ($scope.userModal.newuser) {
