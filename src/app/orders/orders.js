@@ -121,7 +121,7 @@
 
                     var getOrders = function(start,end) {
                         if ($scope.localid !== undefined) {
-                            ordersService.getLocalOrders({local_id: $scope.localid, start:start, end:end}).then(function(data){
+                            ordersService.getLocalOrders({local_id: $scope.localid, dateStart:start, dateEnd:end}).then(function(data){
                                 $scope.filterName = 'Pedidos local: ' + $scope.localid;
                                 $scope.orders = data.data;
                                 $scope.vm.tableParams = new ngTableParams({count:10}, { data: $scope.orders,counts:[10,15,20]});
@@ -130,7 +130,7 @@
                             });
                         }
                         else {
-                            ordersService.getAllOrders({start:start, end:end}).then(function (data) {
+                            ordersService.getAllOrders({dateStart:start, dateEnd:end}).then(function (data) {
                                 $scope.filterName = 'Pedidos de todos los locales';
                                 $scope.orders = data.data;
                                 $scope.vm.tableParams = new ngTableParams({count:10}, { data: $scope.orders,counts:[10,15,20]});

@@ -39,7 +39,7 @@
             <tr ng-repeat="order in $data track by $index">
                 <td title="'Pedido'" filter="{ id: 'number'}" sortable="'id'">
                     {{order.id}}</td>
-                <td title="'Estado'" filter="{ order_state: 'number'}" sortable="'order_state'">
+                <td title="'Estado'" filter="{ order_state_name: 'text'}" sortable="'order_state_name'">
                     {{order.order_state_name}}</td>
                 <td title="'Usuario'" filter="{ user_id: 'text'}" sortable="'user_id'">
                     {{order.user_id}}</td>
@@ -63,7 +63,7 @@
             <tr ng-repeat="order in $data track by $index">
                 <td title="'#P.'" filter="{ id: 'number'}" sortable="'id'">
                     {{order.id}}</td>
-                <td title="'Estado'" filter="{ order_state: 'number'}" sortable="'order_state'">
+                <td title="'Estado'" filter="{ order_state_name: 'text'}" sortable="'order_state_name'">
                     {{order.order_state_name}}</td>
                 <td title="'#U.'" filter="{ user_id: 'text'}" sortable="'user_id'">
                     {{order.user_id}}</td>

@@ -161,7 +161,6 @@
 
             var init = function() {
                 $scope.local = {};
-                $scope.orders = {};
                 $scope.alerts = [];
                 var positions = [];
                 var centerMap = [];
@@ -294,7 +293,6 @@
     app.controller('localModalEditController', ['$scope', '$uibModalInstance', '$log','$rootScope','localData','$uibModal','localsService','usersService',
         function ($scope, $uibModalInstance, $log, $rootScope,localData, $uibModal,localsService, usersService) {
             var init = function () {
-                console.log(localData);
                 $scope.localModal = localData;
                 $scope.localModal.raw_picture ={};
                 $scope.localModal.user_id = angular.isDefined($scope.localModal.user_id) ? $scope.localModal.user_id.toString() : "0";
