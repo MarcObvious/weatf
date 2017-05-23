@@ -154,7 +154,7 @@
                             });
                         }
                         $scope.name_csv = 'Pedidos_'+ start + '_' + end;
-                        $scope.headers_csv = ['Pedido','Local','Usuario','Estado','Producto','Precio','Cantidad','IVA','F.A','F.C'];
+                        $scope.headers_csv = ['Pedido','Local','Usuario','Estado','Producto','Precio','Cantidad','F.A','F.C'];
                     };
                     var populateCsv = function(orders) {
 
@@ -164,10 +164,9 @@
                                 local_id: order.orderdetail[0].local_id,
                                 user_name: order.orderdetail[0].user_name,
                                 order_state_name: order.order_state_name,
-                                product_id: order.orderdetail[0].product_id,
+                                product_name: order.orderdetail[0].productinfo.name,
                                 product_price: order.orderdetail[0].product_price,
                                 product_quantity: order.orderdetail[0].product_quantity,
-                                tax_rate: order.orderdetail[0].tax_rate,
                                 updated_at: order.orderdetail[0].updated_at,
                                 created_at: order.orderdetail[0].created_at
                             });

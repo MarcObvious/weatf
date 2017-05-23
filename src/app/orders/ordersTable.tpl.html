@@ -49,20 +49,18 @@
                     {{order.user_name}}</td>
                 <td title="'Estado'" filter="{ order_state_name: 'text'}" sortable="'order_state_name'">
                     {{order.order_state_name}}</td>
-                <td title="'Producto'" filter="{ product_id: 'number'}" sortable="'product_id'">
-                    {{order.product_id}}</td>
+                <td title="'Producto'" filter="{ product_name: 'text'}" sortable="'product_name'">
+                    {{order.product_name}}</td>
                 <td title="'Precio'" filter="{ product_price: 'number'}" sortable="'product_price'">
-                    {{order.product_price}}</td>
+                    {{order.product_price}}€</td>
                 <td title="'Cantidad'" filter="{ product_quantity: 'number'}" sortable="'product_quantity'">
                     {{order.product_quantity}}</td>
-                <td title="'IVA'" filter="{ tax_rate: 'number'}" sortable="'tax_rate'">
-                    {{order.tax_rate}}</td>
                 <td title="'F.C.'" filter="{ created_at: 'text'}" sortable="'created_at'">
                     {{order.created_at}}</td>
                 <td title="'F.A.'" filter="{ updated_at: 'text'}" sortable="'updated_at'">
                     {{order.updated_at}}</td>
                 <td title="'Acciones'" class="text-center">
-                    <button class="btn btn-warning btn-xs" uib-tooltip="Ver detalles del pedido" tooltip-placement="left" tooltip-trigger="mouseenter" ng-click="viewOrderDetail($index)">
+                    <button class="btn btn-warning btn-xs" uib-tooltip="Ver detalles del pedido" tooltip-placement="left" tooltip-trigger="mouseenter" ng-click="viewOrderDetail(order.id)">
                         <i class="fa fa-eye"></i>
                     </button>
                     <button class="btn btn-danger btn-xs" uib-tooltip="Eliminar pedido" tooltip-placement="left" tooltip-trigger="mouseenter" ng-click="cancelOrder({local_id: order.orderdetail[0].local_id, order_id: order.id})">

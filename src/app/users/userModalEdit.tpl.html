@@ -52,10 +52,10 @@
                         <option value="0">Desconocido</option>
                     </select>
                 </div>
-                <div class="col-md-6">
+                <!--<div class="col-md-6">
                     <label>Compras:</label>
                     <input disabled class="form-control input-modal" placeholder="Compras" ng-model="userModal.purchases">
-                </div>
+                </div>-->
                 <div class="col-md-6">
                     <label>Tipo de usuario:</label>
                     <select class="form-control input-modal" ng-model="userModal.user_type">
@@ -69,7 +69,7 @@
                     <div class="col-md-6">
                         <label>Asignar usuario padre existente:</label>
                         <select class="form-control input-modal" ng-model="userModal.user_id">
-                            <option ng-repeat="user in users" value="{{user.id}}" selected>{{user.email}}</option>
+                            <option ng-repeat="user in users" value="{{user.id}}">{{user.email}}</option>
                         </select>
                     </div>
                     <div class="col-md-6">
@@ -79,10 +79,10 @@
                         </button>
                     </div>
                 </div>
-                <div class="col-md-6">
+               <!-- <div class="col-md-6">
                     <label>Imagen url:</label>
                     <input disabled class="form-control input-modal" placeholder="Imagen url" ng-model="userModal.profile_picture_url">
-                </div>
+                </div>-->
                 <div class="col-md-6">
                     <label>Imagen:</label>
                     <input class="form-control input-modal" type='file' ng-model='userModal.raw_picture' base-sixty-four-input>
