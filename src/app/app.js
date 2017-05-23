@@ -78,6 +78,7 @@
     'ngMap',
     'ngTable',
     'ngCsv',
-    'naif.base64'
+    'naif.base64',
+    'chart.js'
 
 ])));

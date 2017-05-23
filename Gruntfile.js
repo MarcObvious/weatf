@@ -95,7 +95,9 @@ module.exports = function (grunt) {
                 'vendor/angular-local-storage/dist/angular-local-storage.js',
                 'vendor/ngmap/build/scripts/ng-map.min.js',
                 'vendor/ng-csv/build/ng-csv.js',
-                'vendor/angular-base64-upload/dist/angular-base64-upload.min.js'
+                'vendor/angular-base64-upload/dist/angular-base64-upload.min.js',
+                'vendor/chart.js/dist/Chart.js',
+                'vendor/angular-chart.js/dist/angular-chart.js'
             ],
             css: [
             ],

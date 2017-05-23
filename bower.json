@@ -42,6 +42,7 @@
     "ngmap": "~1.17.8",
     "ng-table": "~0.8.3",
     "ng-csv": "^0.3.6",
-    "angular-base64-upload": "^0.1.22"
+    "angular-base64-upload": "^0.1.22",
+    "angular-chart.js": "^1.1.1"
   }
 }
