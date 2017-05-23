@@ -12,16 +12,16 @@
             <li ng-class="{active: collapseVar==1}">
                 <a href="" ng-click="check(1)" class="sub-hedd-text">Herramientas<span class="fa arrow"></span></a>
                 <ul class="nav nav-second-level" uib-collapse="collapseVar!=1">
-                    <li ng-show="user_type != 1" ui-sref-active="active">
+                    <li ng-show="user_type != 2" ui-sref-active="active">
                         <a class="sub-sub-hedd-text" ng-click="newLocal()">Nuevo local <span class="head-text">(+)</span></a>
                     </li>
-                    <li ng-show="user_type != 1" ui-sref-active="active">
+                    <li ng-show="user_type != 2" ui-sref-active="active">
                         <a class="sub-sub-hedd-text" ng-click="newUser()">Nuevo usuario <span class="head-text">(+)</span></a>
                     </li>
                     <li ui-sref-active="active">
                         <a class="sub-sub-hedd-text" ui-sref="root.orders({page:1})"> Gestionar pedidos <span class="head-text">(-)</span></a>
                     </li>
-                    <li ng-show="user_type != 1" ui-sref-active="active">
+                    <li ng-show="user_type != 2" ui-sref-active="active">
                         <a class="sub-sub-hedd-text" ui-sref="root.users({page:1})"> Gestionar usuarios <span class="head-text">(-)</span></a>
                     </li>
                 </ul>

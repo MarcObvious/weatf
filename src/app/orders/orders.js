@@ -125,7 +125,6 @@
                             var filters = a.filter();
                             var rawData = a.settings().data;
                             $scope.exportData = $filter('filter')(rawData,filters);
-                            console.log($scope.exportData);
                         }, $scope);
 
                     };

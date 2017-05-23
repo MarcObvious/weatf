@@ -65,7 +65,7 @@
                         <option value="1">Cliente</option>
                     </select>
                 </div>
-                <div ng-show="userModal.user_type != 10 && userModal.user_type != 1">
+                <div ng-show="userModal.user_type != 10 && userModal.user_type != 1  && usertype != 5">
                     <div class="col-md-6">
                         <label>Asignar usuario padre existente:</label>
                         <select class="form-control input-modal" ng-model="userModal.user_id">
