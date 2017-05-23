@@ -7,15 +7,6 @@
             <sidebar-locals></sidebar-locals>
             <sidebar-search></sidebar-search>
 
-            <!--<li>
-                <a href="" class="head-text">Estadisticas:</a>
-            </li>
-            <li>
-                <a ui-sref="root.history({ option: 'entregas', page:1})" class="sub-hedd-text">Pedidos</a>
-            </li>
-            <li>
-                <a ui-sref="root.history({ option: 'incidencias', page:1 })" class="sub-hedd-text">Push</a>
-            </li>-->
             <li>
                 <a href="" class="head-text">Administración:</a>
             </li>
@@ -31,9 +22,11 @@
                     <li ui-sref-active="active">
                         <a class="sub-sub-hedd-text" ui-sref="root.orders({page:1})"> Gestionar pedidos <span class="head-text">(-)</span></a>
                     </li>
+                    <li ui-sref-active="active">
+                        <a class="sub-sub-hedd-text" ui-sref="root.users({page:1})"> Gestionar usuarios <span class="head-text">(-)</span></a>
+                    </li>
                 </ul>
             </li>
-
             <li>
                 <a href="" class="head-text">Push:</a>
             </li>

@@ -16,8 +16,8 @@
                         autentica: (['authService',  function (authService) {
                             return authService.autentica();
                         }]),
-                        ordersData: (['ordersService', '$q', '$log','$stateParams',
-                            function (ordersService, $q, $log, $stateParams) {
+                        ordersData: (['$q', '$log','$stateParams',
+                            function ($q, $log, $stateParams) {
                                 var def = $q.defer();
                                 $log.debug('locals::::ResolveOrders');
 
@@ -27,7 +27,6 @@
                                 else {
                                     def.resolve({filterName:'Pedidos de todos los locales'});
                                 }
-
                                 return def.promise;
                             }])
                     },
@@ -70,7 +69,7 @@
         function ($scope, $uibModalInstance, $log, $rootScope,orderId) {
             var init = function (){
                 $scope.status = {};
-                $scope.model={};
+                $scope.model = {};
                 $scope.orderId = orderId;
                 $scope.orderDetails = angular.isDefined($scope.orders[orderId].orderdetail) ? $scope.orders[orderId].orderdetail : [];
             };
@@ -145,7 +144,6 @@
                         $scope[date].opened = true;
                     };
 
-
                     $scope.viewOrderDetail = function (id) {
                         $scope.modalInstance = $uibModal.open({
                             templateUrl: 'orders/ordersModalView.tpl.html',
@@ -155,10 +153,7 @@
                             scope: $scope
                         });
 
-                        $scope.modalInstance.result.then(function(modalResult){
-
-                        },function(){
-                        });
+                        $scope.modalInstance.result.then(function(modalResult){},function(){});
                     };
 
                     $scope.cancelOrder = function (params) {

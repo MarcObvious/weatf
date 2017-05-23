@@ -5,21 +5,81 @@
                 .state('root.users', {
                     url: '/users',
                     parent: 'root',
-                    resolve: {
-                        autentica: (['authService','$state', function (authService) {
-                            return authService.autentica();
-                        }])
-                    },
-                    abstract: true,
                     views: {
                         "container@": {
+                            controller: 'usersController',
                             templateUrl: 'users/users.tpl.html'
                         }
                     },
+                    resolve: {
+                        autentica: (['authService', function (authService) {
+                            return authService.autentica();
+                        }]),
+                        usersData: (['usersService', '$q', '$log',
+                            function (usersService, $q, $log) {
+                                var def = $q.defer();
+                                $log.debug('users::::ResolveUsers');
+                                usersService.getAllUsers().then(function(data){
+                                    def.resolve({users: data, filterName:'Usuarios de todos los locales:'});
+                                }, function (err) {
+                                    def.reject(err);
+                                });
+                                return def.promise;
+                            }])
+                    },
                     data: {
-                        pageTitle: 'users'
+                        pageTitle: 'Usuarios'
                     }
                 });
+        }]);
+
+    app.controller('usersController', ['$log','$scope','usersData','ngTableParams','$uibModal','usersService',
+        function ($log, $scope, usersData, NGTableParams, $uibModal, usersService) {
+
+            var init = function () {
+                $log.info('App:: Starting usersController');
+                $scope.filterName = usersData.filterName;
+                $scope.vm = {};
+                if (usersData.users) {
+                    $scope.users = usersData.users;
+                    $scope.vm.tableParams = new NGTableParams({count:15}, { data: $scope.users,counts:[15,20,50]});
+                }
+            };
+
+            $scope.editUser = function (user_id) {
+                $scope.modalInstance = $uibModal.open({
+                    templateUrl: 'users/userModalEdit.tpl.html',
+                    size: 'lg',
+                    controller: 'userModalEditController',
+                    resolve: {
+                        userData: (['usersService','$q',
+                            function (usersService, $q) {
+                                var def = $q.defer();
+                                usersService.getUser({user_id: user_id}).then(function(data){
+                                    def.resolve(data.data);
+                                }, function (err) {
+                                    def.reject(err);
+                                });
+                                return def.promise;
+                            }])
+                    },
+                    scope: $scope
+                });
+
+                $scope.modalInstance.result.then(function(modalResult){
+                },function(){
+
+                });
+            };
+
+            $scope.deleteUser = function (params) {
+                usersService.deleteUser(params).then(function(result){
+                }, function (err) {
+                });
+            };
+
+            init();
+
         }]);
 
     app.controller('userModalEditController', ['$scope', '$uibModalInstance', '$log','$rootScope','userData','usersService',
@@ -72,7 +132,6 @@
                     }, function(err){
                     });
                 }
-
             };
 
             $scope.cancel = function () {
@@ -80,9 +139,8 @@
             };
 
             $scope.delete = function (user_id) {
-                usersService.deleteUser({user_id:user_id}).then(function(result){
+                usersService.deleteUser({user_id: user_id}).then(function(result){
                     $uibModalInstance.dismiss('Exit');
-
                 }, function(err){
                 });
             };

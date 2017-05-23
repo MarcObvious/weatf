@@ -25,9 +25,9 @@
                     parent: 'root.locals',
                     resolve: {
                         localsData: (['localsService', '$q', '$log','$stateParams','authService',
-                            function (localsService, $q, $log, $stateParams,authService) {
+                            function (localsService, $q, $log, $stateParams, authService) {
                                 var def = $q.defer();
-                                var logged=authService.autentica();
+                                var logged = authService.autentica();
                                 if (logged) {
                                     $log.debug('locals::::ResolveLocalsGrid');
                                     localsService.getLocals().then(function(data){
@@ -36,7 +36,9 @@
                                         def.reject(err);
                                     });
                                 }
-                                else{def.reject();}
+                                else{
+                                    def.reject();
+                                }
                                 return def.promise;
                             }])
                     },
@@ -47,15 +49,15 @@
                         }
                     },
                     data: {
-                        pageTitle: 'Orders'
+                        pageTitle: 'Locales'
                     }
                 })
                 .state('root.locals.localdetail', {
                     url: '/localDetail/{id_local}',
                     parent: 'root.locals',
                     resolve: {
-                        localData: (['localsService', '$q', '$log','$stateParams','$rootScope',
-                            function (localsService, $q, $log, $stateParams,$rootScope) {
+                        localData: (['localsService', '$q', '$log','$stateParams',
+                            function (localsService, $q, $log, $stateParams) {
                                 var def = $q.defer();
                                 $log.debug('locals::::ResolveOrderDetail::'+$stateParams.id_local);
                                 localsService.getLocal({local_id: $stateParams.id_local}).then(function(data){
@@ -73,7 +75,7 @@
                         }
                     },
                     data: {
-                        pageTitle: 'LocalDetail'
+                        pageTitle: 'Detalle de local'
                     }
                 });
         }]);
@@ -130,12 +132,12 @@
                     scope: $scope
                 });
 
-                $scope.modalInstance.result.then(function(modalResult){
-                },function(){
+                $scope.modalInstance.result.then(function(modalResult) {
+                    $state.go('root.locals.localdetail',{id_local: modalResult.id});
                 });
             };
 
-            $scope.mostrar = function() {
+            $scope.mostrar = function () {
                 var start =  $scope.dateStart.date.toJSON().substr(0,10);
                 $state.go('root.locals.localgrid', {option: $scope.option, date: start});
             };
@@ -143,7 +145,6 @@
             $scope.pageChanged = function () {
                 var begin = (($scope.currentPage - 1) * $scope.numPerPage), end = begin + $scope.numPerPage;
                 $scope.localsSliced = $scope.locals.slice(begin, end);
-
                 $state.go('root.locals.localgrid',{page:$scope.currentPage},{notify:false, reload:false, location:'replace', inherit:true});
             };
 
@@ -185,12 +186,23 @@
                 });
             };
 
-            $scope.editLocal = function (localData) {
+            $scope.editLocal = function (local_id) {
                 $scope.modalInstance = $uibModal.open({
                     templateUrl: 'locals/localModalEdit.tpl.html',
                     size: 'lg',
                     controller: 'localModalEditController',
-                    resolve: {localData : localData},
+                    resolve: {
+                        localData: (['localsService', '$q',
+                            function (localsService, $q) {
+                                var def = $q.defer();
+                                localsService.getLocal({local_id: local_id}).then(function(data){
+                                    def.resolve(data.data);
+                                }, function (err) {
+                                    def.reject(err);
+                                });
+                                return def.promise;
+                            }])
+                    },
                     scope: $scope
                 });
 
@@ -198,7 +210,6 @@
                     var prods = $scope.local.products;
                     $scope.local = localResult;
                     $scope.local.products = prods;
-                },function(){
                 });
             };
 
@@ -207,7 +218,7 @@
                     templateUrl: 'locals/productModalEdit.tpl.html',
                     size: 'lg',
                     controller: 'productModalEditController',
-                    resolve: {productData :{newproduct: true, local_id:$scope.local.id}},
+                    resolve: {productData :{newproduct: true, local_id: $scope.local.id}},
                     scope: $scope
                 });
                 $scope.modalInstance.result.then(function(productResult){
@@ -235,7 +246,7 @@
                     scope: $scope
                 });
                 $scope.modalInstance.result.then(function(productResult){
-                   console.log($scope.local.products);
+                    console.log($scope.local.products);
                     var products = [];
                     console.log(products);
                     angular.forEach($scope.local.products, function(product){
@@ -283,6 +294,7 @@
     app.controller('localModalEditController', ['$scope', '$uibModalInstance', '$log','$rootScope','localData','$uibModal','localsService','usersService',
         function ($scope, $uibModalInstance, $log, $rootScope,localData, $uibModal,localsService, usersService) {
             var init = function () {
+                console.log(localData);
                 $scope.localModal = localData;
                 $scope.localModal.raw_picture ={};
                 $scope.localModal.user_id = angular.isDefined($scope.localModal.user_id) ? $scope.localModal.user_id.toString() : "0";

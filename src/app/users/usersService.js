@@ -48,6 +48,16 @@ angular.module('usersService', [])
 
                     return def.promise;
                 },
+                getUser: function (params) {
+                    var def = $q.defer();
+                    this.api('getuser/').save({}, params, function(data){
+                        def.resolve(data);
+                    }, function (err) {
+                        def.reject(err);
+                    });
+
+                    return def.promise;
+                },
                 createUser: function (params) {
                     var def = $q.defer();
                     this.api('createuser/').save({}, params, function(data){
