@@ -78,7 +78,7 @@ angular.module('usersService', [])
                 },
                 deleteUser: function (params) {
                     var def = $q.defer();
-                    this.api('deleteuser/').remove({}, params, function(data){
+                    this.api('deleteuser/').remove( params,{}, function(data){
                         def.resolve(data);
                     }, function (err) {
                         def.reject(err);

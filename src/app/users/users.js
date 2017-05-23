@@ -72,11 +72,14 @@
                 });
             };
 
-            $scope.deleteUser = function (params) {
-                usersService.deleteUser(params).then(function(result){
-                }, function (err) {
+            $scope.deleteUser = function (user_id) {
+                console.log(user_id);
+                usersService.deleteUser({user_id: user_id}).then(function(result){
+
+                }, function(err){
                 });
             };
+
 
             init();
 
@@ -147,7 +150,7 @@
                 $uibModalInstance.dismiss('Exit');
             };
 
-            $scope.delete = function (user_id) {
+            $scope.deleteUser = function (user_id) {
                 usersService.deleteUser({user_id: user_id}).then(function(result){
                     $uibModalInstance.dismiss('Exit');
                 }, function(err){
