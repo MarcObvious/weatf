@@ -73,7 +73,6 @@
             };
 
             $scope.deleteUser = function (user_id) {
-                console.log(user_id);
                 usersService.deleteUser({user_id: user_id}).then(function(result){
 
                 }, function(err){
@@ -99,7 +98,7 @@
                 $scope.dates.birthday = angular.isDefined(userData.birthdate) ? new Date(userData.birthdate) : new Date();
                 $scope.dates.opened = false;
 
-                $scope.userModal.user_id = angular.isDefined($scope.userModal.user_id) ? $scope.userModal.user_id.toString() : "0";
+                $scope.userModal.user_id = $scope.userModal.user_id ? $scope.userModal.user_id.toString() : "0";
                 usersService.getAllUsers().then(function (users) {
                     var users_final = [];
                     angular.forEach(users, function (user) {
