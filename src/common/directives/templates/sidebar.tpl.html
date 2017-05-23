@@ -10,9 +10,9 @@
             <li>
                 <a href="" class="head-text">Administración:</a>
             </li>
-            <li ng-class="{active: collapseVar==2}">
-                <a href="" ng-click="check(2)" class="sub-hedd-text">Herramientas<span class="fa arrow"></span></a>
-                <ul class="nav nav-second-level" uib-collapse="collapseVar!=2">
+            <li ng-class="{active: collapseVar==1}">
+                <a href="" ng-click="check(1)" class="sub-hedd-text">Herramientas<span class="fa arrow"></span></a>
+                <ul class="nav nav-second-level" uib-collapse="collapseVar!=1">
                     <li ui-sref-active="active">
                         <a class="sub-sub-hedd-text" ng-click="newLocal()">Nuevo local <span class="head-text">(+)</span></a>
                     </li>
@@ -24,6 +24,17 @@
                     </li>
                     <li ui-sref-active="active">
                         <a class="sub-sub-hedd-text" ui-sref="root.users({page:1})"> Gestionar usuarios <span class="head-text">(-)</span></a>
+                    </li>
+                </ul>
+            </li>
+            <li ng-class="{active: collapseVar==2}">
+                <a href="" ng-click="check(2)" class="sub-hedd-text">Estadísticas<span class="fa arrow"></span></a>
+                <ul class="nav nav-second-level" uib-collapse="collapseVar!=2">
+                    <li ui-sref-active="active">
+                        <a class="sub-sub-hedd-text" ui-sref="root.chart"> Android <span class="head-text">(-)</span></a>
+                    </li>
+                    <li ui-sref-active="active">
+                        <a class="sub-sub-hedd-text" ui-sref="root.chart"> iOS <span class="head-text">(-)</span></a>
                     </li>
                 </ul>
             </li>

@@ -85,10 +85,10 @@
     app.controller('userModalEditController', ['$scope', '$uibModalInstance', '$log','$rootScope','userData','usersService',
         function ($scope, $uibModalInstance, $log, $rootScope, userData, usersService) {
             var init = function () {
-                $scope.user = userData ? userData : {};
-                $scope.user.raw_picture ={};
-                $scope.user.gender = userData.gender ? userData.gender.toString() : "0";
-                $scope.user.user_type = userData.user_type ? userData.user_type.toString() : "1";
+                $scope.userModal = userData ? userData : {};
+                $scope.userModal.raw_picture ={};
+                $scope.userModal.gender = userData.gender ? userData.gender.toString() : "0";
+                $scope.userModal.user_type = userData.user_type ? userData.user_type.toString() : "1";
 
                 $scope.dates = {};
                 $scope.dates.format = 'dd-MM-yyyy';
@@ -112,22 +112,22 @@
             };
 
             $scope.save = function () {
-                if (angular.isDefined($scope.user.raw_picture.base64)){
-                    $scope.user.picture = $scope.user.raw_picture.base64;
+                if (angular.isDefined($scope.userModal.raw_picture.base64)){
+                    $scope.userModal.picture = $scope.userModal.raw_picture.base64;
                 }
                 var mal = $scope.dates.birthday.toISOString().slice(0,10);
-                $scope.user.birthdate = mal.slice(8,10) + '-' + mal.slice(5,7) + '-' + mal.slice(0,4);
-                if ($scope.user.newuser) {
-                    usersService.createUser($scope.user).then(function(result){
+                $scope.userModal.birthdate = mal.slice(8,10) + '-' + mal.slice(5,7) + '-' + mal.slice(0,4);
+                if ($scope.userModal.newuser) {
+                    usersService.createUser($scope.userModal).then(function(result){
                         $uibModalInstance.close(result.data);
                     }, function(err){
                     });
                 }
                 else {
-                    delete $scope.user.created_at;
-                    delete $scope.user.updated_at;
+                    delete $scope.userModal.created_at;
+                    delete $scope.userModal.updated_at;
                     //$scope.user.user_id = $scope.user.id;
-                    usersService.saveUser($scope.user).then(function(result){
+                    usersService.saveUser($scope.userModal).then(function(result){
                         $uibModalInstance.close(result.data);
                     }, function(err){
                     });

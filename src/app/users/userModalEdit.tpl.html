@@ -1,34 +1,34 @@
 <div class="usersClass">
     <div class="modal-header">
-        <h3 class="modal-title" ng-if="user.newuser"><i class="fa fa-user"></i> Alta nuevo usuario</h3>
-        <h3 class="modal-title" ng-if="!user.newuser"><i class="fa fa-user"></i> Edición del usuario {{user.email}}</h3>
+        <h3 class="modal-title" ng-if="userModal.newuser"><i class="fa fa-user"></i> Alta nuevo usuario</h3>
+        <h3 class="modal-title" ng-if="!userModal.newuser"><i class="fa fa-user"></i> Edición del usuario {{userModal.email}}</h3>
     </div>
     <div class="modal-body clearfix">
         <div class="col-md-12">
             <div class="form-group">
                 <div class="col-md-6">
                     <label>Nombre</label>
-                    <input class="form-control input-modal" placeholder="Nombre del usuario" ng-model="user.firstname">
+                    <input class="form-control input-modal" placeholder="Nombre del usuario" ng-model="userModal.firstname">
                 </div>
                 <div class="col-md-6">
                     <label>Apellido</label>
-                    <input class="form-control input-modal" placeholder="Apellido del usuario" ng-model="user.lastname">
+                    <input class="form-control input-modal" placeholder="Apellido del usuario" ng-model="userModal.lastname">
                 </div>
                 <div class="col-md-6">
                     <label>Contraseña</label>
-                    <input type="password" class="form-control input-modal" placeholder="Contraseña" ng-model="user.password">
+                    <input type="password" class="form-control input-modal" placeholder="Contraseña" ng-model="userModal.password">
                 </div>
                 <div class="col-md-6">
                     <label>Repite la contraseña</label>
-                    <input type="password" class="form-control input-modal" placeholder="Repite la contraseña" ng-model="user.password_val">
+                    <input type="password" class="form-control input-modal" placeholder="Repite la contraseña" ng-model="userModal.password_val">
                 </div>
                 <div class="col-md-6">
                     <label>Email:</label>
-                    <input class="form-control input-modal" placeholder="Email" ng-model="user.email">
+                    <input class="form-control input-modal" placeholder="Email" ng-model="userModal.email">
                 </div>
                 <div class="col-md-6">
                     <label>Teléfono:</label>
-                    <input class="form-control input-modal" placeholder="Teléfono" ng-model="user.directions.phone">
+                    <input class="form-control input-modal" placeholder="Teléfono" ng-model="userModal.directions.phone">
                 </div>
                 <div class="col-md-6">
                     <label>Aniversario:</label>
@@ -46,7 +46,7 @@
                 </div>
                 <div class="col-md-6">
                     <label>Sexo:</label>
-                    <select class="form-control input-modal" ng-model="user.gender">
+                    <select class="form-control input-modal" ng-model="userModal.gender">
                         <option value="1">H</option>
                         <option value="2">M</option>
                         <option value="0">Desconocido</option>
@@ -54,11 +54,11 @@
                 </div>
                 <div class="col-md-6">
                     <label>Compras:</label>
-                    <input disabled class="form-control input-modal" placeholder="Compras" ng-model="user.purchases">
+                    <input disabled class="form-control input-modal" placeholder="Compras" ng-model="userModal.purchases">
                 </div>
                 <div class="col-md-6">
                     <label>Tipo de usuario:</label>
-                    <select class="form-control input-modal" ng-model="user.user_type">
+                    <select class="form-control input-modal" ng-model="userModal.user_type">
                         <option value="10">Root</option>
                         <option value="5">Admin</option>
                         <option value="2">Local</option>
@@ -67,7 +67,7 @@
                 </div>
                 <div class="col-md-6">
                     <label>Asignar usuario padre existente:</label>
-                    <select class="form-control input-modal" ng-model="local.user_id">
+                    <select class="form-control input-modal" ng-model="userModal.user_id">
                         <option ng-repeat="user in users" value="{{user.id}}" selected>{{user.email}}</option>
                     </select>
                 </div>
@@ -79,11 +79,11 @@
                 </div>
                 <div class="col-md-6">
                     <label>Imagen url:</label>
-                    <input disabled class="form-control input-modal" placeholder="Imagen url" ng-model="user.profile_picture_url">
+                    <input disabled class="form-control input-modal" placeholder="Imagen url" ng-model="userModal.profile_picture_url">
                 </div>
                 <div class="col-md-6">
                     <label>Imagen:</label>
-                    <input class="form-control input-modal" type='file' ng-model='user.raw_picture' base-sixty-four-input>
+                    <input class="form-control input-modal" type='file' ng-model='userModal.raw_picture' base-sixty-four-input>
                 </div>
                 <!-- <div class="col-md-6">
                      <label>Creado a:</label>
@@ -107,18 +107,18 @@
                     Cancelar <i class="fa fa-ban"></i>
                 </button>
             </div>
-            <div class="col-md-4" ng-if="user.newuser">
+            <div class="col-md-4" ng-if="userModal.newuser">
                 <button type="button" class="btn btn-danger btn-block input-modal" ng-click="cancel()">
                     Descartar usuario <i class="fa fa-trash"></i>
                 </button>
             </div>
-            <div class="col-md-4" ng-if="!user.newuser">
+            <div class="col-md-4" ng-if="!userModal.newuser">
                 <button type="button" class="btn btn-danger btn-block input-modal" ng-click="delete()">
                     Eliminar usuario <i class="fa fa-trash"></i>
                 </button>
             </div>
             <div class="col-md-4">
-                <button type="button" class="btn btn-success btn-block input-modal" ng-click="save(user)">
+                <button type="button" class="btn btn-success btn-block input-modal" ng-click="save()">
                     Guardar usuario <i class="fa fa-floppy-o"></i>
                 </button>
             </div>

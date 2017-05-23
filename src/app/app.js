@@ -61,6 +61,7 @@
     'geolocationService',
     'weatf.locals',
     'weatf.users',
+    'weatf.chart',
     'weatf.auth',
     'weatf.notifier',
     'weatf.scheduler',
