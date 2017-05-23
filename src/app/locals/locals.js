@@ -245,16 +245,16 @@
                     scope: $scope
                 });
                 $scope.modalInstance.result.then(function(productResult){
-                    console.log($scope.local.products);
                     var products = [];
-                    console.log(products);
+
                     angular.forEach($scope.local.products, function(product){
-                        console.log(product);
                         if (product.id !== productResult.id)  {
                             products.push(product);
                         }
                     });
-                    products.push(productResult);
+                    if (productResult.status !== 'deleted') {
+                        products.push(productResult);
+                    }
                     $scope.local.products = products;
                 },function(){
 
@@ -400,7 +400,7 @@
 
             $scope.delete = function (product_id) {
                 productsService.deleteProduct({product_id:product_id}).then(function(result){
-                    $uibModalInstance.close('Exit');
+                    $uibModalInstance.close({status:'deleted', id:product_id});
                 }, function(err){
                 });
 
