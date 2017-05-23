@@ -87,7 +87,7 @@
             var init = function () {
                 $scope.userModal = userData ? userData : {};
                 $scope.userModal.raw_picture ={};
-                $scope.userModal.gender = userData.gender ? userData.gender.toString() : "0";
+                $scope.userModal.gender = userData.gender ? userData.gender.toString() : "H";
                 $scope.userModal.user_type = userData.user_type ? userData.user_type.toString() : "1";
 
                 $scope.dates = {};
