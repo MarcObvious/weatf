@@ -60,7 +60,7 @@ angular.module('localsService', [])
                 },
                 deleteLocal: function (params) {
                     var def = $q.defer();
-                    this.api('deletelocal/').remove({}, params, function(data){
+                    this.api('deletelocal/').remove(params, {}, function(data){
                         def.resolve(data);
                     }, function (err) {
                         def.reject(err);
