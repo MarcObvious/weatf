@@ -89,8 +89,8 @@
             templateUrl:'orders/ordersTable.tpl.html',
             restrict: 'E',
             replace: true,
-            controller:  (['$log','$scope','$state','$http','ngTableParams','$filter','$uibModal','ordersService',
-                function ($log,$scope,$state,$http,ngTableParams,$filter,$uibModal,ordersService) {
+            controller:  (['$log','$scope','$state','$http','ngTableParams','ngTableEventsChannel','$filter','$uibModal','ordersService',
+                function ($log,$scope,$state,$http,ngTableParams,ngTableEventsChannel,$filter,$uibModal,ordersService) {
 
                     var init = function () {
                         $log.info('App:: Starting ordersController');
@@ -116,8 +116,17 @@
                         var start =  $scope.dateStart.date.toJSON().substr(0,10);
                         var end =  $scope.dateEnd.date.toJSON().substr(0,10);
                         $scope.orders = [];
-                        $scope.ordersCSV = [];
+                        $scope.exportData = [];
                         getOrders(start, end);
+
+
+                        $scope.exportData = [];
+                        ngTableEventsChannel.onAfterReloadData(function(a,b,c){
+                            var filters = a.filter();
+                            var rawData = a.settings().data;
+                            $scope.exportData = $filter('filter')(rawData,filters);
+                            console.log($scope.exportData);
+                        }, $scope);
 
                     };
 
@@ -125,9 +134,10 @@
                         if ($scope.localid !== undefined) {
                             ordersService.getLocalOrders({local_id: $scope.localid, dateStart:start, dateEnd:end}).then(function(data){
                                 $scope.filterName = 'Pedidos local: ' + $scope.localid;
-                                $scope.orders = data.data;
+                                //$scope.orders = data.data;
+                                populateCsv(data.data);
                                 $scope.vm.tableParams = new ngTableParams({count:10}, { data: $scope.orders,counts:[10,15,20]});
-                                populateCsv();
+
                             }, function (err) {
                                 $scope.vm.tableParams = new ngTableParams({count:10}, { data: [],counts:[10,15,20]});
                             });
@@ -135,19 +145,21 @@
                         else {
                             ordersService.getAllOrders({dateStart:start, dateEnd:end}).then(function (data) {
                                 $scope.filterName = 'Pedidos de todos los locales';
-                                $scope.orders = data.data;
+                               // $scope.orders = data.data;
+                                populateCsv(data.data);
                                 $scope.vm.tableParams = new ngTableParams({count:10}, { data: $scope.orders,counts:[10,15,20]});
-                                populateCsv();
+
                             }, function (err) {
                                 $scope.vm.tableParams = new ngTableParams({count:10}, { data: [],counts:[10,15,20]});
                             });
                         }
                         $scope.name_csv = 'Pedidos_'+ start + '_' + end;
+                        $scope.headers_csv = ['Pedido','Local','Usuario','Estado','Producto','Precio','Cantidad','IVA','F.A','F.C'];
                     };
-                    var populateCsv = function() {
+                    var populateCsv = function(orders) {
 
-                        angular.forEach($scope.orders, function (order) {
-                            $scope.ordersCSV.push({
+                        angular.forEach(orders, function (order) {
+                            $scope.orders.push({
                                 id: order.id,
                                 local_id: order.orderdetail[0].local_id,
                                 user_name: order.orderdetail[0].user_name,
@@ -160,6 +172,22 @@
                                 created_at: order.orderdetail[0].created_at
                             });
                         });
+                    };
+
+                    $scope.getExportArray = function(){
+                        //return $scope.exportData ? $scope.exportData : [];
+                        var finalData = [];
+                        angular.forEach($scope.exportData,function(value,key){
+                            var object = {};
+                            object.timestamp = value.timestamp;
+                            object.elementName = value.elementName;
+                            object.data = JSON.stringify(value.data);
+                            object.sensorMagnitude = value.sensorMagnitude;
+                            object.units = value.units ? value.units : 'No value';
+                            finalData.push(object);
+                        });
+
+                        return finalData;
                     };
 
                     $scope.openDatepicker = function(date) {

@@ -115,6 +115,10 @@
                 if (angular.isDefined($scope.userModal.raw_picture.base64)){
                     $scope.userModal.picture = $scope.userModal.raw_picture.base64;
                 }
+                if (angular.isDefined($scope.userModal.directions.phone)){
+                   $scope.userModal.phone = $scope.userModal.directions.phone;
+                }
+
                 if($scope.userModal.user_type === 1 || $scope.userModal.user_type === 10){
                     delete $scope.userModal.user_id;
                 }

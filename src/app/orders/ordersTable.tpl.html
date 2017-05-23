@@ -34,7 +34,7 @@
         </div>
 
         <div class="col-lg-3 btn-mostrar">
-            <button class="btn btn-warning btn-block" add-bom field-separator=";" ng-csv="ordersCSV" csv-header="['Pedido','Local','Usuario','Estado','Producto','Precio','Cantidad','IVA','F.A','F.C']" filename="{{name_csv}}.csv">CSV <i class="fa fa-download"></i></button>
+            <button class="btn btn-warning btn-block" add-bom field-separator=";" ng-csv="exportData" csv-header="headers_csv" filename="{{name_csv}}.csv">CSV <i class="fa fa-download"></i></button>
         </div>
 
     </div>
@@ -43,13 +43,23 @@
             <tr ng-repeat="order in $data track by $index">
                 <td title="'Pedido'" filter="{ id: 'number'}" sortable="'id'">
                     {{order.id}}</td>
+                <td title="'Local'" filter="{ local_id: 'number'}" sortable="'local_id'">
+                    {{order.local_id}}</td>
+                <td title="'Email'" filter="{ user_name: 'text'}" sortable="'user_name'">
+                    {{order.user_name}}</td>
                 <td title="'Estado'" filter="{ order_state_name: 'text'}" sortable="'order_state_name'">
                     {{order.order_state_name}}</td>
-                <td title="'Usuario'" filter="{ user_id: 'text'}" sortable="'user_id'">
-                    {{order.user_id}}</td>
-                <td title="'Fecha creación'" filter="{ created_at: 'text'}" sortable="'created_at'">
+                <td title="'Producto'" filter="{ product_id: 'number'}" sortable="'product_id'">
+                    {{order.product_id}}</td>
+                <td title="'Precio'" filter="{ product_price: 'number'}" sortable="'product_price'">
+                    {{order.product_price}}</td>
+                <td title="'Cantidad'" filter="{ product_quantity: 'number'}" sortable="'product_quantity'">
+                    {{order.product_quantity}}</td>
+                <td title="'IVA'" filter="{ tax_rate: 'number'}" sortable="'tax_rate'">
+                    {{order.tax_rate}}</td>
+                <td title="'F.C.'" filter="{ created_at: 'text'}" sortable="'created_at'">
                     {{order.created_at}}</td>
-                <td title="'Fecha actualización'" filter="{ updated_at: 'text'}" sortable="'updated_at'">
+                <td title="'F.A.'" filter="{ updated_at: 'text'}" sortable="'updated_at'">
                     {{order.updated_at}}</td>
                 <td title="'Acciones'" class="text-center">
                     <button class="btn btn-warning btn-xs" uib-tooltip="Ver detalles del pedido" tooltip-placement="left" tooltip-trigger="mouseenter" ng-click="viewOrderDetail($index)">
