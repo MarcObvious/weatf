@@ -37,12 +37,18 @@
                     <input class="form-control input-modal" placeholder="Stock" ng-model="product.stock">
                 </div>
                 <div class="col-md-6">
-                    <label>Imagen Url:</label>
-                    <input disabled class="form-control input-modal" placeholder="Imagen" ng-model="product.picture">
+                    <label>Imagen assignada:</label>
+                    <input disabled class="form-control input-modal" placeholder="Ninguna" ng-model="picture">
                 </div>
-                <div class="col-md-6">
+                <div ng-show="picture" class="col-md-6">
                     <label>Imagen:</label>
-                    <input class="form-control input-modal" type='file' ng-model='product.raw_picture' base-sixty-four-input>
+                    <button type="button" class="btn btn-danger btn-block btn-mostrar input-modal" ng-click="eliminarImagen()">
+                        Eliminar imagen <i class="fa fa-trash"></i>
+                    </button>
+                </div>
+                <div ng-show="!picture" class="col-md-6">
+                    <label>Imagen:</label>
+                    <input class="form-control input-modal" base-sixty-four-input type="file" ng-model="product.raw_picture">
                 </div>
                 <div class="col-md-12">
                     <label>Descripción</label>

@@ -119,8 +119,6 @@
                         $scope.exportData = [];
                         getOrders(start, end);
 
-
-                        $scope.exportData = [];
                         ngTableEventsChannel.onAfterReloadData(function(a,b,c){
                             var filters = a.filter();
                             var rawData = a.settings().data;
@@ -156,7 +154,7 @@
                         $scope.headers_csv = ['Pedido','Local','Usuario','Estado','Producto','Precio','Cantidad','F.A','F.C'];
                     };
                     var populateCsv = function(orders) {
-
+                        $scope.orders = [];
                         angular.forEach(orders, function (order) {
                             $scope.orders.push({
                                 id: order.id,
@@ -211,6 +209,7 @@
                     };
 
                     $scope.mostrar = function() {
+                        $scope.exportData = [];
                         var start =  $scope.dateStart.date.toJSON().substr(0,10);
                         var end =  $scope.dateEnd.date.toJSON().substr(0,10);
                         getOrders(start, end);

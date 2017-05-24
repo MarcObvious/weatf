@@ -300,7 +300,10 @@
         function ($scope, $uibModalInstance, $log, $rootScope,localData, $uibModal,localsService, usersService) {
             var init = function () {
                 $scope.localModal = localData;
-                $scope.localModal.raw_picture ={};
+
+                $scope.localModal.raw_picture = null;
+                $scope.picture = $scope.localModal.picture || null;
+
                 $scope.localModal.user_id = angular.isDefined($scope.localModal.user_id) ? $scope.localModal.user_id.toString() : "0";
                 $scope.dates = {};
                 $scope.dates.from_hour = angular.isDefined(localData.from_hour) ? new Date('2017-05-05 '+localData.from_hour) : new Date();
@@ -315,6 +318,19 @@
                     $scope.users = users_final;
                 });
             };
+
+            $scope.eliminarImagen = function() {
+                $scope.localModal.raw_picture = null;
+                $scope.localModal.picture = null;
+                $scope.picture = null;
+            };
+
+            $scope.$watch('localModal.raw_picture', function(id, oldValue) {
+                if($scope.localModal.raw_picture) {
+                    $scope.picture = $scope.localModal.raw_picture.filename;
+                }
+            });
+
             $scope.save = function () {
                 if (angular.isDefined($scope.localModal.raw_picture.base64)){
                     $scope.localModal.picture = $scope.localModal.raw_picture.base64;
@@ -376,7 +392,9 @@
         function ($scope, $uibModalInstance, $log, $rootScope, productData, productsService) {
             var init = function () {
                 $scope.product = productData;
-                $scope.product.raw_picture ={};
+                $scope.product.raw_picture = null;
+                $scope.picture = $scope.product.picture || null;
+
                 $scope.product.type = $scope.product.type ? $scope.product.type.toString() : "1";
             };
 
@@ -399,6 +417,18 @@
                 }
                 $uibModalInstance.close($scope.product);
             };
+
+            $scope.eliminarImagen = function() {
+                $scope.product.raw_picture = null;
+                $scope.product.picture = null;
+                $scope.picture = null;
+            };
+
+            $scope.$watch('product.raw_picture', function(id, oldValue) {
+                if($scope.product.raw_picture) {
+                    $scope.picture = $scope.product.raw_picture.filename;
+                }
+            });
 
             $scope.cancel = function () {
                 $uibModalInstance.dismiss('Exit');

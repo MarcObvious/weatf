@@ -33,8 +33,8 @@
                 });
         }]);
 
-    app.controller('usersController', ['$log','$scope','usersData','ngTableParams','$uibModal','usersService',
-        function ($log, $scope, usersData, NGTableParams, $uibModal, usersService) {
+    app.controller('usersController', ['$log','$scope','usersData','ngTableParams','$uibModal','usersService','$state',
+        function ($log, $scope, usersData, NGTableParams, $uibModal, usersService, $state) {
 
             var init = function () {
                 $log.info('App:: Starting usersController');
@@ -67,6 +67,7 @@
                 });
 
                 $scope.modalInstance.result.then(function(modalResult){
+                    $state.reload();
                 },function(){
 
                 });
@@ -74,7 +75,7 @@
 
             $scope.deleteUser = function (user_id) {
                 usersService.deleteUser({user_id: user_id}).then(function(result){
-
+                    $state.reload();
                 }, function(err){
                 });
             };
