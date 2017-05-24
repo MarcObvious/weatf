@@ -5,7 +5,7 @@
 
         <ul class="nav in" id="side-menu" ng-show="logged">
             <sidebar-locals></sidebar-locals>
-            <sidebar-search></sidebar-search>
+           <!-- <sidebar-search></sidebar-search>-->
             <li>
                 <a href="" class="head-text">Administración:</a>
             </li>
@@ -41,10 +41,10 @@
                 <a href="" class="head-text">Push:</a>
             </li>
             <li>
-                <a ui-sref="root.simplepush({page:1})" class="sub-hedd-text">Prueba push</a>
+                <a ui-sref="root.simplepush({page:1})" class="sub-hedd-text">Push simple</a>
             </li>
             <li>
-                <a ui-sref="root.segment({page:1})" class="sub-hedd-text">Segmentos</a>
+                <a ui-sref="root.segment({page:1})" class="sub-hedd-text">Push segmentado</a>
             </li>
             <!--<li>
                 <a ui-sref="root.scheduler({page:1})" class="sub-hedd-text">Programador push</a>

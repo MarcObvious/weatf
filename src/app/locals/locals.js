@@ -225,7 +225,7 @@
                     /*$scope.local.products.push(productResult);*/
                     $state.reload();
                 },function(){
-
+                    $state.reload();
                 });
             };
 
@@ -248,20 +248,8 @@
                 });
                 $scope.modalInstance.result.then(function(productResult){
                     $state.reload();
-                    /*var products = [];
-
-                     angular.forEach($scope.local.products, function(product){
-                     if (product.id !== productResult.id)  {
-                     products.push(product);
-                     }
-                     });
-                     if (productResult.status !== 'deleted') {
-                     products.push(productResult);
-                     }
-                     $scope.local.products = products;*/
-
                 },function(){
-
+                    $state.reload();
                 });
             };
 
