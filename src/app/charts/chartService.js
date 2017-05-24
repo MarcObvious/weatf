@@ -2,8 +2,8 @@
  * Api Test Módule
  */
 angular.module('chartService', [])
-        .factory('chartService', ['$resource', '$q', '$log',
-            function ($resource, $q, $log) {
+        .factory('chartService', ['$resource', '$q', '$log','$http',
+            function ($resource, $q, $log,$http) {
                 return {
                     api: function (extra_route) {
                         if (!extra_route) {
@@ -27,7 +27,7 @@ angular.module('chartService', [])
                             }
                         });
                     },
-                    getChart: function (method, params, params_extr) {
+                   /* getChart: function (method, params, params_extr) {
                         var def = $q.defer();
                         var extra_route = '';
                         if (params.start && params.end){
@@ -44,6 +44,26 @@ angular.module('chartService', [])
                         }, function (err) {
                             def.reject(err);
                         });
+                        return def.promise;
+                    },*/
+                    getChart: function (method, params, params_extr) {
+                        var def = $q.defer();
+                        var j = '';
+                        if (params_extr===1) {
+                            j = '1.json';
+                        }
+                        else {
+                            j = '2.json';
+                        }
+                        $http.get('assets/'+j).success(function(data) {
+                            def.resolve(data.data);
+                        });
+                        //var data = JSON.parse('/charts/2.json');
+                        //this.api(extra_route).get({}, {}, function (data) {
+
+                       // }, function (err) {
+                         //   def.reject(err);
+                       // });
                         return def.promise;
                     }
                 };
