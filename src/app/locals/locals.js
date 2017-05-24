@@ -209,6 +209,9 @@
                     /*var prods = $scope.local.products;
                      $scope.local = localResult;
                      $scope.local.products = prods;*/
+                    if (localResult === 'Deleted') {
+                        $state.go('root.locals.localgrid',{},{reload:true});
+                    }
                     $state.reload();
                 });
             };
@@ -275,7 +278,6 @@
 
                 $scope.modalInstance.result.then(function(modalResult){
                     $state.reload();
-
                 },function(){
 
                 });
@@ -349,7 +351,7 @@
 
             $scope.delete = function (local_id) {
                 localsService.deleteLocal({local_id:local_id}).then(function(result){
-                    $uibModalInstance.dismiss('Exit');
+                    $uibModalInstance.close('Deleted');
                 }, function(err){
                 });
 
