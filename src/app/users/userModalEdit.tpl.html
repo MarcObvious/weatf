@@ -52,19 +52,6 @@
                         <option value="null">Desconocido</option>
                     </select>
                 </div>
-                <!--<div class="col-md-6">
-                    <label>Compras:</label>
-                    <input disabled class="form-control input-modal" placeholder="Compras" ng-model="userModal.purchases">
-                </div>-->
-                <div class="col-md-6">
-                    <label>Tipo de usuario:</label>
-                    <select class="form-control input-modal" ng-model="userModal.user_type">
-                        <option value="10">Super-Admin</option>
-                        <option value="5">Franquiciat</option>
-                        <option value="2">Local</option>
-                        <option value="1">Cliente</option>
-                    </select>
-                </div>
                 <div ng-show="userModal.user_type != 10 && userModal.user_type != 1  && usertype != 5">
                     <div class="col-md-6">
                         <label>Asignar usuario padre existente:</label>
@@ -79,26 +66,29 @@
                         </button>
                     </div>
                 </div>
-               <!-- <div class="col-md-6">
-                    <label>Imagen url:</label>
-                    <input disabled class="form-control input-modal" placeholder="Imagen url" ng-model="userModal.profile_picture_url">
-                </div>-->
                 <div class="col-md-6">
-                    <label>Imagen:</label>
-                    <input class="form-control input-modal" type='file' ng-model='userModal.raw_picture' base-sixty-four-input>
+                    <label>Imagen assignada:</label>
+                    <input disabled class="form-control input-modal" placeholder="Ninguna" ng-model="picture">
                 </div>
-                <!-- <div class="col-md-6">
-                     <label>Creado a:</label>
-                     <input disabled class="form-control input-modal" placeholder="Creado a" ng-model="user.created_at">
-                 </div>
-                 <div class="col-md-6">
-                     <label>Actualizado a:</label>
-                     <input disabled class="form-control input-modal" placeholder="Actualizado a" ng-model="user.updated_at">
-                 </div>
-                 <div class="col-md-6">
-                     <label>Asignado a local:</label>
-                     <input disabled class="form-control input-modal" placeholder="Id local" ng-model="user.local_id">
-                 </div>-->
+                <div ng-show="picture" class="col-md-6">
+                    <label>Imagen:</label>
+                    <button type="button" class="btn btn-danger btn-block btn-mostrar input-modal" ng-click="eliminarImagen()">
+                        Eliminar imagen <i class="fa fa-trash"></i>
+                    </button>
+                </div>
+                <div ng-show="!picture" class="col-md-6">
+                    <label>Imagen:</label>
+                    <input class="form-control input-modal" base-sixty-four-input type="file" ng-model="userModal.raw_picture">
+                </div>
+                <div class="col-md-6">
+                    <label>Tipo de usuario:</label>
+                    <select class="form-control input-modal" ng-model="userModal.user_type">
+                        <option value="10">Super-Admin</option>
+                        <option value="5">Franquiciat</option>
+                        <option value="2">Local</option>
+                        <option value="1">Cliente</option>
+                    </select>
+                </div>
             </div>
         </div>
     </div>

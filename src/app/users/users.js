@@ -89,7 +89,8 @@
         function ($scope, $uibModalInstance, $log, $rootScope, userData, usersService) {
             var init = function () {
                 $scope.userModal = userData ? userData : {};
-                $scope.userModal.raw_picture ={};
+                $scope.userModal.raw_picture = null;
+                $scope.picture = $scope.userModal.profile_picture_url || null;
                 $scope.userModal.gender = userData.gender ? userData.gender.toString() : "null";
                 $scope.userModal.user_type = userData.user_type ? userData.user_type.toString() : "1";
 
@@ -111,6 +112,18 @@
                 });
 
             };
+
+            $scope.eliminarImagen = function() {
+                $scope.userModal.raw_picture = null;
+                $scope.userModal.picture = null;
+                $scope.picture = null;
+            };
+
+            $scope.$watch('userModal.raw_picture', function(id, oldValue) {
+                if($scope.userModal.raw_picture) {
+                    $scope.picture = $scope.userModal.raw_picture.filename;
+                }
+            });
 
             $scope.openDatepicker = function() {
                 $scope.dates.opened = true;
