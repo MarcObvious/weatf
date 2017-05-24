@@ -8,6 +8,15 @@
                     resolve:{
                         autentica: (['authService',  function (authService) {
                             return authService.autentica();
+                        }]),
+                        localsData: (['globalService','$q', function(globalService,$q){
+                            var def = $q.defer();
+                            globalService.getSideBarLocals().then(function(data){
+                                def.resolve(data);
+                            }, function (err) {
+                                def.reject(err);
+                            });
+                            return def.promise;
                         }])
                     },
                     views: {
@@ -22,10 +31,20 @@
                 });
         }]);
 
-    app.controller('segmentedpushController', ['$log','$scope','$state','devicetokenService','pushlauncherService','$sce','mqpshService',
-        function ($log,$scope,$state,devicetokenService,pushlauncherService,$sce,mqpshService) {
-
-            var init = function (msg) {
+    app.controller('segmentedpushController', ['$log','$scope','$state','localsData',
+        function ($log,$scope,$state,localsData) {
+            var init = function () {
+                $scope.locals = localsData;
+                $scope.localSelected = "0";
+                $scope.selector1 = "0";
+                $scope.selector2 = "0";
+                $scope.selector3 = "0";
+                $scope.selector4 = "0";
+                $scope.selector5 = "0";
+                console.log(localsData);
+            };
+            init();
+           /* var init = function (msg) {
                 $log.info('App:: Starting segmentedpushController');
                 $scope.alerts = [msg];
                 $scope.model={};
@@ -172,10 +191,10 @@
             $scope.removeToken = function(){
                 $scope.dev.selectedData=null;
                 $scope.dev.result = null;
-            };
+            };*/
 
             //init({ type: 'warning', msg: 'Bienvenido a Simple Push!, Envia mensajes push facilment!!', time:'3000' });
-            init({});
+
         }]);
 
 }(angular.module("weatf.segmentedpush", [

@@ -66,6 +66,7 @@
     'weatf.notifier',
     'weatf.scheduler',
     'weatf.simplepush',
+    'weatf.segmentedpush',
     'weatf.segment',
     'weatf.orders',
     'LocalStorageModule',
