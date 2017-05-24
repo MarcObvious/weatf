@@ -65,21 +65,42 @@
             init();
         }]);
 
-    app.controller('ordersModalViewController', ['$scope', '$uibModalInstance', '$log','$rootScope','orderId',
-        function ($scope, $uibModalInstance, $log, $rootScope,orderId) {
+    app.controller('ordersModalEditController', ['$scope', '$uibModalInstance', '$log','$rootScope','orderDetailData','ordersService',
+        function ($scope, $uibModalInstance, $log, $rootScope, orderDetailData, ordersService) {
             var init = function (){
-                $scope.status = {};
-                $scope.model = {};
-                $scope.orderId = orderId;
-                $scope.orderDetails = angular.isDefined($scope.orders[orderId].orderdetail) ? $scope.orders[orderId].orderdetail : [];
+                $scope.orderModal = {
+                    order_id : orderDetailData.id,
+                    order_state : orderDetailData.order_state ? orderDetailData.order_state.toString() : "0",
+                    created_at : orderDetailData.created_at,
+                    updated_at : orderDetailData.updated_at
+                };
+
+                if(orderDetailData.orderdetail !== null) {
+                    $scope.orderModal.product_id = orderDetailData.orderdetail[0].product_id;
+                    $scope.orderModal.product_quantity = orderDetailData.orderdetail[0].product_quantity;
+                    $scope.orderModal.local_id = orderDetailData.orderdetail[0].local_id;
+                    $scope.orderModal.product_price = orderDetailData.orderdetail[0].product_price;
+                    $scope.orderModal.tax_rate = orderDetailData.orderdetail[0].tax_rate;
+                    $scope.orderModal.total_line = orderDetailData.orderdetail[0].total_line;
+                    $scope.orderModal.user_name = orderDetailData.orderdetail[0].user_name;
+                }
+
+                console.log(orderDetailData);
             };
 
-            $scope.ok = function (model) {
-                $uibModalInstance.close(model);
+
+            $scope.cancelOrder = function () {
+                ordersService.cancelOrder({order_id: $scope.orderModal.order_id}).then(function(result){
+                    $uibModalInstance.close(result);
+                }, function (err) {
+                });
             };
 
-            $scope.cancel = function (model) {
-                $uibModalInstance.dismiss('Exit');
+            $scope.save = function () {
+                ordersService.saveOrder($scope.orderModal).then(function(result){
+                    $uibModalInstance.close(result);
+                }, function(err){
+                });
             };
             init();
         }]);
@@ -124,7 +145,6 @@
                             var rawData = a.settings().data;
                             $scope.exportData = $filter('filter')(rawData,filters);
                         }, $scope);
-
                     };
 
                     var getOrders = function(start,end) {
@@ -142,7 +162,7 @@
                         else {
                             ordersService.getAllOrders({dateStart:start, dateEnd:end}).then(function (data) {
                                 $scope.filterName = 'Pedidos de todos los locales';
-                               // $scope.orders = data.data;
+                                // $scope.orders = data.data;
                                 populateCsv(data.data);
                                 $scope.vm.tableParams = new ngTableParams({count:10}, { data: $scope.orders,counts:[10,15,20]});
 
@@ -153,57 +173,61 @@
                         $scope.name_csv = 'Pedidos_'+ start + '_' + end;
                         $scope.headers_csv = ['Pedido','Local','Usuario','Estado','Producto','Precio','Cantidad','F.A','F.C'];
                     };
+
                     var populateCsv = function(orders) {
                         $scope.orders = [];
-                        angular.forEach(orders, function (order) {
-                            $scope.orders.push({
-                                id: order.id,
-                                local_name: order.orderdetail[0].localinfo.name,
-                                user_name: order.orderdetail[0].user_name,
-                                order_state_name: order.order_state_name,
-                                product_name: order.orderdetail[0].productinfo.name,
-                                product_price: order.orderdetail[0].product_price,
-                                product_quantity: order.orderdetail[0].product_quantity,
-                                updated_at: order.orderdetail[0].updated_at,
-                                created_at: order.orderdetail[0].created_at
+                        if (orders.length > 0) {
+                            angular.forEach(orders, function (order) {
+                                if (order.orderdetail!== null && order.orderdetail[0] !== null){
+                                    var local_name = order.orderdetail[0].localinfo !==null ? order.orderdetail[0].localinfo.name : 'Desconocido';
+                                    var product_name = order.orderdetail[0].productinfo !==null ? order.orderdetail[0].productinfo.name : 'Desconocido';
+                                    $scope.orders.push({
+                                        id: order.id,
+                                        local_name: local_name,
+                                        user_name: order.orderdetail[0].user_name,
+                                        order_state_name: order.order_state_name,
+                                        product_name: product_name ,
+                                        product_price: order.orderdetail[0].product_price,
+                                        product_quantity: order.orderdetail[0].product_quantity,
+                                        updated_at: order.orderdetail[0].updated_at,
+                                        created_at: order.orderdetail[0].created_at
+                                    });
+                                }
                             });
-                        });
-                    };
-
-                    $scope.getExportArray = function(){
-                        //return $scope.exportData ? $scope.exportData : [];
-                        var finalData = [];
-                        angular.forEach($scope.exportData,function(value,key){
-                            var object = {};
-                            object.timestamp = value.timestamp;
-                            object.elementName = value.elementName;
-                            object.data = JSON.stringify(value.data);
-                            object.sensorMagnitude = value.sensorMagnitude;
-                            object.units = value.units ? value.units : 'No value';
-                            finalData.push(object);
-                        });
-
-                        return finalData;
+                        }
                     };
 
                     $scope.openDatepicker = function(date) {
                         $scope[date].opened = true;
                     };
 
-                    $scope.viewOrderDetail = function (id) {
+                    $scope.viewOrderDetail = function (order_id) {
                         $scope.modalInstance = $uibModal.open({
-                            templateUrl: 'orders/ordersModalView.tpl.html',
+                            templateUrl: 'orders/ordersModalEdit.tpl.html',
                             size: 'lg',
-                            controller: 'ordersModalViewController',
-                            resolve: {orderId: id},
+                            controller: 'ordersModalEditController',
+                            resolve: {orderDetailData : (['ordersService','$q',
+                                function (ordersService, $q) {
+                                    var def = $q.defer();
+                                    ordersService.getOrder({order_id: order_id}).then(function(data){
+                                        def.resolve(data);
+                                    }, function (err) {
+                                        def.reject(err);
+                                    });
+                                    return def.promise;
+                                }])},
                             scope: $scope
                         });
 
-                        $scope.modalInstance.result.then(function(modalResult){},function(){});
+                        $scope.modalInstance.result.then(function(modalResult){
+                            $state.reload();
+                        },function(){
+                        });
                     };
 
                     $scope.cancelOrder = function (params) {
                         ordersService.cancelOrder(params).then(function(result){
+                            $state.reload();
                         }, function (err) {
                         });
                     };

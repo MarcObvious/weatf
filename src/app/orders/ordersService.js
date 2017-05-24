@@ -25,7 +25,7 @@ angular.module('ordersService', [])
                                 timeout: 15000,
                                 method: 'PUT'
                             },
-                            delete: {
+                            remove: {
                                 timeout: 15000,
                                 method: 'DELETE'
                             }
@@ -81,37 +81,32 @@ angular.module('ordersService', [])
                         });
                         return def.promise;
                     },
-                    saveorders: function (id,name,description,configuration) {
-                        var def = $q.defer();
-                        var postData = {
-                            name:name,
-                            description:description,
-                            configuration:configuration
-                        };
-                        this.api(id).put({}, postData, function (data) {
-                            def.resolve(data);
-                        }, function (err) {
-                            def.reject(err);
-                        });
-                        return def.promise;
-                    },
-                    deleteorders: function(id){
-                        var def = $q.defer();
-                        this.api(id).delete({}, {}, function (data) {
-                            def.resolve(data);
-                        }, function (err) {
-                            def.reject(err);
-                        });
-                        return def.promise;
-                    },
+
                     cancelOrder: function (params) {
                         var def = $q.defer();
-                        this.api('cancel_order/').save({}, params, function(data){
+                        this.api('cancel_order/').remove(params,{}, function(data){
                             def.resolve(data.data);
                         }, function (err) {
                             def.reject(err);
                         });
-
+                        return def.promise;
+                    },
+                    getOrder: function (params) {
+                        var def = $q.defer();
+                        this.api('getorder/').save({}, params, function(data){
+                            def.resolve(data.data);
+                        }, function (err) {
+                            def.reject(err);
+                        });
+                        return def.promise;
+                    },
+                    saveOrder: function (params) {
+                        var def = $q.defer();
+                        this.api('updateorderdetail/').save({}, params, function(data){
+                            def.resolve(data.data);
+                        }, function (err) {
+                            def.reject(err);
+                        });
                         return def.promise;
                     }
                 };
