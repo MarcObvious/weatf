@@ -43,8 +43,8 @@
             <tr ng-repeat="order in $data track by $index">
                 <td title="'Pedido'" filter="{ id: 'number'}" sortable="'id'">
                     {{order.id}}</td>
-                <td title="'Local'" filter="{ local_id: 'number'}" sortable="'local_id'">
-                    {{order.local_id}}</td>
+                <td title="'Local'" filter="{ local_name: 'text'}" sortable="'local_name'">
+                    {{order.local_name}}</td>
                 <td title="'Email'" filter="{ user_name: 'text'}" sortable="'user_name'">
                     {{order.user_name}}</td>
                 <td title="'Estado'" filter="{ order_state_name: 'text'}" sortable="'order_state_name'">

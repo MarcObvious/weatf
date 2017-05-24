@@ -158,7 +158,7 @@
                         angular.forEach(orders, function (order) {
                             $scope.orders.push({
                                 id: order.id,
-                                local_id: order.orderdetail[0].local_id,
+                                local_name: order.orderdetail[0].localinfo.name,
                                 user_name: order.orderdetail[0].user_name,
                                 order_state_name: order.order_state_name,
                                 product_name: order.orderdetail[0].productinfo.name,
