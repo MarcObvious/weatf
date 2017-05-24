@@ -207,8 +207,8 @@
 
                 $scope.modalInstance.result.then(function(localResult){
                     /*var prods = $scope.local.products;
-                    $scope.local = localResult;
-                    $scope.local.products = prods;*/
+                     $scope.local = localResult;
+                     $scope.local.products = prods;*/
                     $state.reload();
                 });
             };
@@ -250,15 +250,15 @@
                     $state.reload();
                     /*var products = [];
 
-                    angular.forEach($scope.local.products, function(product){
-                        if (product.id !== productResult.id)  {
-                            products.push(product);
-                        }
-                    });
-                    if (productResult.status !== 'deleted') {
-                        products.push(productResult);
-                    }
-                    $scope.local.products = products;*/
+                     angular.forEach($scope.local.products, function(product){
+                     if (product.id !== productResult.id)  {
+                     products.push(product);
+                     }
+                     });
+                     if (productResult.status !== 'deleted') {
+                     products.push(productResult);
+                     }
+                     $scope.local.products = products;*/
 
                 },function(){
 
@@ -332,7 +332,7 @@
             });
 
             $scope.save = function () {
-                if (angular.isDefined($scope.localModal.raw_picture.base64)){
+                if ($scope.localModal.raw_picture !== null){
                     $scope.localModal.picture = $scope.localModal.raw_picture.base64;
                 }
 
@@ -396,12 +396,14 @@
                 $scope.picture = $scope.product.picture || null;
 
                 $scope.product.type = $scope.product.type ? $scope.product.type.toString() : "1";
+
             };
 
             $scope.save = function () {
-                if (angular.isDefined($scope.product.raw_picture.base64)){
+                if ($scope.product.raw_picture !== null){
                     $scope.product.picture = $scope.product.raw_picture.base64;
                 }
+
                 if ($scope.product.newproduct) {
                     productsService.createProduct($scope.product).then(function(result){
                         $uibModalInstance.close(result);
