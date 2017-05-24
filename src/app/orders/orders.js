@@ -92,6 +92,9 @@
                 console.log(orderDetailData);
             };
 
+            $scope.cancel = function () {
+                $uibModalInstance.dismiss('Exit');
+            };
 
             $scope.cancelOrder = function () {
                 ordersService.saveOrder({order_id: $scope.orderModal.order_id, order_state:2}).then(function(result){
