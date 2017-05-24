@@ -139,7 +139,7 @@ angular.module('genericDirectives', [])
 
                         $scope.modalInstance.result.then(function(modalResult){
                         },function(){
-
+                            $state.reload();
                         });
                     };
 

@@ -206,9 +206,10 @@
                 });
 
                 $scope.modalInstance.result.then(function(localResult){
-                    var prods = $scope.local.products;
+                    /*var prods = $scope.local.products;
                     $scope.local = localResult;
-                    $scope.local.products = prods;
+                    $scope.local.products = prods;*/
+                    $state.reload();
                 });
             };
 
@@ -221,7 +222,8 @@
                     scope: $scope
                 });
                 $scope.modalInstance.result.then(function(productResult){
-                    $scope.local.products.push(productResult);
+                    /*$scope.local.products.push(productResult);*/
+                    $state.reload();
                 },function(){
 
                 });
@@ -245,7 +247,8 @@
                     scope: $scope
                 });
                 $scope.modalInstance.result.then(function(productResult){
-                    var products = [];
+                    $state.reload();
+                    /*var products = [];
 
                     angular.forEach($scope.local.products, function(product){
                         if (product.id !== productResult.id)  {
@@ -255,7 +258,8 @@
                     if (productResult.status !== 'deleted') {
                         products.push(productResult);
                     }
-                    $scope.local.products = products;
+                    $scope.local.products = products;*/
+
                 },function(){
 
                 });
@@ -282,6 +286,8 @@
                 });
 
                 $scope.modalInstance.result.then(function(modalResult){
+                    $state.reload();
+
                 },function(){
 
                 });

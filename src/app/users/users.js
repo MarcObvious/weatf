@@ -89,7 +89,7 @@
             var init = function () {
                 $scope.userModal = userData ? userData : {};
                 $scope.userModal.raw_picture ={};
-                $scope.userModal.gender = userData.gender ? userData.gender.toString() : "H";
+                $scope.userModal.gender = userData.gender ? userData.gender.toString() : "null";
                 $scope.userModal.user_type = userData.user_type ? userData.user_type.toString() : "1";
 
                 $scope.dates = {};
@@ -122,10 +122,14 @@
                 if (angular.isDefined($scope.userModal.directions) && angular.isDefined($scope.userModal.directions.phone)){
                     $scope.userModal.phone = $scope.userModal.directions.phone;
                 }
+                if ($scope.userModal.gender === "null"){
+                    $scope.userModal.gender = null;
+                }
 
                 if($scope.userModal.user_type === 1 || $scope.userModal.user_type === 10){
                     delete $scope.userModal.user_id;
                 }
+                console.log($scope.dates.birthday);
                 var mal = $scope.dates.birthday.toISOString().slice(0,10);
                 $scope.userModal.birthdate = mal.slice(8,10) + '-' + mal.slice(5,7) + '-' + mal.slice(0,4);
                 if ($scope.userModal.newuser) {
