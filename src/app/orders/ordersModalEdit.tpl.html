@@ -1,59 +1,4 @@
 <div>
-    <!--<div class="modal-header">
-        <h3 class="modal-title">Pedido {{orderDetails[0].order_id}}</h3>
-    </div>
-    <div class="modal-body clearfix">
-        <div class="col-lg-12">
-            <div ng-repeat="orderDetail in orderDetails track by $index" class="panel panel-default">
-                <div class="panel-body">
-                    <div class="col-lg-6">
-                        <p><span>Id producto: </span>{{orderDetail.product_id}}</p>
-                        <p><span>Cantidad: </span>{{orderDetail.product_quantity}}</p>
-                        <p><span>Precio producto: </span>{{orderDetail.product_price}}€</p>
-                        <p><span>IVA: </span>{{orderDetail.tax_rate}}</p>
-                    </div>
-                    <div class="col-lg-6">
-                        <p><span>Producto: </span>{{orderDetail.productinfo.name}}</p>
-                        <p><span>Stock: </span>{{orderDetail.productinfo.stock}}</p>
-                        <p><span>Precio anterior: </span>{{orderDetail.productinfo.previous_price}}€</p>
-                        <p><span>Precio final: </span>{{orderDetail.productinfo.final_price}}€</p>
-                    </div>
-                    <div class="col-lg-12">
-                        <p><strong><span>Total: </span>{{orderDetail.total_line}}€</strong></p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>-->
-
-</div>
-
-<!--
-
-"id": 1,
-"user_id": 21,
-"order_state": 2,
-"deleted_at": null,
-"created_at": "2017-05-23 06:30:40",
-"updated_at": "2017-05-23 18:30:40",
-"order_state_name": "Cancelado",
-"orderdetail": [
-{
-"id": 1,
-"order_id": 1,
-"local_id": 10,
-"product_id": 10,
-"product_quantity": 2,
-"product_price": 2,
-"tax_rate": 0,
-"total_line": 4,
-"total_line_wt": 0,
-"deleted_at": null,
-"created_at": "2017-05-23 06:30:40",
-"updated_at": "2017-05-24 18:28:56",
-"user_name": "amya.marvin@reichel.net",
--->
-<div>
     <div class="modal-header">
         <h3 class="modal-title"><i class="fa fa-shopping-cart"></i> Pedido {{orderModal.id}}</h3>
     </div>
@@ -71,22 +16,21 @@
                     </select>
                 </div>
                 <div class="col-md-6">
-                    <label>ID producto:</label>
-                    <input class="form-control input-modal" placeholder="ID producto" ng-model="orderModal.product_id">
+                    <label>Local:</label>
+                    <input disabled class="form-control input-modal" placeholder="ID local" ng-model="orderModal.local_name">
                 </div>
-                <div class="col-md-6">
-                    <label>ID local:</label>
-                    <input class="form-control input-modal" placeholder="ID local" ng-model="orderModal.local_id">
+                <div disabled class="col-md-6">
+                    <label>Usuario:</label>
+                    <input disabled class="form-control input-modal" placeholder="Usuario" ng-model="orderModal.user_name">
                 </div>
                 <div class="col-md-6">
                     <label>Cantidad:</label>
                     <input class="form-control input-modal" placeholder="Cantidad" ng-model="orderModal.product_quantity">
                 </div>
                 <div class="col-md-6">
-                    <label>ID producto:</label>
-                    <input class="form-control input-modal" placeholder="ID producto" ng-model="orderModal.product_id">
+                    <label>Producto:</label>
+                    <input disabled class="form-control input-modal" placeholder="ID producto" ng-model="orderModal.product_name">
                 </div>
-
                 <div class="col-md-6">
                     <label>Precio:</label>
                     <input class="form-control input-modal" placeholder="Precio" ng-model="orderModal.product_price">
@@ -101,16 +45,13 @@
                 </div>
                 <div class="col-md-6">
                     <label>Fecha creación:</label>
-                    <input class="form-control input-modal" placeholder="Creación" ng-model="orderModal.created_at">
+                    <input disabled class="form-control input-modal" placeholder="Creación" ng-model="orderModal.created_at">
                 </div>
                 <div class="col-md-6">
                     <label>Ultima actualización:</label>
-                    <input class="form-control input-modal" placeholder="Actualización" ng-model="orderModal.updated_at">
+                    <input disabled class="form-control input-modal" placeholder="Actualización" ng-model="orderModal.updated_at">
                 </div>
-                <div class="col-md-6">
-                    <label>Usuario:</label>
-                    <input class="form-control input-modal" placeholder="Usuario" ng-model="orderModal.user_name">
-                </div>
+
             </div>
         </div>
     </div>

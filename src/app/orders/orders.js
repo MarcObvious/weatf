@@ -76,9 +76,13 @@
                 };
 
                 if(orderDetailData.orderdetail !== null) {
+                    var local_name = orderDetailData.orderdetail[0].localinfo !==null ? orderDetailData.orderdetail[0].localinfo.name : 'Desconocido';
+                    var product_name = orderDetailData.orderdetail[0].productinfo !==null ? orderDetailData.orderdetail[0].productinfo.name : 'Desconocido';
+
                     $scope.orderModal.product_id = orderDetailData.orderdetail[0].product_id;
+                    $scope.orderModal.product_name = product_name;
                     $scope.orderModal.product_quantity = orderDetailData.orderdetail[0].product_quantity;
-                    $scope.orderModal.local_id = orderDetailData.orderdetail[0].local_id;
+                    $scope.orderModal.local_name = local_name;
                     $scope.orderModal.product_price = orderDetailData.orderdetail[0].product_price;
                     $scope.orderModal.tax_rate = orderDetailData.orderdetail[0].tax_rate;
                     $scope.orderModal.total_line = orderDetailData.orderdetail[0].total_line;
