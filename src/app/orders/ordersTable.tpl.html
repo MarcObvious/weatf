@@ -82,10 +82,10 @@
                 <td title="'Creación'" filter="{ created_at: 'text'}" sortable="'created_at'">
                     {{order.created_at|limitTo: 9:2}}</td>
                 <td title="'Acc.'" class="text-center">
-                    <button class="btn btn-warning btn-xs" uib-tooltip="Ver detalles del pedido" tooltip-placement="left" tooltip-trigger="mouseenter" ng-click="viewOrderDetail(order)">
+                    <button class="btn btn-warning btn-xs" uib-tooltip="Ver detalles del pedido" tooltip-placement="left" tooltip-trigger="mouseenter" ng-click="viewOrderDetail(order.id)">
                         <i class="fa fa-eye"></i>
                     </button>
-                    <button class="btn btn-danger btn-xs" uib-tooltip="Anular pedido" tooltip-placement="left" tooltip-trigger="mouseenter" ng-click="cancelOrder({local_id: order.orderdetail[0].local_id, order_id: order.id})">
+                    <button class="btn btn-danger btn-xs" uib-tooltip="Anular pedido" tooltip-placement="left" tooltip-trigger="mouseenter" ng-click="cancelOrder({order_id: order.id})">
                         <i class="fa fa-trash-o"></i>
                     </button>
                 </td>

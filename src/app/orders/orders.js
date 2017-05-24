@@ -90,7 +90,7 @@
 
 
             $scope.cancelOrder = function () {
-                ordersService.cancelOrder({order_id: $scope.orderModal.order_id}).then(function(result){
+                ordersService.saveOrder({order_id: $scope.orderModal.order_id, order_state:2}).then(function(result){
                     $uibModalInstance.close(result);
                 }, function (err) {
                 });
@@ -226,7 +226,8 @@
                     };
 
                     $scope.cancelOrder = function (params) {
-                        ordersService.cancelOrder(params).then(function(result){
+                        params.order_state = 2;
+                        ordersService.saveOrder(params).then(function(result){
                             $state.reload();
                         }, function (err) {
                         });
