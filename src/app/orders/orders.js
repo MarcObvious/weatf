@@ -242,9 +242,15 @@
 
                     $scope.mostrar = function() {
                         $scope.exportData = [];
-                        var start =  $scope.dateStart.date.toJSON().substr(0,10);
-                        var end =  $scope.dateEnd.date.toJSON().substr(0,10);
-                        getOrders(start, end);
+                        if ($scope.dateStart.date && $scope.dateEnd.date) {
+                            var start =  $scope.dateStart.date.toJSON().substr(0,10);
+                            var end =  $scope.dateEnd.date.toJSON().substr(0,10);
+                            getOrders(start, end);
+                        }
+                        else {
+                            getOrders(null, null);
+                        }
+
                     };
 
                     init();

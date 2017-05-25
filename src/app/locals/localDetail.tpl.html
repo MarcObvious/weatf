@@ -10,14 +10,14 @@
                 </div>
                 <hr>
                 <div class="col-lg-6 text-detail">
-                    <p><span>Id: </span>{{local.id}}</p>
+                    <p><span>Id local: </span>{{local.id}}</p>
                     <p><span>Dirección: </span>{{local.direction}}</p>
                     <p><span>Latitud: </span>{{local.lat}}</p>
                     <p><span>Longitud: </span>{{local.lng}}</p>
                     <p><span>Nombre: </span>{{local.name}}</p>
                     <p><span>Hora de recogida: </span>{{local.pickup_time}}</p>
                     <p><span>Codigo postal: </span>{{local.postcode}}</p>
-                    <p><span>Usuario: </span>{{local.user_id}}</p>
+                    <p><span>Propietario: </span>{{local.owner.email}}</p>
                     <p><span>Actualizado: </span>{{local.updated_at}}</p>
                 </div>
                 <div class="col-lg-6">
@@ -36,7 +36,7 @@
                         &nbsp;
                     </div>
                     <div class="col-lg-3">
-                        <button class="btn btn-danger btn-block" ng-click="editUser(local.id)"> Editar usuario  <i class="fa fa-user"></i></button>
+                        <button class="btn btn-danger btn-block" ng-click="editUser(local.id)"> Editar propietario  <i class="fa fa-user"></i></button>
                         &nbsp;
                     </div>
                     <div class="col-lg-3">
@@ -67,19 +67,18 @@
                         <img src="{{product.picture}}" width="100%" height="100%">
 
                     </div>
-                    <div class="col-lg-3">
+                    <div class="col-lg-3 text-detail">
                         <h4>Información</h4>
                         <p><span>Precio inicial: </span>{{product.previous_price}}€</p>
                         <p><span>Precio final: </span>{{product.final_price}}€</p>
                         <p><span>IVA: </span>{{product.tax_rate}}%</p>
-                        <p><span>Tipo:</span> {{product.type}}</p>
+                        <p ng-if="product.type==1"><span>Tipo:</span> Pack frío</p>
+                        <p ng-if="product.type==2"><span>Tipo:</span> Pack caliente</p>
                         <p><span>Stock:</span> {{product.stock}}</p>
                     </div>
                     <div class="col-lg-6">
                         <h4>Descripción</h4>
                         <p>{{product.description}}</p>
-
-
                     </div>
                     <div class="col-lg-12" style="padding: 0">
                         <div class="col-lg-3 col-lg-push-9">

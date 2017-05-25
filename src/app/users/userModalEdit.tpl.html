@@ -45,14 +45,14 @@
                     </p>
                 </div>
                 <div class="col-md-6">
-                    <label>Sexo:</label>
+                    <label>Género:</label>
                     <select class="form-control input-modal" ng-model="userModal.gender">
                         <option value="H">H</option>
                         <option value="M">M</option>
                         <option value="null">Desconocido</option>
                     </select>
                 </div>
-                <div ng-show="userModal.user_type != 10 && userModal.user_type != 1  && usertype != 5">
+                <div ng-show="usertype == 10 && (userModal.user_type !=10 && userModal.user_type !=5)">
                     <div class="col-md-6">
                         <label>Asignar usuario padre existente:</label>
                         <select class="form-control input-modal" ng-model="userModal.user_id">

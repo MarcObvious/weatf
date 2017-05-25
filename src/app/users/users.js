@@ -92,7 +92,23 @@
                 $scope.userModal.raw_picture = null;
                 $scope.picture = $scope.userModal.profile_picture_url || null;
                 $scope.userModal.gender = userData.gender ? userData.gender.toString() : "null";
-                $scope.userModal.user_type = userData.user_type ? userData.user_type.toString() : "1";
+
+                if(userData.user_type) {
+                    $scope.userModal.user_type = userData.user_type.toString();
+                }
+                else {
+                    switch ($rootScope.usertype) {
+                        case 10:
+                            $scope.userModal.user_type = "5";
+                            break;
+                        case 5:
+                            $scope.userModal.user_type = "2";
+                            break;
+                        default:
+                            $scope.userModal.user_type = "1";
+                            break;
+                    }
+                }
 
                 $scope.dates = {};
                 $scope.dates.format = 'dd-MM-yyyy';

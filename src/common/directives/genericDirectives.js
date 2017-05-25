@@ -153,6 +153,7 @@ angular.module('genericDirectives', [])
                         });
 
                         $scope.modalInstance.result.then(function (modalResult) {
+                            $rootScope.$emit('newLocalAdded', {added: true});
                             $state.go('root.locals.localdetail', {id_local:modalResult.id});
                         }, function () {
 
@@ -273,6 +274,16 @@ angular.module('genericDirectives', [])
                     $rootScope.$on('logged.loggedChange', function(event, aValues) {
                         $scope.logged = aValues.logged;
                         if ($scope.logged) {
+                            globalService.getSideBarLocals().then(function(data){
+                                $scope.locals = data;
+                            }, function (err) {
+                                console.log(err);
+                            });
+                        }
+                    });
+
+                    $rootScope.$on('newLocalAdded', function(event, aValues) {
+                        if ($scope.logged && aValues.added) {
                             globalService.getSideBarLocals().then(function(data){
                                 $scope.locals = data;
                             }, function (err) {

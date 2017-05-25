@@ -133,6 +133,7 @@
                 });
 
                 $scope.modalInstance.result.then(function(modalResult) {
+                    $rootScope.$emit('newLocalAdded', {added: true});
                     $state.go('root.locals.localdetail',{id_local: modalResult.id});
                 });
             };
@@ -410,7 +411,6 @@
                     }, function(err){
                     });
                 }
-                $uibModalInstance.close($scope.product);
             };
 
             $scope.eliminarImagen = function() {
