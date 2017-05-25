@@ -85,19 +85,20 @@
 
         }]);
 
-    app.controller('userModalEditController', ['$scope', '$uibModalInstance', '$log','$rootScope','userData','usersService',
-        function ($scope, $uibModalInstance, $log, $rootScope, userData, usersService) {
+    app.controller('userModalEditController', ['$scope', '$uibModalInstance', '$log','$rootScope','userData','usersService','localStorageService',
+        function ($scope, $uibModalInstance, $log, $rootScope, userData, usersService,localStorageService) {
             var init = function () {
                 $scope.userModal = userData ? userData : {};
                 $scope.userModal.raw_picture = null;
                 $scope.picture = $scope.userModal.profile_picture_url || null;
                 $scope.userModal.gender = userData.gender ? userData.gender.toString() : "null";
 
+                $scope.usertype_editor = parseInt(localStorageService.get('user_type'));
                 if(userData.user_type) {
                     $scope.userModal.user_type = userData.user_type.toString();
                 }
                 else {
-                    switch ($rootScope.usertype) {
+                    switch ($scope.usertype_editor) {
                         case 10:
                             $scope.userModal.user_type = "5";
                             break;
