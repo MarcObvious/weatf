@@ -2,54 +2,32 @@
     &nbsp;
     <div class="col-lg-12">
         <div back class="order-detail-header">
-            <p><img src="../../assets/mbd_back.svg" width="29px"> Enviar push</p>
+            <p><img src="../../assets/mbd_back.svg" width="29px"> Enviar push segmentado</p>
         </div>
         <div class="panel panel-default">
-            <!--     <div class="panel-heading">
-                     <h4><i class="fa fa-edit"></i> <strong>Enviar push</strong></h4>
-                 </div>-->
             <div class="panel-body">
                 <div class="col-lg-12">
                     <div class="col-lg-6">
                         <h3>Configurar Mensaje</h3>
-
                         <div class="form-group">
-                            <label>Push name</label>
-                            <input class="form-control" placeholder="Indica un nombre para guardar este push y poder repetirlo." ng-model="dev.push_name">
+                            <label>Nombre de la acción</label>
+                            <input class="form-control" placeholder="Indica un nombre para guardar este push y poder repetirlo." ng-model="msg.push_name">
                         </div>
                         <div class="form-group">
-                            <label>Título push</label>
-                            <input class="form-control" placeholder="Titulo del push" ng-model="dev.push_title">
+                            <label>Título del push</label>
+                            <input class="form-control" placeholder="Titulo del push" ng-model="msg.push_title">
                         </div>
                         <div class="form-group">
                             <label>Texto del push</label>
-                            <textarea class="form-control" placeholder="Texto del push (permite iconos)" rows="3" ng-model="dev.push_message"></textarea>
+                            <textarea class="form-control" placeholder="Texto del push (permite iconos)" rows="3" ng-model="msg.push_message"></textarea>
                         </div>
-
-                        <!--<div class="well" ng-show="dev.show_dialog" ng-animate="'animate'">
-                            <div class="text-right"><i class="fa fa-times" ng-click="dev.show_dialog=false" style="cursor:pointer;"></i></div>
-                            <div ng-repeat="dev in dev.devicetokens">
-                                <h6>Aviable Token:</h6><span ng-click="selectToken(dev.token)" class="label label-primary" style="padding-top:5px;cursor:pointer;">{{ dev.token | limitTo: 20 }}{{dev.token.length > 20 ? '...' : ''}}</span>
-                            </div>
-                            <div ng-bind-html="dev.result" ng-click="removeToken()" style="cursor:pointer;">
-                            </div>
-                        </div>-->
 
                     </div>
-                    <!-- /.col-lg-6 (nested) -->
                     <div class="col-lg-6">
                         <h3>Configurar Segmento</h3>
-
                         <div class="form-group">
-                            <label>Seleccionar local:</label>
-                            <select class="form-control" ng-model="localSelected">
-                                <option ng-repeat="local in locals" value="{{local.id}}">{{local.n}}</option>
-                                <option value="0">Todos</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label>Selector 1:</label>
-                            <select class="form-control" ng-model="selector1">
+                            <label>Registros y compras:</label>
+                            <select class="form-control" ng-model="segments.drc">
                                 <option value="1">Usuarios que han bajado la APP pero no se han registrado</option>
                                 <option value="2">Usuarios que se han registrado pero que no han comprado</option>
                                 <option value="3">Usuarios que han comprado alguna vez</option>
@@ -58,53 +36,48 @@
                             </select>
                         </div>
                         <div class="form-group">
-                            <label>Selector 2:</label>
-                            <select class="form-control" ng-model="selector2">
-                                <option value="1">Android</option>
-                                <option value="2">iOS</option>
-                                <option value="0">Todos</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label>Selector 3:</label>
-                            <select class="form-control" ng-model="selector3">
+                            <label>Visitas:</label>
+                            <select class="form-control" ng-model="segments.vis">
                                 <option value="1">Usuarios que hace más de dos semanas que no visitan la APP</option>
                                 <option value="2">Usuarios que hace más de un más que visitan la APP</option>
                                 <option value="0">Todos</option>
                             </select>
                         </div>
                         <div class="form-group">
-                            <label>Clientes de franquicia local:</label>
-                            <select class="form-control" ng-model="selector4">
+                            <label>Clientes de un local determinado:</label>
+                            <select class="form-control" ng-model="segments.local">
                                 <option ng-repeat="local in locals" value="{{local.id}}">Clientes que han comprado en '{{local.n}}'</option>
                                 <option value="0">Todos</option>
                             </select>
                         </div>
                         <div class="form-group">
-                            <label>Idiomas</label>
-                            <select class="form-control" ng-model="selector5">
-                                <option value="1">Clientes que tienen la APP en castellano</option>
-                                <option value="1">Clientes que tienen la APP en catalán</option>
+                            <label>Sistema operativo:</label>
+                            <select class="form-control" ng-model="segments.so">
+                                <option value="1">Android</option>
+                                <option value="2">iOS</option>
                                 <option value="0">Todos</option>
                             </select>
                         </div>
-
+                        <div class="form-group">
+                            <label>Idiomas:</label>
+                            <select class="form-control" ng-model="segments.lang">
+                                <option value="1">Clientes que tienen la APP en castellano</option>
+                                <option value="2">Clientes que tienen la APP en catalán</option>
+                                <option value="0">Todos</option>
+                            </select>
+                        </div>
                     </div>
                 </div>
-                <div class="col-lg-6 text-left">
+                <div class="col-lg-12">
                     <hr>
-                    <button type="submit" class="btn btn-success" ng-click="sendsegmentedpush(dev.token)"><i class="fa fa-paper-plane-o"></i> Enviar PUSH ahora</button>
-                    <button type="button" class="btn btn-danger" ng-click="clearDevForm()"><i class="fa fa-ban"></i> Borrar Formulario</button>
-                </div>
-                <div class="col-lg-6 text-right">
-                    <hr>
+                    <div class="col-lg-3 col-md-6">
+                        <button type="submit" class="btn btn-block btn-success input-modal" ng-click="sendSegmentedPush()"><i class="fa fa-paper-plane-o"></i> Enviar PUSH ahora</button>
+                    </div>
+                    <div class="col-lg-3 col-md-6">
+                        <button type="button" class="btn btn-block btn-danger input-modal" ng-click="clearForm()"><i class="fa fa-ban"></i> Borrar Formulario</button>
+                    </div>
                 </div>
             </div>
-            <!-- /.panel-body -->
         </div>
-        <!-- /.panel -->
     </div>
-    <!-- /.col-lg-12 -->
-
-
 </div>

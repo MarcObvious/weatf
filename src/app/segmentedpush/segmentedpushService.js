@@ -1,17 +1,12 @@
-/**
- * Created by ramon on 30/09/15.
- *
- */
-
-angular.module('pushlauncherService', [])
-    .factory('pushlauncherService', ['$resource', '$q', '$log',
+angular.module('segmentedpushService', [])
+    .factory('segmentedpushService', ['$resource', '$q', '$log',
         function ($resource, $q, $log) {
             return {
                 api: function (extra_route) {
                     if (!extra_route) {
                         extra_route = '';
                     }
-                    return $resource(API_URL + '/pushlauncher/' + extra_route, {}, {
+                    return $resource(API_URL + '/' + extra_route, {}, {
                         query: {
                             timeout: 15000
                         },
@@ -19,28 +14,28 @@ angular.module('pushlauncherService', [])
                             timeout: 15000,
                             method: 'POST'
                         },
+                        update: {
+                            timeout: 15000,
+                            method: 'PUT'
+                        },
                         get: {
                             timeout: 15000,
                             method: 'GET'
                         },
-                        post: {
+                        remove: {
                             timeout: 15000,
-                            method: 'POST'
+                            method: 'DELETE'
                         }
                     });
                 },
-                sendsegmentedpush: function(pushMsg){
+                sendsegmentedpush: function (params) {
                     var def = $q.defer();
-                    pushMsg.token = btoa(pushMsg.token);
-                    this.api().save({}, pushMsg, function (data) {
-                        def.resolve(data.data);
+                    this.api('sendpush/').save({}, params, function(data){
+                        def.resolve(data);
                     }, function (err) {
                         def.reject(err);
                     });
                     return def.promise;
-                },
-                testFunction: function () {
-                    alert('testFunction');
                 }
             };
         }]);

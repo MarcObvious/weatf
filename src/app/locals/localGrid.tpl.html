@@ -2,9 +2,9 @@
     <div class="local-grid-header" >
         <p>{{filterBy}} <span>({{totalItems}})</span>
     </div>
-<!--    <div class="col-lg-12 clearfix">
+    <div class="col-lg-12 clearfix">
         <div ng-if="usertype != 2" class="col-lg-4 col-md-6 local-grid-element">
-            <div class="panel panel-default" ng-click="newLocal()" >
+            <div class="panel panel-default local-grid-element-local" ng-click="newLocal()" >
                 <div class="panel-body clearfix" style="width: 100%">
                     <div class="col-lg-12">
                         <div class="local-grid-title">
@@ -21,19 +21,19 @@
         </div>
 
         <div ng-if="locals" class="col-lg-4 col-md-6 local-grid-element" ng-repeat="localData in localsSliced">
-            <div class="panel panel-default" ng-click="openLocal(localData.id)" >
-                <div class="panel-body clearfix" style="width: 100%">
-                    <div class="col-lg-12" ng-style="{'background-image':'url({{localData.picture}})'}">
-                        <div class="local-grid-title">
-                            <h3 class="local-grid-local">{{localData.name}}</h3>
-                        </div>
-                        <div class="local-grid-text">
-                            <p class="local-grid-strong">{{localData.direction}}</p>
-                            <p>{{localData.postcode}}</p>
-                        </div>
-                    </div>
+            <div class="panel panel-default local-grid-element-local" ng-click="openLocal(localData.id)" ng-style="{'background-size': 'cover','background':'url({{localData.picture}}) no-repeat center center'}">
+               <!-- <div class="panel-body clearfix" style="width: 100%">-->
 
-                </div>
+                    <!-- <div class="local-grid-title">
+                         <h3 class="local-grid-local">{{localData.name}}</h3>
+                     </div>
+                     <div class="local-grid-text">
+                         <p class="local-grid-strong">{{localData.direction}}</p>
+                         <p>{{localData.postcode}}</p>
+                     </div>-->
+
+
+              <!--  </div>-->
 
             </div>
         </div>
@@ -58,5 +58,5 @@
 
             </div>
         </div>
-    </div>-->
+    </div>
 </div>

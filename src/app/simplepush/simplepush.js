@@ -153,15 +153,8 @@
                 }
             };
 
-            $scope.clearDevForm = function(){
-                $scope.dev.selectedData=null;
-                $scope.dev.push_name='';
-                $scope.dev.push_title='';
-                $scope.dev.push_message='';
-                $scope.dev.devicetoken='';
-                $scope.dev.id_customer='';
-                $scope.dev.email='';
-                $scope.dev.show_dialog=false;
+            $scope.clearForm = function(){
+                init();
             };
 
             $scope.selectToken = function(token){
@@ -174,8 +167,7 @@
                 $scope.dev.result = null;
             };
 
-            //init({ type: 'warning', msg: 'Bienvenido a Simple Push!, Envia mensajes push facilment!!', time:'3000' });
-            init({});
+            init();
         }]);
 
 }(angular.module("weatf.simplepush", [
