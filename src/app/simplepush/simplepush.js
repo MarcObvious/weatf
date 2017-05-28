@@ -22,8 +22,8 @@
                 });
         }]);
 
-    app.controller('SimplepushController', ['$log','$scope','$state','devicetokenService','pushlauncherService','$sce','mqpshService',
-        function ($log,$scope,$state,devicetokenService,pushlauncherService,$sce,mqpshService) {
+    app.controller('SimplepushController', ['$log','$scope','$state','simplepushService','$sce',
+        function ($log,$scope,$state,simplepushService,$sce) {
 
             var init = function (msg) {
                 $log.info('App:: Starting simplepushController');
@@ -37,6 +37,7 @@
                 $scope.dev.android_platform=false;
                 $scope.dev.apple_platform=false;
                 $scope.dev.selradio='Not selected';
+
 
                 //Prod object
                 $scope.prod=$scope.dev;
@@ -67,9 +68,10 @@
 
 
             $scope.getTokensFromEmail = function(){
-                mqpshService.getTokensFromEmail($scope.dev.email).then(function(data){
-                    if(data.data.Devicetoken && data.data.Devicetoken.length>0){
-                        $scope.dev.devicetokens = data.data.Devicetoken;
+                simplepushService.getTokenFromEmail({email:$scope.dev.email}).then(function(data){
+                    console.log(data);
+                    if(data.Devicetoken && data.Devicetoken.length>0){
+                        $scope.dev.devicetokens = data.Devicetoken;
                         $scope.addAlert('Token found and loaded', 'success', 3000);
                         //$scope.dev.selectedData = data.data.token;
                         //$scope.dev.result = "Token found and loaded";
@@ -81,7 +83,7 @@
                 });
             };
 
-            $scope.getTokenFromIdCustomer = function(id_customer){
+           /* $scope.getTokenFromIdCustomer = function(id_customer){
                 devicetokenService.getTokenFromDeviceToken($scope.dev.id_customer).then(function(data){
                     $scope.dev.recibedData = data.data;
                     if(data.data){
@@ -93,8 +95,8 @@
                         $scope.addAlert('No tokens found!', 'danger', 3000);
                     }
                 });
-            };
-
+            };*/
+/*
             $scope.getTokenFromDeviceToken = function(){
                 if(!$scope.dev.devicetoken){
                     $scope.dev.result = '<i class="fa fa-exclamation-triangle" style="color:red;"></i> No token provided';
@@ -115,9 +117,9 @@
                     });
                 }
                 $scope.dev.show_dialog=true;
-            };
+            };*/
 
-            $scope.sendSimplePush = function(token){
+           /* $scope.sendSimplePush = function(token){
                 if($scope.dev.platform===0){
                     //alert('Debes seleccionar la plataforma de envio');
                     $scope.addAlert('Debes seleccionar la plataforma de envio', 'danger', 3000);
@@ -151,7 +153,7 @@
                     $scope.addAlert('Debes fijar un token al que enviar', 'danger', 3000);
                     return false;
                 }
-            };
+            };*/
 
             $scope.clearForm = function(){
                 init();
@@ -172,8 +174,6 @@
 
 }(angular.module("weatf.simplepush", [
     'ui.router',
-    'devicetokenService',
-    'pushlauncherService',
-    'mqpshService',
+    'simplepushService',
     'ngAnimate'
 ])));
