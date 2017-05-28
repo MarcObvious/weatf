@@ -44,6 +44,18 @@
                     lang: "0"
                 };
 
+                var date = new Date();
+
+                $scope.dateStart = {};
+                $scope.dateStart.format = 'dd-MM-yyyy hh:ss';
+                $scope.dateStart.dateOptions = { formatYear: 'yy', startingDay: 1 };
+                $scope.dateStart.date = new Date(date.getTime() - 24*60*60*10000*7);
+                $scope.dateStart.opened = false;
+
+            };
+
+            $scope.openDatepicker = function(date) {
+                $scope[date].opened = true;
             };
 
             $scope.clearForm = function(){
