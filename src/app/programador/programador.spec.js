@@ -5,7 +5,7 @@
  * automatically.
  */
 describe('chart section', function () {
-    beforeEach(module('weatf.devicetoken'));
+    beforeEach(module('weatf.programador'));
 
     it('should have a dummy test', inject(function() {
         expect(true).toBeTruthy();

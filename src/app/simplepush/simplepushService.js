@@ -38,7 +38,18 @@ angular.module('simplepushService', [])
                     });*/
 
                     return def.promise;
+                },
+                sendSinglePush: function(params){
+                    var def = $q.defer();
+                    this.api('sendsinglepush/').save({}, params, function(data){
+                        def.resolve(data.data);
+                    }, function (err) {
+                        def.reject(err);
+                    });
+
+                    return def.promise;
                 }
+
 
             };
         }]);
