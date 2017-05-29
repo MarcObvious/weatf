@@ -71,6 +71,7 @@
                 $scope.msg = {};
                 $scope.locals = localsData;
                 $scope.segments = {
+                    type: "0",
                     drc: "0",
                     vis: "0",
                     local: "0",
@@ -79,6 +80,7 @@
                 };
 
                 $scope.segments_def = {
+                    type: ['Noticias','Promociones'],
                     drc: ['Todos','Usuarios que han bajado la APP pero no se han registrado','Usuarios que se han registrado pero que no han comprado','Usuarios que han comprado alguna vez','Usuarios que han comprado más de 10 veces'],
                     vis: ['Todos','Usuarios que hace más de dos semanas que no visitan la APP','Usuarios que hace más de un más que visitan la APP'],
                     so:  ['Todos','Android','iOS'],
