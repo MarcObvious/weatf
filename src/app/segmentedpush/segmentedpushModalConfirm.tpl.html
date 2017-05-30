@@ -1,0 +1,42 @@
+<div>
+    <div class="modal-header">
+        <h3 class="modal-title" ng-if="send_now"><i class="fa fa-paper-plane-o"></i> Confirmación de envio de push <u>AHORA</u></h3>
+        <h3 class="modal-title" ng-if="!send_now"><i class="fa fa-paper-plane-o"></i> Confirmación de push el dia <u>{{final_date}}</u></h3>
+    </div>
+    <div class="modal-body clearfix">
+        <div class="col-md-12">
+
+            <h4>Has seleccionado los siguientes segmentos:</h4>
+
+            <ul>
+                <li><strong>Tipo:</strong> {{segments_def.type[segments.type]}}</li>
+                <li><strong>Registros y compras:</strong> {{segments_def.drc[segments.drc]}}</li>
+                <li><strong>Visitas:</strong> {{segments_def.vis[segments.vis]}}</li>
+                <li><strong>Clientes de un local determinado:</strong> {{segments_def.local[segments.local]}}</li>
+                <li><strong>Sistema operativo:</strong> {{segments_def.so[segments.so]}}</li>
+                <li><strong>Idiomas:</strong> {{segments_def.language[segments.language]}}</li>
+            </ul>
+
+        </div>
+
+    </div>
+    <div class="modal-footer">
+        <div class="col-md-12">
+            <div class="col-md-push-4 col-md-4">
+                <button type="button" class="btn btn-danger btn-block input-modal" ng-click="cancel()">
+                    Descartar envio <i class="fa fa-trash"></i>
+                </button>
+            </div>
+            <div class="col-md-push-4 col-md-4" ng-if="send_now">
+                <button type="button" class="btn btn-success btn-block input-modal" ng-click="send()">
+                    Confirmar envio <i class="fa fa-paper-plane-o"></i>
+                </button>
+            </div>
+            <div class="col-md-push-4 col-md-4" ng-if="!send_now">
+                <button type="button" class="btn btn-warning btn-block input-modal" ng-click="send()">
+                    Confirmar programación <i class="fa fa-clock-o"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

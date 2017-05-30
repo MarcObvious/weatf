@@ -112,10 +112,13 @@ angular.module('globalService', [])
                                 ++locals_count;
                             });
                         }
+
+                        def.resolve(locals);
                         //locals.push({n: 'Nuevo local', c: locals_count, id: 0, show: true});
                     });
 
-                    def.resolve(locals);
+
+
                     return def.promise;
                 },
                 getSideBarContent: function () {

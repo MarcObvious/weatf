@@ -1,6 +1,6 @@
-angular.module('notifierService', [])
-    .factory('notifierService', ['$resource', '$q',
-        function ($resource, $q) {
+angular.module('simplepushService', [])
+    .factory('simplepushService', ['$resource', '$q', '$log',
+        function ($resource, $q, $log) {
             return {
                 api: function (extra_route) {
                     if (!extra_route) {
@@ -14,26 +14,34 @@ angular.module('notifierService', [])
                             timeout: 15000,
                             method: 'POST'
                         },
+                        update: {
+                            timeout: 15000,
+                            method: 'PUT'
+                        },
                         get: {
                             timeout: 15000,
                             method: 'GET'
+                        },
+                        remove: {
+                            timeout: 15000,
+                            method: 'DELETE'
                         }
                     });
                 },
-                getAllEntregas: function (params) {
+                getTokenFromEmail: function(params){
                     var def = $q.defer();
-                    this.api('ordersfront/').get(params, {}, function(data){
+                    def.resolve({Devicetoken:[{token:'sometoken'}]});
+                    /*this.api('gettokenbyemail/').save({}, params, function(data){
                         def.resolve(data.data);
                     }, function (err) {
                         def.reject(err);
-                    });
+                    });*/
 
                     return def.promise;
                 },
-
-                getAllIncidencias: function (params) {
+                sendSinglePush: function(params){
                     var def = $q.defer();
-                    this.api('incidencesbydate/'+params.start+'/'+params.end).get({}, {}, function(data){
+                    this.api('sendsinglepush/').save({}, params, function(data){
                         def.resolve(data.data);
                     }, function (err) {
                         def.reject(err);
@@ -41,6 +49,7 @@ angular.module('notifierService', [])
 
                     return def.promise;
                 }
+
 
             };
         }]);
