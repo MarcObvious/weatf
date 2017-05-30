@@ -1,0 +1,138 @@
+<div class="row">
+    <div class="col-lg-12">
+        <h1 class="page-header">Estadísticas</h1>
+    </div>
+    <!-- /.col-lg-12 -->
+</div>
+<div class="row">
+    <div class="col-lg-12 col-sm-12">
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <div class="col-lg-6 col-sm-12">
+                    <label>Desde el:</label>
+                    <p class="input-group">
+                        <input title="Date Start" type="text" name="date_start"
+                               class="form-control" uib-datepicker-popup="{{dateStart.format}}"
+                               ng-model="dateStart.date" is-open="dateStart.opened"
+                               datepicker-options="dateStart.dateOptions" date-disabled="disabled(date, mode)"
+                               close-text="Close" placeholder="Date Start"/>
+                    <span class="input-group-btn">
+                        <button type="button" class="btn btn-success" ng-click="openDatepicker('dateStart')"><i class="fa fa-calendar"></i></button>
+                    </span>
+                    </p>
+                </div>
+                <div class="col-lg-6 col-sm-12">
+                    <label>Hasta el:</label>
+                    <p class="input-group">
+                        <input title="Date End" type="text" name="date_end"
+                               class="form-control" uib-datepicker-popup="{{dateEnd.format}}"
+                               ng-model="dateEnd.date" is-open="dateEnd.opened"
+                               datepicker-options="dateEnd.dateOptions" date-disabled="disabled(date, mode)"
+                               close-text="Close" placeholder="Date End"/>
+                    <span class="input-group-btn">
+                        <button type="button" class="btn btn-danger" ng-click="openDatepicker('dateEnd')"><i class="fa fa-calendar"></i></button>
+                    </span>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <stats number="{{statsData.total_push_history}}" comments="Total Messages Received!" colour="primary" type="user"></stats>
+    <stats number="{{statsData.last_sent}}" comments="Last Sent!" colour="primary" type="comments"></stats>
+    <stats number="{{statsData.last_installed}}" comments="New Instalations" colour="green" type="arrow-up"></stats>
+    <stats number="{{statsData.last_desinstalled}}" comments="Desinstalations" colour="red" type="arrow-down"></stats>
+
+
+    <div class="col-lg-6 col-sm-12">
+        <div class="panel panel-default">
+            <div class="panel-heading"><img src="assets/android.png"> Android SOC</div>
+            <div class="panel-body">
+                <canvas id="lineAndroid" class="chart chart-line" chart-data="succerr[2].data" chart-colours="succerr[2].colours" chart-labels="succerr[2].labels" chart-legend="true"
+                        chart-click="succerr[2].onClick" chart-series="succerr[2].series"></canvas>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-6 col-sm-12">
+        <div class="panel panel-default">
+            <div class="panel-heading"><img src="assets/android.png"> Android ID</div>
+            <div class="panel-body">
+                <canvas id="instdestAndroid" class="chart chart-line chart-xl" chart-data="instdest[2].data" chart-colours="instdest[2].colours" chart-labels="instdest[2].labels" chart-legend="true"
+                        chart-click="instdest[2].onClick" chart-series="instdest[2].series"></canvas>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-6 col-sm-12">
+        <div class="panel panel-default">
+            <div class="panel-heading"><img src="assets/apple.png"> Apple SOC</div>
+            <div class="panel-body">
+                <canvas id="lineIos" class="chart chart-line" chart-data="succerr[1].data" chart-colours="succerr[1].colours" chart-labels="succerr[1].labels" chart-legend="true"
+                        chart-click="succerr[1].onClick" chart-series="succerr[1].series"></canvas>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-6 col-sm-12">
+        <div class="panel panel-default">
+            <div class="panel-heading"><img src="assets/apple.png"> Apple ID</div>
+            <div class="panel-body">
+                <canvas id="instdestIos" class="chart chart-line chart-xl" chart-data="instdest[1].data" chart-colours="instdest[1].colours" chart-labels="instdest[1].labels" chart-legend="true"
+                        chart-click="instdest[1].onClick" chart-series="instdest[1].series"></canvas>
+            </div>
+        </div>
+    </div>
+
+</div>
+<!--
+<div class="col-lg-6 col-sm-12" id="bar-chart">
+        <div class="panel panel-default">
+            <div class="panel-heading">Envío Push semanal</div>
+            <div class="panel-body">
+                <canvas id="bar" class="chart chart-bar" chart-data="bar.data" chart-labels="bar.labels" chart-series="bar.series"
+                        options="bar.options"></canvas>
+            </div>
+        </div>
+    </div>
+
+<div class="row">
+    <div class="col-lg-6 col-sm-12" id="doughnut-chart">
+        <div class="panel panel-default">
+            <div class="panel-heading">Dsipositivos Registrados</div>
+            <div class="panel-body">
+                <canvas id="doughnut" class="chart chart-doughnut chart-xs" chart-data="donut.data" chart-labels="donut.labels" chart-legend="false"></canvas>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-6 col-sm-12" id="radar-chart">
+        <div class="panel panel-default">
+            <div class="panel-heading">Clickers</div>
+            <div class="panel-body">
+                <canvas id="area" class="chart chart-radar" chart-data="radar.data" chart-labels="radar.labels" click="onClick"></canvas>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-6 col-sm-12" id="pie-chart">
+        <div class="panel panel-default">
+            <div class="panel-heading">Pie Chart</div>
+            <div class="panel-body">
+                <canvas id="pie" class="chart chart-pie chart-xs" chart-data="pie.data" chart-labels="pie.labels"></canvas>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-6 col-sm-12" id="polar area-chart">
+        <div class="panel panel-default">
+            <div class="panel-heading">Polar Area Chart</div>
+            <div class="panel-body">
+                <canvas id="polar" class="chart chart-polar-area" chart-data="polar.data" chart-labels="polar.labels"></canvas>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-6 col-sm-12" id="base-chart">
+        <div class="panel panel-default">
+            <div class="panel-heading">Dynamic Chart</div>
+            <div class="panel-body">
+                <canvas id="base" class="chart chart-base" chart-type="dynamic.type" chart-data="dynamic.data" chart-labels="dynamic.labels" chart-legend="true"></canvas>
+            </div>
+        </div>
+        <button type="button" class="btn btn-primary pull-right" ng-click="dynamic.toggle()">Toggle</button>
+    </div>-->
+</div>

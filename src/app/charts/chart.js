@@ -41,6 +41,21 @@
                 $scope.dateEnd.opened = false;
                 $scope.dateEnd.date = date;
 
+                $scope.stats = {
+                    d_app: {d:'Descargas APP', v: 10000,n:''},
+                    o_app: {d:'Aperturas por push', v: 99215}, n:'',
+                    buyers: {d:'Ha comprado', v: 15550, n:''},
+                    r_compra: {d:'Recurrència de compra', v: 10000, n:''},
+                    r_visita: {d:'Recurrencia de visita', v: 10000, n:''},
+                    s_app: {d:'Han compartido la APP', v: 10000, n:''},
+                    opt_in: {d:'Optin', v: 10000, n:'%'},
+                    buscador: {d:'Han utilizado el buscador', v: 10000, n:''},
+                    p_paypal: {d:'Han pagado con paypal', v: 10000, n:''},
+                    p_targeta: {d:'Han pagado con tarjeta', v: 10000, n:''},
+                };
+
+                $scope.filterName = 'KPIs';
+
                 $scope.succerr = {};
                 $scope.instdest = {};
 
