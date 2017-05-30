@@ -42,6 +42,25 @@
                 $scope.vm = {};
                 if (usersData.users) {
                     $scope.users = usersData.users;
+                    angular.forEach($scope.users, function (user,key) {
+                        switch (user.user_type) {
+                            case 10:
+                                $scope.users[key].user_type_name = "Super-Admin";
+                                break;
+                            case 5:
+                                $scope.users[key].user_type_name = "Franquiciado";
+                                break;
+                            case 2:
+                                $scope.users[key].user_type_name = "Local";
+                                break;
+                            case 1:
+                                $scope.users[key].user_type_name = "Cliente";
+                                break;
+                            default:
+                                $scope.users[key].user_type_name = "Cliente";
+                                break;
+                        }
+                    });
                     $scope.vm.tableParams = new NGTableParams({count:15}, { data: $scope.users,counts:[15,20,50]});
                 }
             };
