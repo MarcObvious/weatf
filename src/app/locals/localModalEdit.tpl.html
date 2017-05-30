@@ -1,13 +1,13 @@
 <div>
     <div class="modal-header">
-        <h3 class="modal-title" ng-if="localModal.newlocal"><i class="fa fa-home"></i> Alta nuevo local</h3>
+        <h3 class="modal-title" ng-if="localModal.newlocal"><i class="fa fa-home"></i> Alta nuevo local </h3><span style="color:red;" class="inline">(* campo obligatorio)</span>
         <h3 class="modal-title" ng-if="!localModal.newlocal"><i class="fa fa-home"></i> Edición del local {{localModal.name}}</h3>
     </div>
     <div class="modal-body clearfix">
         <div class="col-md-12">
             <div class="form-group">
                 <div class="col-md-6">
-                    <label>Nombre del Local</label>
+                    <label>Nombre del Local <sup style="color:red">*</sup></label>
                     <input class="form-control input-modal" placeholder="Nombre del local" ng-model="localModal.name">
                 </div>
                 <div class="col-md-6">
@@ -31,11 +31,11 @@
                     <input class="form-control input-modal" placeholder="Longitud" ng-model="localModal.lng">
                 </div>
                 <div class="col-xs-6">
-                    <label>Desde:</label>
+                    <label>Desde: <sup style="color:red">*</sup></label>
                     <div uib-timepicker class="input-modal" ng-model="dates.from_hour" show-spinners="false" show-meridian="false"></div>
                 </div>
                 <div class="col-xs-6">
-                    <label>Hasta:</label>
+                    <label>Hasta: <sup style="color:red">*</sup></label>
                     <div uib-timepicker class="input-modal" ng-model="dates.to_hour" show-spinners="false" show-meridian="false"></div>
                 </div>
                 <div class="col-md-6">
@@ -46,23 +46,23 @@
                     </select>
                 </div>
                 <div class="col-md-6">
-                    <label>Asignar usuario nuevo:</label>
+                    <label>Asignar usuario nuevo: <sup style="color:red">*</sup></label>
                     <button type="button" class="btn btn-success btn-block input-modal" ng-click="newUser()">
                         Nuevo usuario <i class="fa fa-user"></i>
                     </button>
                 </div>
                 <div class="col-md-6">
-                    <label>Imagen assignada:</label>
+                    <label>Imagen assignada: <sup style="color:red">*</sup></label>
                     <input disabled class="form-control input-modal" placeholder="Ninguna" ng-model="picture">
                 </div>
                 <div ng-show="picture" class="col-md-6">
-                    <label>Imagen:</label>
+                    <label>Imagen: <sup style="color:red">*</sup></label>
                     <button type="button" class="btn btn-danger btn-block btn-mostrar input-modal" ng-click="eliminarImagen()">
                         Eliminar imagen <i class="fa fa-trash"></i>
                     </button>
                 </div>
                 <div ng-show="!picture" class="col-md-6">
-                    <label>Imagen:</label>
+                    <label>Imagen: <sup style="color:red">*</sup></label>
                     <input class="form-control input-modal" base-sixty-four-input type="file" ng-model="localModal.raw_picture">
                 </div>
 

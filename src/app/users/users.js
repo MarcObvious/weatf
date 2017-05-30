@@ -87,6 +87,7 @@
 
     app.controller('userModalEditController', ['$scope', '$uibModalInstance', '$log','$rootScope','userData','usersService','localStorageService',
         function ($scope, $uibModalInstance, $log, $rootScope, userData, usersService,localStorageService) {
+            console.log(userData);
             var init = function () {
                 $scope.userModal = userData ? userData : {};
                 $scope.userModal.raw_picture = null;
@@ -147,6 +148,10 @@
             };
 
             $scope.save = function () {
+                if($scope.userModal.password !== $scope.userModal.password_val){
+                    $rootScope.alerts.push({ type: 'danger', msg: "Las contraseñas no coinciden.", time:'3000' });
+                    return false;
+                }
                 if ($scope.userModal.raw_picture !== null){
                     $scope.userModal.picture = $scope.userModal.raw_picture.base64;
                 }

@@ -1,17 +1,17 @@
 <div class="usersClass">
     <div class="modal-header">
-        <h3 class="modal-title" ng-if="userModal.newuser"><i class="fa fa-user"></i> Alta nuevo usuario</h3>
+        <h3 class="modal-title" ng-if="userModal.newuser"><i class="fa fa-user"></i> Alta nuevo usuario</h3><span style="color:red;" class="inline">(* campo obligatorio)</span>
         <h3 class="modal-title" ng-if="!userModal.newuser"><i class="fa fa-user"></i> Edición del usuario {{userModal.email}}</h3>
     </div>
     <div class="modal-body clearfix">
         <div class="col-md-12">
             <div class="form-group">
                 <div class="col-md-6">
-                    <label>Nombre</label>
+                    <label>Nombre <sup style="color:red">*</sup></label>
                     <input class="form-control input-modal" placeholder="Nombre del usuario" ng-model="userModal.firstname">
                 </div>
                 <div class="col-md-6">
-                    <label>Apellido</label>
+                    <label>Apellido <sup style="color:red">*</sup></label>
                     <input class="form-control input-modal" placeholder="Apellido del usuario" ng-model="userModal.lastname">
                 </div>
                 <div class="col-md-6">
@@ -23,7 +23,7 @@
                     <input type="password" class="form-control input-modal" placeholder="Repite la contraseña" ng-model="userModal.password_val">
                 </div>
                 <div class="col-md-6">
-                    <label>Email:</label>
+                    <label>Email: <sup style="color:red">*</sup></label>
                     <input class="form-control input-modal" placeholder="Email" ng-model="userModal.email">
                 </div>
                 <div class="col-md-6">
@@ -84,7 +84,7 @@
                     <label>Tipo de usuario:</label>
                     <select class="form-control input-modal" ng-model="userModal.user_type">
                         <option value="10">Super-Admin</option>
-                        <option value="5">Franquiciat</option>
+                        <option value="5">Franquiciado</option>
                         <option value="2">Local</option>
                         <option value="1">Cliente</option>
                     </select>
