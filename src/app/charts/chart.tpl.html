@@ -6,52 +6,55 @@
         </div>
         <div class="panel panel-default">
             <div class="panel-body">
-                <div class="col-lg-12 col-sm-12">
-                    <div class="col-lg-6 col-sm-12">
-                        <label>Desde el:</label>
-                        <p class="input-group">
-                            <input title="Date Start" type="text" name="date_start"
-                                   class="form-control" uib-datepicker-popup="{{dateStart.format}}"
-                                   ng-model="dateStart.date" is-open="dateStart.opened"
-                                   datepicker-options="dateStart.dateOptions" date-disabled="disabled(date, mode)"
-                                   close-text="Close" placeholder="Date Start"/>
-                            <span class="input-group-btn">
+                <div class="col-lg-3">
+                    <label>Desde el:</label>
+                    <p class="input-group">
+                        <input title="Date Start" type="text" name="date_start"
+                               class="form-control" uib-datepicker-popup="{{dateStart.format}}"
+                               ng-model="dateStart.date" is-open="dateStart.opened"
+                               datepicker-options="dateStart.dateOptions" date-disabled="disabled(date, mode)"
+                               close-text="Close" placeholder="Date Start"/>
+                        <span class="input-group-btn">
                         <button type="button" class="btn btn-success" ng-click="openDatepicker('dateStart')"><i class="fa fa-calendar"></i></button>
                     </span>
-                        </p>
-                    </div>
-                    <div class="col-lg-6 col-sm-12">
-                        <label>Hasta el:</label>
-                        <p class="input-group">
-                            <input title="Date End" type="text" name="date_end"
-                                   class="form-control" uib-datepicker-popup="{{dateEnd.format}}"
-                                   ng-model="dateEnd.date" is-open="dateEnd.opened"
-                                   datepicker-options="dateEnd.dateOptions" date-disabled="disabled(date, mode)"
-                                   close-text="Close" placeholder="Date End"/>
-                            <span class="input-group-btn">
+                    </p>
+                </div>
+                <div class="col-lg-3">
+                    <label>Hasta el:</label>
+                    <p class="input-group">
+                        <input title="Date End" type="text" name="date_end"
+                               class="form-control" uib-datepicker-popup="{{dateEnd.format}}"
+                               ng-model="dateEnd.date" is-open="dateEnd.opened"
+                               datepicker-options="dateEnd.dateOptions" date-disabled="disabled(date, mode)"
+                               close-text="Close" placeholder="Date End"/>
+                        <span class="input-group-btn">
                         <button type="button" class="btn btn-danger" ng-click="openDatepicker('dateEnd')"><i class="fa fa-calendar"></i></button>
                     </span>
-                        </p>
-                    </div>
+                    </p>
+                </div>
+                <div class="col-lg-3" style="padding-top: 25px">
+                    <button class="btn btn-danger btn-block" ng-click="mostrar()"> Mostrar <i class="fa fa-search"></i></button>
                 </div>
                 <div class="col-lg-12 col-sm-12">
                     <div class="local-detail-title">
                         <h3 class="local-detail-local"> APP </h3>
                     </div>
                     <hr>
-                    <stats number="{{stats.d_app.v}}" comments="{{stats.d_app.d}}" colour="green" type="arrow-down"></stats>
-                    <stats number="{{stats.o_app.v}}" comments="{{stats.o_app.d}}" colour="green" type="envelope-open"></stats>
+                    <stats number="{{stats.app_downloads.v}}" comments="{{stats.app_downloads.d}}" colour="green" type="arrow-down"></stats>
+                    <stats number="{{stats.count_open_push.v}}" comments="{{stats.count_open_push.d}}" colour="green" type="envelope-open"></stats>
                 </div>
                 <div class="col-lg-12 col-sm-12">
                     <div class="local-detail-title">
                         <h3 class="local-detail-local"> Comportamiento </h3>
                     </div>
                     <hr>
-                    <stats number="{{stats.opt_in.v}}%" comments="{{stats.opt_in.d}}" colour="primary" type="sign-in"></stats>
-                    <stats number="{{stats.buscador.v}}" comments="{{stats.buscador.d}}" colour="primary" type="search"></stats>
+                    <stats number="{{stats.count_optin_users.v}}" comments="{{stats.count_optin_users.d}}" colour="primary" type="sign-in"></stats>
+                    <stats number="{{stats.count_search_users.v}}" comments="{{stats.count_search_users.d}}" colour="primary" type="search"></stats>
 
-                    <stats number="{{stats.r_visita.v}}" comments="{{stats.r_visita.d}}" colour="primary" type="eye"></stats>
-                    <stats number="{{stats.s_app.v}}" comments="{{stats.s_app.d}}" colour="primary" type="share-alt"></stats>
+                    <!--
+                                        <stats number="{{stats.r_visita.v}}" comments="{{stats.r_visita.d}}" colour="primary" type="eye"></stats>
+                    -->
+                    <stats number="{{stats.user_shares.v}}" comments="{{stats.user_shares.d}}" colour="primary" type="share-alt"></stats>
                 </div>
                 <div class="col-lg-12 col-sm-12">
 
@@ -59,10 +62,9 @@
                         <h3 class="local-detail-local"> Ventas </h3>
                     </div>
                     <hr>
-                    <stats number="{{stats.buyers.v}}" comments="{{stats.buyers.d}}" colour="yellow" type="shopping-cart"></stats>
-                    <stats number="{{stats.r_compra.v}}" comments="{{stats.r_compra.d}}" colour="yellow" type="shopping-cart"></stats>
-                    <stats number="{{stats.p_paypal.v}}" comments="{{stats.p_paypal.d}}" colour="yellow" type="paypal"></stats>
-                    <stats number="{{stats.p_targeta.v}}" comments="{{stats.p_targeta.d}}" colour="yellow" type="credit-card"></stats>
+                    <stats number="{{stats.count_unique_buyers.v}}" comments="{{stats.count_unique_buyers.d}}" colour="yellow" type="shopping-cart"></stats>
+                    <stats number="{{stats.buy_recurrency.v}}%" comments="{{stats.buy_recurrency.d}}" colour="yellow" type="line-chart"></stats>
+                    <stats number="{{stats.count_success_paid.v}}" comments="{{stats.count_success_paid.d}}" colour="yellow" type="credit-card"></stats>
                 </div>
             </div>
         </div>
