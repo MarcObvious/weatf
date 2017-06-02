@@ -23,7 +23,7 @@
             var init = function () {
                 $log.info('App:: Starting consolidacionController');
 
-                $scope.filterName = 'KPIs';
+                $scope.filterName = 'Consolidación';
                 var date = new Date();
 
                 $scope.dateStart = {};
