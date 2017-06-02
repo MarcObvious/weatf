@@ -31,69 +31,19 @@ angular.module('programadorService', [])
                             }
                         });
                     },
-                    getLocalprogramador: function (params) {
+                    getpushCampaigns: function (params) {
                         var def = $q.defer();
-                        this.api('getlocalprogramador').save({}, params, function (data) {
+                        this.api('getpushcampaigns').save({}, params, function (data) {
                             def.resolve(data);
                         }, function (err) {
                             def.reject(err);
                         });
                         return def.promise;
                     },
-                    getAllprogramador: function (params) {
+                    cancelCampaign: function(params){
                         var def = $q.defer();
-                        this.api('getallprogramador').save({}, params, function (data) {
+                        this.api('cancelpushcampaign').save({}, params, function (data) {
                             def.resolve(data);
-                        }, function (err) {
-                            def.reject(err);
-                        });
-                        return def.promise;
-                    },
-                    getprogramador: function(id){
-                        var def = $q.defer();
-                        this.api(id).get({}, {}, function (data) {
-                            def.resolve(data);
-                        }, function (err) {
-                            def.reject(err);
-                        });
-                        return def.promise;
-                    },
-                    duplicateprogramador: function(id){
-                        var def = $q.defer();
-                        this.api(id + '/duplicate').get({}, {}, function (data) {
-                            def.resolve(data);
-                        }, function (err) {
-                            def.reject(err);
-                        });
-                        return def.promise;
-                    },
-                    submitprogramador: function (name,description,configuration) {
-                        var def = $q.defer();
-                        var postData = {
-                            name:name,
-                            description:description,
-                            configuration:configuration
-                        };
-                        this.api().save({}, postData, function (data) {
-                            def.resolve(data);
-                        }, function (err) {
-                            def.reject(err);
-                        });
-                        return def.promise;
-                    },
-                    getOrder: function (params) {
-                        var def = $q.defer();
-                        this.api('getorder/').save({}, params, function(data){
-                            def.resolve(data.data);
-                        }, function (err) {
-                            def.reject(err);
-                        });
-                        return def.promise;
-                    },
-                    saveOrder: function (params) {
-                        var def = $q.defer();
-                        this.api('updateorderdetail/').save({}, params, function(data){
-                            def.resolve(data.data);
                         }, function (err) {
                             def.reject(err);
                         });

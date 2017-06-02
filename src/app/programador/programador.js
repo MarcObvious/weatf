@@ -159,77 +159,55 @@
                         $scope.dateEnd = {};
                         $scope.dateEnd.format = 'dd-MM-yyyy';
                         $scope.dateEnd.dateOptions = { formatYear: 'yy', startingDay: 1 };
-                        $scope.dateEnd.date = date;
+                        $scope.dateEnd.date =  new Date(date.getTime() + 24*60*60*10000*7);
                         $scope.dateEnd.opened = false;
 
                         var start =  $scope.dateStart.date.toJSON().substr(0,10);
                         var end =  $scope.dateEnd.date.toJSON().substr(0,10);
-                        $scope.programador = [];
-                        $scope.exportData = [];
-                        getprogramador(start, end);
+                        getcampaigns(start, end);
 
-                        ngTableEventsChannel.onAfterReloadData(function(a,b,c){
-                            var filters = a.filter();
-                            var rawData = a.settings().data;
-                            $scope.exportData = $filter('filter')(rawData,filters);
-                        }, $scope);
                     };
 
-                    var getprogramador = function(start,end) {
-                        if ($scope.localid !== undefined) {
-                            programadorService.getLocalprogramador({local_id: $scope.localid, dateStart:start, dateEnd:end}).then(function(data){
-                                $scope.filterName = 'Pedidos local: ' + $scope.localid;
-                                //$scope.programador = data.data;
-                                populateCsv(data.data);
-                                $scope.vm.tableParams = new ngTableParams({count:10}, { data: $scope.programador,counts:[10,15,20]});
-
-                            }, function (err) {
-                                $scope.vm.tableParams = new ngTableParams({count:10}, { data: [],counts:[10,15,20]});
-                            });
-                        }
-                        else {
-                            programadorService.getAllprogramador({dateStart:start, dateEnd:end}).then(function (data) {
-                                $scope.filterName = 'Pedidos de todos los locales';
-                                // $scope.programador = data.data;
-                                populateCsv(data.data);
-                                $scope.vm.tableParams = new ngTableParams({count:10}, { data: $scope.programador,counts:[10,15,20]});
-
-                            }, function (err) {
-                                $scope.vm.tableParams = new ngTableParams({count:10}, { data: [],counts:[10,15,20]});
-                            });
-                        }
-                        $scope.name_csv = 'Pedidos_'+ start + '_' + end;
-                        $scope.headers_csv = ['Pedido','Local','Usuario','Estado','Producto','Precio','Cantidad','F.A','F.C'];
-                    };
-
-                    var populateCsv = function(programador) {
-                        $scope.programador = [];
-                        if (programador.length > 0) {
-                            angular.forEach(programador, function (order) {
-                                if (order.orderdetail!== null && order.orderdetail[0] !== null){
-                                    var local_name = order.orderdetail[0].localinfo !==null ? order.orderdetail[0].localinfo.name : 'Desconocido';
-                                    var product_name = order.orderdetail[0].productinfo !==null ? order.orderdetail[0].productinfo.name : 'Desconocido';
-                                    $scope.programador.push({
-                                        id: order.id,
-                                        local_name: local_name,
-                                        user_name: order.orderdetail[0].user_name,
-                                        order_state_name: order.order_state_name,
-                                        product_name: product_name ,
-                                        product_price: order.orderdetail[0].product_price,
-                                        product_quantity: order.orderdetail[0].product_quantity,
-                                        updated_at: order.orderdetail[0].updated_at,
-                                        created_at: order.orderdetail[0].created_at
-                                    });
+                    var getcampaigns = function(start,end) {
+                        programadorService.getpushCampaigns({startDate:start, endDate:end}).then(function (data) {
+                            $scope.campaigns = [];
+                            angular.forEach(data.data, function (campaign) {
+                                var c = {
+                                    id:campaign.configuration_id,
+                                    queue_name: campaign.queue_name,
+                                    date_release: campaign.date_release,
+                                    created_at: campaign.created_at
+                                };
+                                switch (campaign.delivery_status) {
+                                    case 1: // PUSH_CAMPAIGN_PENDING
+                                        c.status = 'Pendiente';
+                                        break;
+                                    case 2: // PUSH_CAMPAIGN_SENDING
+                                        c.status = 'Enviando';
+                                        break;
+                                    case 3: //PUSH_CAMPAIGN_SENT
+                                        c.status = 'Enviado';
+                                        break;
+                                    case 4: //PUSH_CAMPAIGN_CANCELED
+                                        c.status = 'Cancelado';
+                                        break;
                                 }
+                                $scope.campaigns.push(c);
                             });
-                        }
+                            $scope.vm.tableParams = new ngTableParams({count:10}, { data: $scope.campaigns,counts:[10,15,20]});
+
+                        }, function (err) {
+                            $scope.vm.tableParams = new ngTableParams({count:10}, { data: [],counts:[10,15,20]});
+                        });
+
                     };
+
 
                     $scope.openDatepicker = function(date) {
                         $scope[date].opened = true;
                     };
 
-                    $scope.viewOrderDetail = function (order_id) {
+                   /* $scope.viewCampaignDetail = function (order_id) {
                         $scope.modalInstance = $uibModal.open({
                             templateUrl: 'programador/programadorModalEdit.tpl.html',
                             size: 'lg',
@@ -247,11 +225,11 @@
                                 campaingData : (['programadorService','$q', function (programadorService, $q) {
                                     var def = $q.defer();
                                     def.resolve(true);
-                                    /*programadorService.getOrder({order_id: order_id}).then(function(data){
+                                    /!*programadorService.getOrder({order_id: order_id}).then(function(data){
                                      def.resolve(data);
                                      }, function (err) {
                                      def.reject(err);
-                                     });*/
+                                     });*!/
                                     return def.promise;
                                 }])
                             },
@@ -262,25 +240,23 @@
                             $state.reload();
                         },function(){
                         });
-                    };
+                    };*/
 
-                    $scope.cancelOrder = function (params) {
-                        params.order_state = 2;
-                        programadorService.saveOrder(params).then(function(result){
+                    $scope.deleteCampaign = function (params) {
+                        programadorService.cancelCampaign(params).then(function(result){
                             $state.reload();
                         }, function (err) {
                         });
                     };
 
                     $scope.mostrar = function() {
-                        $scope.exportData = [];
                         if ($scope.dateStart.date && $scope.dateEnd.date) {
                             var start =  $scope.dateStart.date.toJSON().substr(0,10);
                             var end =  $scope.dateEnd.date.toJSON().substr(0,10);
-                            getprogramador(start, end);
+                            getcampaigns(start, end);
                         }
                         else {
-                            getprogramador(null, null);
+                            getcampaigns(null, null);
                         }
 
                     };
