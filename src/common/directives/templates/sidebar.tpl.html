@@ -24,6 +24,9 @@
                     <li ng-show="user_type != 2" ui-sref-active="active">
                         <a class="sub-sub-hedd-text" ui-sref="root.users({page:1})"> Gestionar usuarios <span class="head-text">(-)</span></a>
                     </li>
+                    <li ng-show="user_type != 2" ui-sref-active="active">
+                        <a class="sub-sub-hedd-text" ui-sref="root.consolidacion({page:1})"> Gestionar consolidación <span class="head-text">(-)</span></a>
+                    </li>
                 </ul>
             </li>
             <li ng-show="user_type == 10" ng-class="{active: collapseVar==2}">

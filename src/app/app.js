@@ -62,6 +62,7 @@
     'weatf.locals',
     'weatf.users',
     'weatf.chart',
+    'weatf.consolidacion',
     'weatf.auth',
     'weatf.programador',
     'weatf.simplepush',
