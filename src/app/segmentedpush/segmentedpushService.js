@@ -30,7 +30,7 @@ angular.module('segmentedpushService', [])
                 },
                 sendsegmentedpush: function (params) {
                     var def = $q.defer();
-                    this.api('sendpush/').save({}, params, function(data){
+                    this.api('createsegmentedpush/').save({}, params, function(data){
                         def.resolve(data);
                     }, function (err) {
                         def.reject(err);

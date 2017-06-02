@@ -30,12 +30,11 @@ angular.module('simplepushService', [])
                 },
                 getTokenFromEmail: function(params){
                     var def = $q.defer();
-                    def.resolve({Devicetoken:[{token:'sometoken'}]});
-                    /*this.api('gettokenbyemail/').save({}, params, function(data){
+                    this.api('gettokenbyemail/').save({}, params, function(data){
                         def.resolve(data.data);
                     }, function (err) {
                         def.reject(err);
-                    });*/
+                    });
 
                     return def.promise;
                 },

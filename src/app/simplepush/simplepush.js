@@ -36,6 +36,7 @@
                 $scope.dev.show_dialog=false;
                 $scope.dev.result = "";
                 $scope.dev.selradio='Not selected';
+                $scope.dev.devicetokens = [];
 
 
                 //Prod object
@@ -53,15 +54,17 @@
 
 
             $scope.getTokensFromEmail = function(){
+                $scope.removeToken();
+                $scope.dev.devicetokens = [];
+                $scope.dev.selectedData = null;
                 simplepushService.getTokenFromEmail({email:$scope.dev.email}).then(function(data){
-                    console.log(data);
-                    if(data.Devicetoken && data.Devicetoken.length>0){
-                        console.log('hola?');
-                        $scope.dev.devicetokens = data.Devicetoken;
+                    if(data.pushtoken){
+                        $scope.dev.selectedData = data.pushtoken;
+                        $scope.dev.devicetokens.push({token:data.pushtoken});
                         $scope.addAlert('Token encontrado', 'success', 3000);
                     }
                     else{
-                        $scope.dev.result = "No results";
+                        $scope.dev.result = "No se encontro dispositivo.";
                         $scope.addAlert('No se ha encontrado ningun token!', 'danger', 3000);
                     }
                     $scope.dev.show_dialog=true;
@@ -74,6 +77,7 @@
 
                 if(token){
                     var pushMsg = {
+                        email : $scope.dev.email,
                         token : token,
                         pushTitle: $scope.dev.push_title || 'Example push title',
                         pushMessage: $scope.dev.push_message || 'Push example message ...'
