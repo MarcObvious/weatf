@@ -38,8 +38,8 @@
                 $scope.dateEnd.opened = false;
                 $scope.dateEnd.date = date;
 
-                $scope.localsValues =
-                    [
+                $scope.localsValues = [];
+                   /* [
                         {"name": "5-Franquiciador Fornet",
                             "locals": {
                                 "1-Fornet1": {
@@ -82,23 +82,28 @@
                             },
                             "total_franquicia": 378
                         }
-                    ];
+                    ];*/
 
                 $scope.mostrar();
             };
 
             $scope.mostrar = function () {
-                var params = {};
+                $scope.localsValues = [];
+                var params = {cons_type:10};
                 if ($scope.dateStart.date && $scope.dateEnd.date) {
                     params.startDate =  $scope.dateStart.date.toJSON().substr(0,10);
                     params.endDate=  $scope.dateEnd.date.toJSON().substr(0,10);
                 }
 
-                consolidacionService.getConsolidacion(params).then(function(kpis){
-                    angular.forEach(kpis,function (value, key) {
-                        if (angular.isDefined($scope.stats[key])) {
+                consolidacionService.getConsolidacion(params).then(function(cons){
+                    angular.forEach(cons,function (value, key) {
+                       /* if (angular.isDefined(cons[key])) {
                             $scope.stats[key].v = value;
-                        }
+                        }*/
+                        console.log(value);
+                        console.log(key);
+                        $scope.localsValues.push(value);
+
                     });
                 }, function (err) {
                 });
