@@ -17,8 +17,8 @@
                 });
         }]);
 
-    app.controller('consolidacionController', ['$log', '$q', '$scope', '$state', 'consolidacionService',
-        function ($log, $q, $scope, $state, consolidacionService) {
+    app.controller('consolidacionController', ['$log', '$q', '$scope', '$state', 'consolidacionService','ngTableParams','ngTableEventsChannel','$filter',
+        function ($log, $q, $scope, $state, consolidacionService, NGTableParams, ngTableEventsChannel, $filter) {
 
             var init = function () {
                 $log.info('App:: Starting consolidacionController');
@@ -38,75 +38,50 @@
                 $scope.dateEnd.opened = false;
                 $scope.dateEnd.date = date;
 
-                $scope.localsValues = [];
-                   /* [
-                        {"name": "5-Franquiciador Fornet",
-                            "locals": {
-                                "1-Fornet1": {
-                                    "local_owner":"fr1@fornet.com",
-                                    "total_sold": 282
-                                },
-                                "2-Fornet2": {
-                                    "local_owner":"fr1@fornet.com",
-                                    "total_sold": 28
-                                },
-                                "3-Fornet3": {
-                                    "local_owner":"fr1@fornet.com",
-                                    "total_sold": 26
-                                },
-                                "4-Fornet4": {
-                                    "local_owner":"fr1@fornet.com",
-                                    "total_sold": 42
-                                }
-                            },
-                            "total_franquicia": 378
-                        },
-                        {"name": "5-Franquiciador Buenas1",
-                            "locals": {
-                                "1-Buenas1": {
-                                    "local_owner":"bm1@fornet.com",
-                                    "total_sold": 282
-                                },
-                                "2-Buenas2": {
-                                    "local_owner":"bm2@fornet.com",
-                                    "total_sold": 28
-                                },
-                                "3-Buenas3": {
-                                    "local_owner":"bm2@fornet.com",
-                                    "total_sold": 26
-                                },
-                                "4-Buenas4": {
-                                    "local_owner":"bm2@fornet.com",
-                                    "total_sold": 42
-                                }
-                            },
-                            "total_franquicia": 378
-                        }
-                    ];*/
+                $scope.vm = {};
 
-                $scope.mostrar();
+                var start =  $scope.dateStart.date.toJSON().substr(0,10);
+                var end =  $scope.dateEnd.date.toJSON().substr(0,10);
+                $scope.localsValues = [];
+                $scope.exportData = [];
+                getConsolidacion(start, end);
+
+                ngTableEventsChannel.onAfterReloadData(function(a,b,c){
+                    var filters = a.filter();
+                    var rawData = a.settings().data;
+                    $scope.exportData = $filter('filter')(rawData,filters);
+                }, $scope);
             };
 
-            $scope.mostrar = function () {
+            var getConsolidacion = function (start, end) {
                 $scope.localsValues = [];
-                var params = {cons_type:10};
-                if ($scope.dateStart.date && $scope.dateEnd.date) {
-                    params.startDate =  $scope.dateStart.date.toJSON().substr(0,10);
-                    params.endDate=  $scope.dateEnd.date.toJSON().substr(0,10);
-                }
 
-                consolidacionService.getConsolidacion(params).then(function(cons){
-                    angular.forEach(cons,function (value, key) {
-                       /* if (angular.isDefined(cons[key])) {
-                            $scope.stats[key].v = value;
-                        }*/
-                        console.log(value);
-                        console.log(key);
-                        $scope.localsValues.push(value);
+                consolidacionService.getConsolidacion({cons_type:10,dateStart:start, dateEnd:end}).then(function(cons){
+                    angular.forEach(cons,function (franquicia, franquicia_name) {
+                        $scope.localsValues.push({name:franquicia_name, total:franquicia.total_fr, franquicia: 1});
+                        angular.forEach(franquicia.locals,function (total_local, local) {
+                            $scope.localsValues.push({name:local, total: total_local, franquicia: 0});
+                        });
 
                     });
+                    $scope.vm.tableParams = new NGTableParams({count:50}, { data: $scope.localsValues,counts:[100,200,500]});
                 }, function (err) {
                 });
+                $scope.name_csv = 'Consolidacion_'+ start + '_' + end;
+                $scope.headers_csv = ['Local','Total', 'Franquicia'];
+            };
+
+            $scope.mostrar = function() {
+                $scope.exportData = [];
+                if ($scope.dateStart.date && $scope.dateEnd.date) {
+                    var start =  $scope.dateStart.date.toJSON().substr(0,10);
+                    var end =  $scope.dateEnd.date.toJSON().substr(0,10);
+                    getConsolidacion(start, end);
+                }
+                else {
+                    getConsolidacion(null, null);
+                }
+
             };
 
             $scope.openDatepicker = function(date) {

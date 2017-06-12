@@ -123,9 +123,9 @@
                     var init = function () {
                         $log.info('App:: Starting ordersController');
 
-                        $scope.model={};
+                        $scope.model = {};
                         $scope.isCollapsed = false;
-                        $scope.vm={};
+                        $scope.vm = {};
 
                         var date = new Date();
 
