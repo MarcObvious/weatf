@@ -56,7 +56,7 @@
             var getConsolidacion = function (start, end) {
                 $scope.localsValues = [];
 
-                consolidacionService.getConsolidacion({cons_type:10,dateStart:start, dateEnd:end}).then(function(cons){
+                consolidacionService.getConsolidacion({cons_type:10,startDate:start, endDate:end}).then(function(cons){
                     angular.forEach(cons,function (franquicia, franquicia_name) {
                         $scope.localsValues.push({name:franquicia_name, total:franquicia.total_fr, franquicia: 1});
                         angular.forEach(franquicia.locals,function (total_local, local) {
