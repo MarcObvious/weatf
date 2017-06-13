@@ -58,9 +58,9 @@
 
                 consolidacionService.getConsolidacion({cons_type:10,startDate:start, endDate:end}).then(function(cons){
                     angular.forEach(cons,function (franquicia, franquicia_name) {
-                        $scope.localsValues.push({name:franquicia_name, total:franquicia.total_fr, franquicia: 1});
+                        $scope.localsValues.push({name:franquicia_name, total:franquicia.total_fr, name_fr: '-'});
                         angular.forEach(franquicia.locals,function (total_local, local) {
-                            $scope.localsValues.push({name:local, total: total_local, franquicia: 0});
+                            $scope.localsValues.push({name:local, total: total_local, name_fr: franquicia_name});
                         });
 
                     });
