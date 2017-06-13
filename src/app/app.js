@@ -68,6 +68,8 @@
     'weatf.simplepush',
     'weatf.segmentedpush',
     'weatf.orders',
+    'weatf.discounts',
+    'discountsService',
     'LocalStorageModule',
     'ui.bootstrap',
     'templates-app',

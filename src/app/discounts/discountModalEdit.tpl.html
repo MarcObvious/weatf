@@ -1,0 +1,64 @@
+<div class="usersClass">
+    <div class="modal-header">
+        <h3 class="modal-title" ng-if="discountModal.newDiscount"><i class="fa fa-user"></i> Nuevo cupón</h3>
+        <h3 class="modal-title" ng-if="!discountModal.newDiscount"><i class="fa fa-user"></i> Editando el cupón : {{discountModal.name}}</h3><span style="color:red;" class="inline">(* campo obligatorio)</span>
+    </div>
+    <div class="modal-body clearfix">
+        <div class="col-md-12">
+            <div class="form-group">
+                <div class="col-md-6">
+                    <label>Nombre <sup style="color:red">*</sup></label>
+                    <input class="form-control input-modal" placeholder="Nombre del cupón." ng-model="discountModal.name">
+                </div>
+                <div class="col-md-6">
+                    <label>Description <sup style="color:red">*</sup></label>
+                    <input class="form-control input-modal" placeholder="Breve descripción" ng-model="discountModal.description">
+                </div>
+                <div class="col-md-6">
+                    <label>Cantidad de cupones: <sup style="color:red">*</sup></label>
+                    <input type="number" class="form-control input-modal" placeholder="Cantidad de cupones" ng-model="discountModal.quantity">
+                </div>
+                <div class="col-md-6">
+                    <label>Cantidad por usuario: <sup style="color:red">*</sup></label>
+                    <input type="number" class="form-control input-modal" placeholder="Cantidad por cada usuario." ng-model="discountModal.quantity_per_user">
+                </div>
+                <div class="col-md-6">
+                    <label>Tipo de cupón: <sup style="color:red">*</sup></label>
+                    <select class="form-control input-modal" ng-model="discountModal.type">
+                        <option value="1" ng-selected="discountModal.type==1">Importe</option>
+                        <option value="2" ng-selected="discountModal.type==2" >Porcentaje</option>
+                    </select>
+                </div>
+                <div class="col-md-6">
+                    <label>Valor (porcentaje o absoluto): <sup style="color:red">*</sup></label>
+                    <input type="number" class="form-control input-modal" placeholder="Valor o porcentaje del cupón." ng-model="discountModal.value">
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <div class="col-md-12">
+            <div class="col-md-4">
+                <button type="button" class="btn btn-warning btn-block input-modal" ng-click="cancel()">
+                    Cancelar <i class="fa fa-ban"></i>
+                </button>
+            </div>
+            <div class="col-md-4" ng-if="discountModal.newDiscount">
+                <button type="button" class="btn btn-danger btn-block input-modal" ng-click="cancel()">
+                    Descartar cupón <i class="fa fa-trash"></i>
+                </button>
+            </div>
+            <div class="col-md-4" ng-if="!discountModal.newDiscount">
+                <button type="button" class="btn btn-danger btn-block input-modal" ng-click="deleteDiscount(discountModal.id)">
+                    Eliminar cupón <i class="fa fa-trash"></i>
+                </button>
+            </div>
+            <div class="col-md-4">
+                <button type="button" class="btn btn-success btn-block input-modal" ng-click="save()">
+                    Guardar cupón <i class="fa fa-floppy-o"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

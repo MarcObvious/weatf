@@ -159,6 +159,23 @@ angular.module('genericDirectives', [])
 
                         });
                     };
+
+                    $scope.newDiscount = function () {
+                        $scope.modalInstance = $uibModal.open({
+                            templateUrl: 'discounts/discountModalEdit.tpl.html',
+                            size: 'lg',
+                            controller: 'discountModalEditController',
+                            resolve: {discountData: {newDiscount: true}},
+                            scope: $scope
+                        });
+
+                        $scope.modalInstance.result.then(function (modalResult) {
+                            $state.reload();
+                        }, function () {
+
+                        });
+                    };
+
                     init();
                 }
             };
