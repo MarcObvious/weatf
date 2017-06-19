@@ -18,7 +18,7 @@
                     <li ng-show="user_type != 2" ui-sref-active="active">
                         <a class="sub-sub-hedd-text" ng-click="newUser()">Nuevo usuario <span class="head-text">(+)</span></a>
                     </li>
-                    <li ng-show="user_type != 2" ui-sref-active="active">
+                    <li ng-show="user_type != 10" ui-sref-active="active">
                         <a class="sub-sub-hedd-text" ng-click="newDiscount()">Nuevo cupón <span class="head-text">(+)</span></a>
                     </li>
                     <hr>
@@ -28,7 +28,7 @@
                     <li ng-show="user_type != 2" ui-sref-active="active">
                         <a class="sub-sub-hedd-text" ui-sref="root.users({page:1})"> Gestionar usuarios</a>
                     </li>
-                    <li ng-show="user_type != 2" ui-sref-active="active">
+                    <li ng-show="user_type != 10" ui-sref-active="active">
                         <a class="sub-sub-hedd-text" ui-sref="root.discounts"> Gestionar Cupones </a>
                     </li>
                 </ul>
@@ -47,7 +47,7 @@
                     </li>-->
                 </ul>
             </li>
-            <li ng-class="{active: collapseVar==3}">
+            <li ng-show="user_type == 10" ng-class="{active: collapseVar==3}">
                 <a href="" ng-click="check(3)" class="sub-hedd-text">Notificaciones<span class="fa arrow"></span></a>
                 <ul class="nav nav-second-level" uib-collapse="collapseVar!=3">
                     <li ui-sref-active="active">
