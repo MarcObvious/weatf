@@ -194,8 +194,10 @@
                                         user_name: order.orderdetail[0].user_name,
                                         order_state_name: order.order_state_name,
                                         product_name: product_name ,
-                                        product_price: order.orderdetail[0].product_price,
-                                        product_quantity: order.orderdetail[0].product_quantity,
+                                        //product_price: order.orderdetail[0].product_price,
+                                        product_price: order.orderdetail[0].total_line,
+                                        //product_quantity: order.orderdetail[0].product_quantity,
+                                        product_quantity: 1,
                                         updated_at: order.orderdetail[0].updated_at,
                                         created_at: order.orderdetail[0].created_at
                                     });
